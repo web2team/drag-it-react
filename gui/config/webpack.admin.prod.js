@@ -1,21 +1,26 @@
 const path = require('path');
+
 const tsImportPlugin = require('ts-import-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: path.resolve('./gui/src/index.tsx'),
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, 'dist')
+        path: path.resolve('./gui/dist')
     },
     devtool: 'source-map',
-    mode: 'development',
+    mode: 'production',
     resolve: {
         extensions: ['.js', '.json', '.ts', '.tsx']
     },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 3000
+    stats: {
+        hash: false
+    },
+    performance: {
+        maxEntrypointSize: 1000000,
+        maxAssetSize: 1000000
     },
     module: {
         rules: [
@@ -37,14 +42,15 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [
-                    {
-                        loader: 'style-loader'
-                    },
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            sourceMap: true
+                            sourceMap: true,
+                            minimize: {
+                                safe: true
+                            }
                         }
                     },
                     {
@@ -53,12 +59,18 @@ module.exports = {
                             javascriptEnabled: true,
                             sourceMap: true,
                             modifyVars: {
-                                '@primary-color': '#1DA57A'
+                                //'@primary-color': '#1DA57A'
                             }
                         }
                     }
                 ]
             }
         ]
-    }
+    },
+    plugins: [
+        new CleanWebpackPlugin(['dist'], { root: path.resolve('./gui') }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css'
+        })
+    ]
 };
