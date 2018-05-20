@@ -7,7 +7,8 @@ module.exports = {
     entry: path.resolve('./gui/src/index.tsx'),
     output: {
         filename: 'bundle.js',
-        path: path.resolve('./gui/dist')
+        path: path.resolve('./gui/dist'),
+        publicPath: "/"
     },
     devtool: 'inline-source-map',
     mode: 'development',
@@ -16,11 +17,6 @@ module.exports = {
     },
     stats: {
         hash: false
-    },
-    devServer: {
-        contentBase: path.resolve('./gui'),
-        compress: true,
-        port: 3000
     },
     module: {
         rules: [{
@@ -59,7 +55,7 @@ module.exports = {
                             javascriptEnabled: true,
                             sourceMap: true,
                             modifyVars: {
-                                '@primary-color': '#1DA57A'
+                                '@primary-color': '#722ed1'
                             }
                         }
                     }
@@ -69,5 +65,15 @@ module.exports = {
     },
     plugins: [new CleanWebpackPlugin(['dist'], {
         root: path.resolve('./gui')
-    })]
+    })],
+    devServer: {
+        contentBase: path.resolve('./gui'),
+        compress: true,
+        port: 3000,
+        watchOptions: {
+            ignored: /node_modules/
+        },
+        watchContentBase: true,
+        historyApiFallback: true
+    }
 };
