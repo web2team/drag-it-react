@@ -23,8 +23,7 @@ module.exports = {
         port: 3000
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.(ts|tsx)$/,
                 loader: 'ts-loader',
                 options: {
@@ -41,8 +40,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                use: [
-                    {
+                use: [{
                         loader: 'style-loader'
                     },
                     {
@@ -61,7 +59,7 @@ module.exports = {
                             javascriptEnabled: true,
                             sourceMap: true,
                             modifyVars: {
-                                //'@primary-color': '#1DA57A'
+                                '@primary-color': '#1DA57A'
                             }
                         }
                     }
@@ -69,5 +67,7 @@ module.exports = {
             }
         ]
     },
-    plugins: [new CleanWebpackPlugin(['dist'], { root: path.resolve('./gui') })]
+    plugins: [new CleanWebpackPlugin(['dist'], {
+        root: path.resolve('./gui')
+    })]
 };

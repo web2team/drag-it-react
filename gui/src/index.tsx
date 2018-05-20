@@ -1,15 +1,5 @@
-import * as React from 'react';
+import * as React from "react";
+import { render } from "react-dom";
+import App from "./components/App";
 
-import { render } from 'react-dom';
-import { LocaleProvider } from 'antd';
-import locale from 'antd/lib/locale-provider/cs_CZ';
-
-import { App } from './components/App';
-
-const Main = () => (
-    <LocaleProvider locale={locale}>
-        <App message="world" />
-    </LocaleProvider>
-);
-
-render(<Main />, document.getElementById('app'));
+render(<App />, document.getElementById("app"));
