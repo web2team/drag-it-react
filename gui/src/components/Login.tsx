@@ -51,7 +51,7 @@ class NormalLoginForm extends React.Component<any, any> {
               {getFieldDecorator("remember", {
                 valuePropName: "checked",
                 initialValue: true
-              })(<Checkbox>Remember me</Checkbox>)}
+              })(<Checkbox>Stay signed in</Checkbox>)}
               <a className="login-form-forgot" href="">
                 Forgot password
               </a>
@@ -62,7 +62,7 @@ class NormalLoginForm extends React.Component<any, any> {
               >
                 Log in
               </Button>
-              Or <a href="">register now!</a>
+              Don't have an account? <a href="">Sign up</a>
             </FormItem>
           </Form>
         </Col>

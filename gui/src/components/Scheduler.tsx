@@ -1,6 +1,6 @@
 import { Calendar, Badge } from "antd";
 import * as React from "react";
-import "./FullCalender.less";
+import "./Scheduler.less";
 
 function getListData(value) {
   let listData;
@@ -14,9 +14,12 @@ function getListData(value) {
     case 21:
       listData = [
         { type: "warning", content: "캡스톤 회의" },
-        { type: "success", content: "발표자료 완성" },
+        { type: "success", content: "발표자료 초안 완성" },
         { type: "error", content: "저녁 약속" }
       ];
+      break;
+    case 23:
+      listData = [{ type: "success", content: "발표자료 최종본 완성"}];
       break;
     case 25:
       listData = [{ type: "warning", content: "캡스톤 발표" }];

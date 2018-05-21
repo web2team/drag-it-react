@@ -13,8 +13,9 @@ import {
 } from "react-router-dom";
 import LoginForm from "./Login";
 import RegisterForm from "./Register";
-import FullCalender from "./FullCalender";
+import Scheduler from "./Scheduler";
 import SmallCalenderContainer from "./SmallCalenderContainer";
+//import Todo from "./Todo";
 
 export default class SiderDemo extends React.Component<any, any> {
   state = {
@@ -40,44 +41,44 @@ export default class SiderDemo extends React.Component<any, any> {
             <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
                 <Link to="/">
-                  <Icon type="user" />
+                  <Icon type="bank" />
                   <span>home</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="1-1">
                 <Link to="login">
-                  <Icon type="video-camera" />
+                  <Icon type="user" />
                   <span>login</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to="register">
-                  <Icon type="video-camera" />
+                  <Icon type="user-add" />
                   <span>register</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3">
                 <Link to="board">
-                  <Icon type="upload" />
+                  <Icon type="file" />
                   <span>board</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4">
                 <Link to="calender">
-                  <Icon type="upload" />
-                  <span>calender</span>
+                  <Icon type="calendar" />
+                  <span>calendar</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4-1">
-                <Link to="full_calender">
-                  <Icon type="upload" />
-                  <span>FULL calender</span>
+                <Link to="scheduler">
+                  <Icon type="schedule" />
+                  <span>Scheduler</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="5">
-                <Link to="board">
-                  <Icon type="upload" />
-                  <span>board</span>
+                <Link to="setting">
+                  <Icon type="setting" />
+                  <span>setting</span>
                 </Link>
               </Menu.Item>
             </Menu>
@@ -126,9 +127,10 @@ export default class SiderDemo extends React.Component<any, any> {
                   />
                   <Route
                     exact={true}
-                    path="/full_calender"
-                    render={props => FullCalender}
+                    path="/Scheduler"
+                    render={props => Scheduler}
                   />
+                  
 
                   {/* <WrappedRegistrationForm /> */}
                 </Switch>
