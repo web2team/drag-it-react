@@ -15,7 +15,7 @@ import LoginForm from "./Login";
 import RegisterForm from "./Register";
 import Scheduler from "./Scheduler";
 import SmallCalenderContainer from "./SmallCalenderContainer";
-//import Todo from "./Todo";
+import Todo from "./Todo";
 
 export default class SiderDemo extends React.Component<any, any> {
   state = {
@@ -115,6 +115,11 @@ export default class SiderDemo extends React.Component<any, any> {
                     exact={true}
                     path="/register"
                     render={props => <RegisterForm />}
+                  />
+                  <Route
+                    exact={true}
+                    path="/board"
+                    render={props => <Todo />}
                   />
                   <Route
                     exact={true}
