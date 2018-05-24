@@ -66,7 +66,7 @@ export default class SiderDemo extends React.Component<any, any> {
               <Menu.Item key="4">
                 <Link to="calender">
                   <Icon type="calendar" />
-                  <span>calendar</span>
+                  <span>personal board</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4-1">

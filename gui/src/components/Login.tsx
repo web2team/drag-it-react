@@ -22,21 +22,21 @@ class NormalLoginForm extends React.Component<any, any> {
               <FormItem>
                 {getFieldDecorator("userName", {
                   rules: [
-                    { required: true, message: "Please input your username!" }
+                    { required: true, message: "아이디를 입력해주세요!" }
                   ]
                 })(
                   <Input
                     prefix={
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
-                    placeholder="Username"
+                    placeholder="아이디"
                   />
                 )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator("password", {
                   rules: [
-                    { required: true, message: "Please input your Password!" }
+                    { required: true, message: "비밀번호를 입력해주세요!" }
                   ]
                 })(
                   <Input
@@ -44,7 +44,7 @@ class NormalLoginForm extends React.Component<any, any> {
                       <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
                     type="password"
-                    placeholder="Password"
+                    placeholder="비밀번호"
                   />
                 )}
               </FormItem>
@@ -52,18 +52,18 @@ class NormalLoginForm extends React.Component<any, any> {
                 {getFieldDecorator("remember", {
                   valuePropName: "checked",
                   initialValue: true
-                })(<Checkbox>Stay signed in</Checkbox>)}
+                })(<Checkbox>로그인 상태 유지</Checkbox>)}
                 <a className="login-form-forgot" href="">
-                  Forgot password
+                  비밀번호 찾기
                 </a>
                 <Button
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
                 >
-                  Log in
+                  로그인!
                 </Button>
-                Don't have an account? <a href="">Sign up</a>
+                Drag-it에 처음이신가요? <a href="">회원가입!</a>
               </FormItem>
             </Form>
           </Col>

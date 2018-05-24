@@ -19,15 +19,15 @@ const AutoCompleteOption = AutoComplete.Option;
 const residences = [
   {
     value: "zhejiang",
-    label: "Zhejiang",
+    label: "서울시",
     children: [
       {
         value: "hangzhou",
-        label: "Hangzhou",
+        label: "노원구",
         children: [
           {
             value: "xihu",
-            label: "West Lake"
+            label: "공릉동"
           }
         ]
       }
@@ -35,15 +35,15 @@ const residences = [
   },
   {
     value: "jiangsu",
-    label: "Jiangsu",
+    label: "경기도",
     children: [
       {
         value: "nanjing",
-        label: "Nanjing",
+        label: "남양주시",
         children: [
           {
             value: "zhonghuamen",
-            label: "Zhong Hua Men"
+            label: "평내동"
           }
         ]
       }
@@ -137,7 +137,7 @@ class RegistrationForm extends React.Component<any, any> {
       <Row>
         <Col span={20}>
           <Form onSubmit={this.handleSubmit}>
-            <FormItem {...formItemLayout} label="E-mail">
+            <FormItem {...formItemLayout} label="이메일">
               {getFieldDecorator("email", {
                 rules: [
                   {
@@ -151,7 +151,7 @@ class RegistrationForm extends React.Component<any, any> {
                 ]
               })(<Input />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="Password">
+            <FormItem {...formItemLayout} label="비밀번호">
               {getFieldDecorator("password", {
                 rules: [
                   {
@@ -164,7 +164,7 @@ class RegistrationForm extends React.Component<any, any> {
                 ]
               })(<Input type="password" />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="Confirm Password">
+            <FormItem {...formItemLayout} label="비밀번호 확인">
               {getFieldDecorator("confirm", {
                 rules: [
                   {
@@ -181,7 +181,7 @@ class RegistrationForm extends React.Component<any, any> {
               {...formItemLayout}
               label={
                 <span>
-                  Nickname&nbsp;
+                  닉네임&nbsp;
                   <Tooltip title="What do you want others to call you?">
                     <Icon type="question-circle-o" />
                   </Tooltip>
@@ -198,7 +198,7 @@ class RegistrationForm extends React.Component<any, any> {
                 ]
               })(<Input />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="Habitual Residence">
+            <FormItem {...formItemLayout} label="주소">
               {getFieldDecorator("residence", {
                 initialValue: ["zhejiang", "hangzhou", "xihu"],
                 rules: [
@@ -210,7 +210,7 @@ class RegistrationForm extends React.Component<any, any> {
                 ]
               })(<Cascader options={residences} />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="Phone Number">
+            <FormItem {...formItemLayout} label="핸드폰 번호">
               {getFieldDecorator("phone", {
                 rules: [
                   { required: true, message: "Please input your phone number!" }
@@ -222,7 +222,7 @@ class RegistrationForm extends React.Component<any, any> {
 
             <FormItem
               {...formItemLayout}
-              label="Captcha"
+              label="CAPTCHA"
               extra="We must make sure that your are a human."
             >
               <Row gutter={8}>
@@ -246,13 +246,13 @@ class RegistrationForm extends React.Component<any, any> {
                 valuePropName: "checked"
               })(
                 <Checkbox>
-                  I have read the <a href="">agreement</a>
+                  <a href="">약관</a>에 모두 동의합니다
                 </Checkbox>
               )}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Register
+                회원가입하기!
               </Button>
             </FormItem>
           </Form>
