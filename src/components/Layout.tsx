@@ -42,43 +42,43 @@ export default class SiderDemo extends React.Component<any, any> {
               <Menu.Item key="1">
                 <Link to="/">
                   <Icon type="bank" />
-                  <span>home</span>
+                  <span>홈 화면</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="1-1">
                 <Link to="login">
                   <Icon type="user" />
-                  <span>login</span>
+                  <span>로그인</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to="register">
                   <Icon type="user-add" />
-                  <span>register</span>
+                  <span>회원가입</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="3">
                 <Link to="board">
                   <Icon type="file" />
-                  <span>board</span>
+                  <span>팀 보드</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4">
                 <Link to="calender">
                   <Icon type="calendar" />
-                  <span>personal board</span>
+                  <span>개인 보드</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4-1">
                 <Link to="scheduler">
                   <Icon type="schedule" />
-                  <span>Scheduler</span>
+                  <span>스케줄러</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="5">
                 <Link to="setting">
                   <Icon type="setting" />
-                  <span>setting</span>
+                  <span>환경설정</span>
                 </Link>
               </Menu.Item>
             </Menu>

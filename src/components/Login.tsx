@@ -1,5 +1,14 @@
 import * as React from "react";
-import { Form, Icon, Input, Button, Checkbox, Row, Col } from "antd";
+import {
+  Form,
+  Icon,
+  Input,
+  Button,
+  Checkbox,
+  Row,
+  Col,
+  notification
+} from "antd";
 const FormItem = Form.Item;
 import "./Login.less";
 
@@ -21,9 +30,7 @@ class NormalLoginForm extends React.Component<any, any> {
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
                 {getFieldDecorator("userName", {
-                  rules: [
-                    { required: true, message: "아이디를 입력해주세요!" }
-                  ]
+                  rules: [{ required: true, message: "아이디를 입력해주세요!" }]
                 })(
                   <Input
                     prefix={
@@ -60,6 +67,12 @@ class NormalLoginForm extends React.Component<any, any> {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
+                  onClick={e =>
+                    notification.error({
+                      message: "실패",
+                      description: "비밀번호를 확인해주세요."
+                    })
+                  }
                 >
                   로그인!
                 </Button>
