@@ -1,3 +1,3 @@
 Drag-it front-end
 
-react, webpack, graphql, mobx, antd
+react, typescript, webpack, graphql, mobx, antd
