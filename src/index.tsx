@@ -12,15 +12,15 @@ const client = new ApolloClient({
 
 client.query({
   query: gql`{
-    findAllBooks {
-        id,
-        title,
-        pageCount,
-        author {
-            id
-        }
-    }
-}
+      findAllBooks {
+          id,
+          title,
+          pageCount,
+          author {
+              id
+          }
+      }
+  }
   `
 }).then(v => console.log(v));
 
