@@ -33,7 +33,7 @@ class CardContainer extends Component<any, any> {
         {
           id: 5,
           text:
-            "Spam in Twitter and IRC to promote it (note that this element is taller than the others)"
+              "Spam in Twitter and IRC to promote it (note that this element is taller than the others)"
         },
         {
           id: 6,
@@ -48,33 +48,33 @@ class CardContainer extends Component<any, any> {
   }
 
   moveCard = (dragIndex, hoverIndex) => {
-    const { cards } = this.state;
+    const {cards} = this.state;
     const dragCard = cards[dragIndex];
 
     this.setState(
-      update(this.state, {
-        cards: {
-          $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]]
-        }
-      })
+        update(this.state, {
+          cards: {
+            $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]]
+          }
+        })
     );
-  }
+  };
 
   render() {
-    const { cards } = this.state;
+    const {cards} = this.state;
 
     return (
-      <div style={style}>
-        {cards.map((card, i) => (
-          <Card
-            key={card.id}
-            index={i}
-            id={card.id}
-            text={card.text}
-            moveCard={this.moveCard}
-          />
-        ))}
-      </div>
+        <div style={style}>
+          {cards.map((card, i) => (
+              <Card
+                  key={card.id}
+                  index={i}
+                  id={card.id}
+                  text={card.text}
+                  moveCard={this.moveCard}
+              />
+          ))}
+        </div>
     );
   }
 }

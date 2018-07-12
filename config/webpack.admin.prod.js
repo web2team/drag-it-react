@@ -5,10 +5,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: path.resolve('./gui/src/index.tsx'),
+    entry: path.resolve('src/index.tsx'),
     output: {
         filename: 'bundle.js',
-        path: path.resolve('./gui/dist')
+        path: path.resolve('dist')
     },
     devtool: 'source-map',
     mode: 'production',
@@ -23,8 +23,7 @@ module.exports = {
         maxAssetSize: 1000000
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.(ts|tsx)$/,
                 loader: 'ts-loader',
                 options: {
@@ -68,7 +67,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist'], { root: path.resolve('./gui') }),
+        new CleanWebpackPlugin(['dist'], {
+            root: path.resolve('./gui')
+        }),
         new MiniCssExtractPlugin({
             filename: 'style.css'
         })

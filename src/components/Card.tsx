@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import { DragSource, DropTarget } from "react-dnd";
 import ItemTypes from "./ItemTypes";
@@ -25,13 +24,13 @@ const cardTarget = {
   hover(props, monitor, component) {
     const dragIndex = monitor.getItem().index;
     const hoverIndex = props.index;
-    
+
     if (dragIndex === hoverIndex) {
       return;
     }
-    
-    // @ts-ignore
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+
+    const DOMNode: Element = findDOMNode(component) as Element;
+    const hoverBoundingRect = DOMNode.getBoundingClientRect();
 
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
@@ -46,6 +45,8 @@ const cardTarget = {
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
       return;
     }
+
+    console.log(hoverIndex);
 
     props.moveCard(dragIndex, hoverIndex);
 
@@ -69,9 +70,9 @@ export default class Card extends Component<any, any> {
       connectDropTarget
     } = this.props;
     const opacity = isDragging ? 0 : 1;
-    
+
     return (connectDropTarget(
-      connectDragSource(<div style={{ ...style, opacity }}>{text}</div>)
+        connectDragSource(<div style={{...style, opacity}}>{text}</div>)
     ));
   }
 }
