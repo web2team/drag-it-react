@@ -4,7 +4,7 @@ import { DragSource } from "react-dnd";
 import ItemTypes from "./ItemTypes";
 
 const boxSource = {
-  beginDrag(props) {
+  beginDrag(props: any) {
     const { id, left, top } = props;
     return { id, left, top, type: "BOX" };
   }

@@ -5,7 +5,7 @@ import { DropTarget, DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import ItemTypes from "./ItemTypes";
 import SmallCalender from "./SmallCalender";
-import DraggableCard from "./DraggableCard";
+import DraggableCard from "components/dragExamples/DraggableCard";
 
 const styles = {
   width: "100%",
@@ -14,7 +14,7 @@ const styles = {
 };
 
 const boxTarget = {
-  drop(props, monitor, component) {
+  drop(props: any, monitor: any, component: any) {
     const item = monitor.getItem();
     const delta = monitor.getDifferenceFromInitialOffset();
     const left = Math.round(item.left + delta.x);
@@ -31,7 +31,7 @@ const boxTarget = {
 };
 
 class Container extends Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       boxes: {
@@ -43,7 +43,7 @@ class Container extends Component<any, any> {
     };
   }
 
-  moveBox(id, left, top) {
+  moveBox(id: any, left: any, top: any) {
     this.setState(
       update(this.state, {
         boxes: {
@@ -55,7 +55,7 @@ class Container extends Component<any, any> {
     );
   }
 
-  moveCard(id, left, top) {
+  moveCard(id: any, left: any, top: any) {
     this.setState(
       update(this.state, {
         cards: {
@@ -75,7 +75,7 @@ class Container extends Component<any, any> {
       // @ts-ignore
       <div style={styles}>
         <div style={{ position: "absolute" }}>
-          {Object.keys(boxes).map(key => {
+          {Object.keys(boxes).map((key) => {
             const { left, top, title } = boxes[key];
             return (
               <SmallCalender
@@ -89,7 +89,7 @@ class Container extends Component<any, any> {
           })}
         </div>
         <div>
-          {Object.keys(cards).map(key => {
+          {Object.keys(cards).map((key) => {
             const { left, top, title } = cards[key];
             return (
               <DraggableCard
@@ -108,7 +108,7 @@ class Container extends Component<any, any> {
 }
 
 export default DragDropContext(HTML5Backend)(
-  DropTarget(ItemTypes.BOX, boxTarget, connect => ({
+  DropTarget(ItemTypes.BOX, boxTarget, (connect) => ({
     connectDropTarget: connect.dropTarget()
   }))(Container)
 );

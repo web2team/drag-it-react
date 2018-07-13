@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
 import { DragSource, DropTarget } from "react-dnd";
-import ItemTypes from "./ItemTypes";
+import ItemTypes from "../dragExamples/ItemTypes";
 
 const style = {
   border: "1px dashed gray",
@@ -12,7 +12,7 @@ const style = {
 };
 
 const cardSource = {
-  beginDrag(props) {
+  beginDrag(props: any) {
     return {
       id: props.id,
       index: props.index
@@ -21,7 +21,7 @@ const cardSource = {
 };
 
 const cardTarget = {
-  hover(props, monitor, component) {
+  hover(props: any, monitor: any, component: any) {
     const dragIndex = monitor.getItem().index;
     const hoverIndex = props.index;
 

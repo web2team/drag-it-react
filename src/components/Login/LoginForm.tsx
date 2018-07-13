@@ -10,10 +10,10 @@ import {
   notification
 } from "antd";
 const FormItem = Form.Item;
-import "./Login.less";
+import styled from "theme";
 
-class NormalLoginForm extends React.Component<any, any> {
-  handleSubmit = e => {
+class LoginForm extends React.Component<any, any> {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -21,11 +21,13 @@ class NormalLoginForm extends React.Component<any, any> {
       }
     });
   };
+
   render() {
     const { getFieldDecorator } = this.props.form;
+
     return (
       <div id="login">
-        <Row>
+        <Row className={this.props.className}>
           <Col span={20} offset={8}>
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
@@ -67,7 +69,7 @@ class NormalLoginForm extends React.Component<any, any> {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                  onClick={e =>
+                  onClick={(e) =>
                     notification.error({
                       message: "실패",
                       description: "비밀번호를 확인해주세요."
@@ -86,5 +88,31 @@ class NormalLoginForm extends React.Component<any, any> {
   }
 }
 
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-export default WrappedNormalLoginForm;
+const WrappedNormalLoginForm = Form.create()(LoginForm);
+
+const styledForm = styled(WrappedNormalLoginForm)`
+  .login-form {
+    max-width: 300px;
+    max-height: 300px;
+    padding-top: 10rem;
+
+    .ant-input {
+      min-height: 0;
+    }
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+    height: auto;
+  }
+
+  #login {
+    transform: scale(1.2);
+  }
+`;
+
+export { styledForm as LoginForm };

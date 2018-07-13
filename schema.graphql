@@ -1,0 +1,33 @@
+# source: http://localhost:9000/graphql
+# timestamp: Thu Jul 12 2018 22:46:38 GMT+0900 (KST)
+
+type Author {
+  id: ID!
+  firstName: String!
+  lastName: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  isbn: String!
+  pageCount: Int
+  author: Author
+}
+
+scalar Long
+
+type Mutation {
+  newAuthor(firstName: String!, lastName: String!): Author!
+  newBook(title: String!, isbn: String!, pageCount: Int, author: ID!): Book!
+  deleteBook(id: ID!): Boolean
+  updateBookPageCount(pageCount: Int!, id: ID!): Book!
+}
+
+type Query {
+  findAllAuthors: [Author]!
+  countAuthors: Long!
+  findAllBooks: [Book]!
+  countBooks: Long!
+  findOneBook(id: ID!): Book!
+}

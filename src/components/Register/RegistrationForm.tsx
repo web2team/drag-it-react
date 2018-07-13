@@ -12,6 +12,7 @@ import {
   Button,
   AutoComplete
 } from "antd";
+import styled from "theme";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
@@ -56,7 +57,7 @@ class RegistrationForm extends React.Component<any, any> {
     confirmDirty: false,
     autoCompleteResult: []
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -64,7 +65,7 @@ class RegistrationForm extends React.Component<any, any> {
       }
     });
   };
-  handleConfirmBlur = e => {
+  handleConfirmBlur = (e) => {
     const value = e.target.value;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
@@ -83,13 +84,13 @@ class RegistrationForm extends React.Component<any, any> {
     }
     callback();
   };
-  handleWebsiteChange = value => {
+  handleWebsiteChange = (value) => {
     let autoCompleteResult;
     if (!value) {
       autoCompleteResult = [];
     } else {
       autoCompleteResult = [".com", ".org", ".net"].map(
-        domain => `${value}${domain}`
+        (domain) => `${value}${domain}`
       );
     }
     this.setState({ autoCompleteResult });
@@ -129,12 +130,12 @@ class RegistrationForm extends React.Component<any, any> {
       </Select>
     );
 
-    const websiteOptions: any = autoCompleteResult.map(website => (
+    const websiteOptions: any = autoCompleteResult.map((website) => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
     ));
 
     return (
-      <Row>
+      <Row className={this.props.className}>
         <Col span={20}>
           <Form onSubmit={this.handleSubmit}>
             <FormItem {...formItemLayout} label="이메일">
@@ -263,4 +264,6 @@ class RegistrationForm extends React.Component<any, any> {
 }
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
-export default WrappedRegistrationForm;
+const styledWrapped = styled(WrappedRegistrationForm)`
+`;
+export { styledWrapped as RegistrationForm };

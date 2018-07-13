@@ -1,26 +1,18 @@
 import * as React from "react";
-import { render } from "react-dom";
-import App from "./components/App";
+import App from "components/App";
+import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
-import gql from "graphql-tag";
-
-render(<App/>, document.getElementById("app"));
+import { render } from "react-dom";
+import { APOLLO_CLIENT_URL } from "constants/urls";
 
 const client = new ApolloClient({
-  uri: "http://localhost:9000/graphql"
+  uri: APOLLO_CLIENT_URL
 });
 
-client.query({
-  query: gql`{
-      findAllBooks {
-          id,
-          title,
-          pageCount,
-          author {
-              id
-          }
-      }
-  }
-  `
-}).then(v => console.log(v));
+const ApolloApp = () => (
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
+);
 
+render(<ApolloApp />, document.getElementById("app"));

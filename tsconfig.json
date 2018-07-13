@@ -13,11 +13,17 @@
       "components/*": [
         "components/*"
       ],
-      "theme": [
-        "/src/theme"
+      "routers/*": [
+        "routers/*"
+      ],
+      "constants/*": [
+        "constants/*"
+      ],
+      "theme/*": [
+        "theme/*"
       ],
       "src/*": [
-        "/src/*"
+        "*"
       ]
     }
   },
