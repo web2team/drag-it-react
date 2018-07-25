@@ -8,12 +8,15 @@ import {
   Row,
   Col,
   Button,
-  AutoComplete
+  AutoComplete,
+  notification
 } from "antd";
 import styled from "theme";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
+import axios from "axios";
+import { API_ENDPOINT } from "constants/urls";
 
 class RegistrationForm extends React.Component<any, any> {
   state = {
@@ -23,15 +26,39 @@ class RegistrationForm extends React.Component<any, any> {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
+      if (err) {
         console.log("Received values of form: ", values);
+        return;
       }
+      const { email, password, userName, phone } = values;
+
+      axios
+        .post(`${API_ENDPOINT}/register`, {
+          email,
+          password,
+          userName,
+          phone
+        })
+        .then(() =>
+          notification.success({
+            message: "SUCCESS",
+            description: "성공적으로 등록되었습니다."
+          })
+        )
+        .catch(({ response: { data: { message } } }) => {
+          notification.error({
+            message: "Fail to register",
+            description: `회원가입에 실패했습니다. ${message}`
+          });
+        });
     });
   };
+
   handleConfirmBlur = (e) => {
     const value = e.target.value;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
+
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue("password")) {
@@ -40,6 +67,7 @@ class RegistrationForm extends React.Component<any, any> {
       callback();
     }
   };
+
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
@@ -47,17 +75,7 @@ class RegistrationForm extends React.Component<any, any> {
     }
     callback();
   };
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = [".com", ".org", ".net"].map(
-        (domain) => `${value}${domain}`
-      );
-    }
-    this.setState({ autoCompleteResult });
-  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
@@ -106,11 +124,11 @@ class RegistrationForm extends React.Component<any, any> {
                 rules: [
                   {
                     type: "email",
-                    message: "The input is not valid E-mail!"
+                    message: "유효한 이메일 형식이 아닙니다."
                   },
                   {
                     required: true,
-                    message: "Please input your E-mail!"
+                    message: "이메일을 입력해주세요."
                   }
                 ]
               })(<Input />)}
@@ -120,7 +138,7 @@ class RegistrationForm extends React.Component<any, any> {
                 rules: [
                   {
                     required: true,
-                    message: "Please input your password!"
+                    message: "비밀번호를 입력해주세요."
                   },
                   {
                     validator: this.validateToNextPassword
@@ -133,7 +151,7 @@ class RegistrationForm extends React.Component<any, any> {
                 rules: [
                   {
                     required: true,
-                    message: "Please confirm your password!"
+                    message: "비밀번호를 다시 한 번 입력해주세요."
                   },
                   {
                     validator: this.compareToFirstPassword
@@ -145,14 +163,14 @@ class RegistrationForm extends React.Component<any, any> {
               {...formItemLayout}
               label={
                 <span>
-                  이름&nbsp;
+                  사용자 이름&nbsp;
                   <Tooltip title="What do you want others to call you?">
                     <Icon type="question-circle-o" />
                   </Tooltip>
                 </span>
               }
             >
-              {getFieldDecorator("name", {
+              {getFieldDecorator("userName", {
                 rules: [
                   {
                     required: true,
@@ -165,9 +183,7 @@ class RegistrationForm extends React.Component<any, any> {
 
             <FormItem {...formItemLayout} label="핸드폰 번호">
               {getFieldDecorator("phone", {
-                rules: [
-                  { required: true, message: "Please input your phone number!" }
-                ]
+                rules: []
               })(
                 <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
               )}
