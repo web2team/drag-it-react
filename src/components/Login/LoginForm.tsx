@@ -25,17 +25,26 @@ class LoginForm extends React.Component<any, any> {
         console.log("Received values of form: ", values);
         return;
       }
-      
+
       axios
         .post(`${API_ENDPOINT}/login`, {
-          id: values.id,
-          pw: values.pw
+          email: values.email,
+          password: values.password
         })
-        .then(({ data }) => setToken(data.token))
+        .then(({ data }) => {
+          setToken(data.token);
+          return data;
+        })
+        .then((data) =>
+          notification.success({
+            message: "SUCCESS",
+            description: `안녕하세요, ${data.userName}님`
+          })
+        )
         .catch((e) =>
           notification.error({
-            description: "ERROR",
-            message: "로그인 에러"
+            message: "Fail to Login",
+            description: `${e}`
           })
         );
     });
@@ -50,8 +59,8 @@ class LoginForm extends React.Component<any, any> {
           <Col span={20} offset={8}>
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
-                {getFieldDecorator("id", {
-                  rules: [{ required: true, message: "아이디를 입력해주세요!" }]
+                {getFieldDecorator("email", {
+                  rules: [{ required: true, message: "이메일을 입력해주세요!" }]
                 })(
                   <Input
                     prefix={
@@ -62,7 +71,7 @@ class LoginForm extends React.Component<any, any> {
                 )}
               </FormItem>
               <FormItem>
-                {getFieldDecorator("pw", {
+                {getFieldDecorator("password", {
                   rules: [
                     { required: true, message: "비밀번호를 입력해주세요!" }
                   ]
