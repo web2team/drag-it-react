@@ -1,10 +1,17 @@
 {
-  "projects": {
-    "drag-it-react": {
-      "schemaPath": "schema.graphql",
-      "extensions": {
-        "endpoints": {
-          "dev": "http://localhost:9000/graphql"
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "dev": {
+        "url": "http://localhost:9000/graphql",
+        "headers": {
+          "Authorization": "Bearer ${env:AUTH_TOKEN_ENV}"
+        },
+        "subscription": {
+          "url": "http://localhost:9000/graphql",
+          "connectionParams": {
+            "Token": "${env:YOUR_APP_TOKEN}"
+          }
         }
       }
     }

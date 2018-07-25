@@ -1,5 +1,3 @@
-// 이름, 닉네임, 이메일, 전화번호, 비밀번호, 비밀번호 확인
-
 import * as React from "react";
 import {
   Form,

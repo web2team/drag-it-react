@@ -9,16 +9,25 @@ import {
   Col,
   notification
 } from "antd";
+import axios from "axios";
 const FormItem = Form.Item;
 import styled from "theme";
+import { API_ENDPOINT } from "constants/urls";
 
 class LoginForm extends React.Component<any, any> {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
+      if (err) {
         console.log("Received values of form: ", values);
+        return;
       }
+      axios
+        .post(`${API_ENDPOINT}/login`, {
+          id: values.id,
+          pw: values.pw
+        })
+        .then(({ data }) => console.log(data));
     });
   };
 
@@ -31,7 +40,7 @@ class LoginForm extends React.Component<any, any> {
           <Col span={20} offset={8}>
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
-                {getFieldDecorator("userName", {
+                {getFieldDecorator("id", {
                   rules: [{ required: true, message: "아이디를 입력해주세요!" }]
                 })(
                   <Input
@@ -43,7 +52,7 @@ class LoginForm extends React.Component<any, any> {
                 )}
               </FormItem>
               <FormItem>
-                {getFieldDecorator("password", {
+                {getFieldDecorator("pw", {
                   rules: [
                     { required: true, message: "비밀번호를 입력해주세요!" }
                   ]

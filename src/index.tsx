@@ -4,6 +4,8 @@ import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import { render } from "react-dom";
 import { APOLLO_CLIENT_URL } from "constants/urls";
+import { Provider } from "mobx-react";
+import store from "state";
 
 const client = new ApolloClient({
   uri: APOLLO_CLIENT_URL
@@ -11,7 +13,9 @@ const client = new ApolloClient({
 
 const ApolloApp = () => (
   <ApolloProvider client={client}>
-    <App />
+      <Provider {...store}>
+        <App />
+      </Provider>
   </ApolloProvider>
 );
 

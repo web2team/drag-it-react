@@ -20,6 +20,7 @@ module.exports = {
       theme: path.resolve(__dirname, 'src/theme/'),
       routers: path.resolve(__dirname, 'src/routers/'),
       constants: path.resolve(__dirname, 'src/constants/'),
+      state: path.resolve(__dirname, 'src/state/'),
     }
   },
   stats: {

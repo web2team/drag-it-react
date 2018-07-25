@@ -4,6 +4,7 @@ import { Link, Route, Switch, BrowserRouter } from "react-router-dom";
 const Router = BrowserRouter;
 import { Calendar, Card, Login, Register } from "components";
 import styled from "theme";
+import SmallCalenderContainer from "components/dragExamples/SmallCalenderContainer";
 
 const { Header, Content, Footer } = Layout;
 
@@ -38,6 +39,11 @@ class RootRouter extends React.Component<any, any> {
               <span>Calendar</span>
             </Link>
           </Menu.Item>
+          <Menu.Item key="5">
+            <Link to="drag">
+              <span>Personal Board</span>
+            </Link>
+          </Menu.Item>
         </Menu>
       </Header>
     );
@@ -47,6 +53,11 @@ class RootRouter extends React.Component<any, any> {
         <Switch>
           <Route exact={true} path="/" render={(props) => <Card />} />
           <Route exact={true} path="/login" render={(props) => <Login />} />
+          <Route
+            exact={true}
+            path="/drag"
+            render={(props) => <SmallCalenderContainer />}
+          />
           <Route
             exact={true}
             path="/calendar"

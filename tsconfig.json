@@ -24,8 +24,14 @@
       ],
       "src/*": [
         "*"
+      ],
+      "state/*": [
+        "state/*"
       ]
-    }
+    },
+    "plugins": [{
+      "name": "ts-graphql-plugin"
+    }]
   },
   "exclude": [
     "node_modules"
