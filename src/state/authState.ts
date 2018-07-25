@@ -12,6 +12,4 @@ class AuthState {
   }
 }
 
-const authState = new AuthState();
-
-export default authState;
+export const authState = new AuthState();

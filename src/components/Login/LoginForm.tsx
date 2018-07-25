@@ -13,7 +13,10 @@ import axios from "axios";
 const FormItem = Form.Item;
 import styled from "theme";
 import { API_ENDPOINT } from "constants/urls";
+import { setToken } from "state/helper";
+import { inject } from "mobx-react";
 
+@inject("authState")
 class LoginForm extends React.Component<any, any> {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -22,12 +25,19 @@ class LoginForm extends React.Component<any, any> {
         console.log("Received values of form: ", values);
         return;
       }
+      
       axios
         .post(`${API_ENDPOINT}/login`, {
           id: values.id,
           pw: values.pw
         })
-        .then(({ data }) => console.log(data));
+        .then(({ data }) => setToken(data.token))
+        .catch((e) =>
+          notification.error({
+            description: "ERROR",
+            message: "로그인 에러"
+          })
+        );
     });
   };
 
