@@ -69,12 +69,6 @@ class LoginForm extends React.Component<any, any> {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                  onClick={(e) =>
-                    notification.error({
-                      message: "실패",
-                      description: "비밀번호를 확인해주세요."
-                    })
-                  }
                 >
                   로그인!
                 </Button>

@@ -1,14 +1,14 @@
+// 이름, 닉네임, 이메일, 전화번호, 비밀번호, 비밀번호 확인
+
 import * as React from "react";
 import {
   Form,
   Input,
   Tooltip,
   Icon,
-  Cascader,
   Select,
   Row,
   Col,
-  Checkbox,
   Button,
   AutoComplete
 } from "antd";
@@ -16,41 +16,6 @@ import styled from "theme";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
-
-const residences = [
-  {
-    value: "zhejiang",
-    label: "서울시",
-    children: [
-      {
-        value: "hangzhou",
-        label: "노원구",
-        children: [
-          {
-            value: "xihu",
-            label: "공릉동"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: "jiangsu",
-    label: "경기도",
-    children: [
-      {
-        value: "nanjing",
-        label: "남양주시",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "평내동"
-          }
-        ]
-      }
-    ]
-  }
-];
 
 class RegistrationForm extends React.Component<any, any> {
   state = {
@@ -122,11 +87,11 @@ class RegistrationForm extends React.Component<any, any> {
       }
     };
     const prefixSelector = getFieldDecorator("prefix", {
-      initialValue: "86"
+      initialValue: "010"
     })(
       <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
+        <Option value="010">010</Option>
+        <Option value="011">011</Option>
       </Select>
     );
 
@@ -182,35 +147,24 @@ class RegistrationForm extends React.Component<any, any> {
               {...formItemLayout}
               label={
                 <span>
-                  닉네임&nbsp;
+                  이름&nbsp;
                   <Tooltip title="What do you want others to call you?">
                     <Icon type="question-circle-o" />
                   </Tooltip>
                 </span>
               }
             >
-              {getFieldDecorator("nickname", {
+              {getFieldDecorator("name", {
                 rules: [
                   {
                     required: true,
-                    message: "Please input your nickname!",
+                    message: "Please input your name!",
                     whitespace: true
                   }
                 ]
               })(<Input />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="주소">
-              {getFieldDecorator("residence", {
-                initialValue: ["zhejiang", "hangzhou", "xihu"],
-                rules: [
-                  {
-                    type: "array",
-                    required: true,
-                    message: "Please select your habitual residence!"
-                  }
-                ]
-              })(<Cascader options={residences} />)}
-            </FormItem>
+
             <FormItem {...formItemLayout} label="핸드폰 번호">
               {getFieldDecorator("phone", {
                 rules: [
@@ -221,36 +175,6 @@ class RegistrationForm extends React.Component<any, any> {
               )}
             </FormItem>
 
-            <FormItem
-              {...formItemLayout}
-              label="CAPTCHA"
-              extra="We must make sure that your are a human."
-            >
-              <Row gutter={8}>
-                <Col span={12}>
-                  {getFieldDecorator("captcha", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "Please input the captcha you got!"
-                      }
-                    ]
-                  })(<Input />)}
-                </Col>
-                <Col span={12}>
-                  <Button>Get captcha</Button>
-                </Col>
-              </Row>
-            </FormItem>
-            <FormItem {...tailFormItemLayout}>
-              {getFieldDecorator("agreement", {
-                valuePropName: "checked"
-              })(
-                <Checkbox>
-                  <a href="">약관</a>에 모두 동의합니다
-                </Checkbox>
-              )}
-            </FormItem>
             <FormItem {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
                 회원가입하기!
@@ -265,5 +189,6 @@ class RegistrationForm extends React.Component<any, any> {
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
 const styledWrapped = styled(WrappedRegistrationForm)`
+  margin-top: 2rem;
 `;
 export { styledWrapped as RegistrationForm };
