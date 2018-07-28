@@ -1,5 +1,5 @@
 import * as store from "store";
-import { authState } from "./authState";
+import { authState } from "state/authState";
 
 export const setToken = (token: string) => {
   store.set("token", token);

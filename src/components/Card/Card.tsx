@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
 import { DragSource, DropTarget } from "react-dnd";
-import ItemTypes from "../dragExamples/ItemTypes";
+import ItemTypes from "components/dragExamples/ItemTypes";
 
 const style = {
   border: "1px dashed gray",

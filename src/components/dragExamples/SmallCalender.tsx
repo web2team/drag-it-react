@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Calendar } from "antd";
 import { DragSource } from "react-dnd";
-import ItemTypes from "./ItemTypes";
+import ItemTypes from "components/dragExamples/ItemTypes";
 
 const boxSource = {
   beginDrag(props: any) {

@@ -1,2 +1,5 @@
-export const API_ENDPOINT = "http://localhost:9000";
-export const APOLLO_CLIENT_URL = `${API_ENDPOINT}/graphql`;
+export const BASE_ENDPOINT = "localhost:9000";
+
+export const API_ENDPOINT = `http://${BASE_ENDPOINT}`;
+export const APOLLO_CLIENT_URL = `http://${BASE_ENDPOINT}/graphql`;
+export const APOLLO_SUBSCRIPTION_URL = `wss://${BASE_ENDPOINT}/graphql`;

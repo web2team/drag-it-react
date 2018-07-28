@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
     "sourceMap": true,
     "target": "es5",
     "experimentalDecorators": true,

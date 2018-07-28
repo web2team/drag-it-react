@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import update from "immutability-helper";
 import { DropTarget, DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
-import ItemTypes from "./ItemTypes";
-import SmallCalender from "./SmallCalender";
+import ItemTypes from "components/dragExamples/ItemTypes";
+import SmallCalender from "components/dragExamples/SmallCalender";
 import DraggableCard from "components/dragExamples/DraggableCard";
 
 const styles = {

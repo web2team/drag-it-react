@@ -5,6 +5,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 import Card from "components/Card/Card";
 import gql from "graphql-tag";
 import { Mutation, Query } from "react-apollo";
+import { Chatting } from "components/Chatting";
 
 const style = {
   width: 400
@@ -149,6 +150,7 @@ class CardContainer extends Component<any, any> {
             moveCard={this.moveCard}
           />
         ))}
+        <Chatting />
       </div>
     );
   }

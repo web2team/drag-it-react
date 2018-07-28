@@ -1,4 +1,4 @@
-export { Card } from "./Card";
-export { Login } from "./Login";
-export { Register } from "./Register";
-export { Calendar } from "./Calendar";
+export { Card } from "components/Card";
+export { Login } from "components/Login";
+export { Register } from "components/Register";
+export { Calendar } from "components/Calendar";

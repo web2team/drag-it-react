@@ -1,4 +1,4 @@
-import { authState } from "./authState";
+import { authState } from "state/authState";
 
 const store = {
   authState
