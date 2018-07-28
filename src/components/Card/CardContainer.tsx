@@ -5,7 +5,8 @@ import HTML5Backend from "react-dnd-html5-backend";
 import Card from "components/Card/Card";
 import gql from "graphql-tag";
 import { Mutation, Query } from "react-apollo";
-import { Chatting } from "components/Chatting";
+import { MessageList } from "../Chatting";
+import { InputChatting } from "components/Chatting/InputChatting";
 
 const style = {
   width: 400
@@ -139,8 +140,8 @@ class CardContainer extends Component<any, any> {
 
     return (
       <div style={style}>
-        <AddTodo />
-        <Exam />
+        {/* <AddTodo /> */}
+        {/* <Exam /> */}
         {cards.map((card, i) => (
           <Card
             key={card.id}
@@ -150,7 +151,9 @@ class CardContainer extends Component<any, any> {
             moveCard={this.moveCard}
           />
         ))}
-        <Chatting />
+        <MessageList />
+        -----
+        <InputChatting />
       </div>
     );
   }
