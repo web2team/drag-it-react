@@ -65,9 +65,8 @@ export const MessageList = () => (
             }
             const newMessage = subscriptionData.data.ChatMessage;
             const newMessages = [...prev.getAllMessages];
-            console.log(newMessages);
             newMessages.push(newMessage);
-            console.log(newMessages);
+
             const length = newMessages.length;
 
             return Object.assign({}, prev, {
