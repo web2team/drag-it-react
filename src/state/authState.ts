@@ -1,5 +1,5 @@
 import { observable, computed, action, autorun } from "mobx";
-import { checkToken } from "request/auth";
+import { requestCheckToken } from "request/auth";
 import * as store from "store";
 
 class AuthState {
@@ -7,8 +7,7 @@ class AuthState {
   @observable isLogin: boolean = false;
 
   constructor() {
-    const token = this.getToken;
-    this.validateToken(token).then((val) => this.setIsLogin(val));
+    this.checkToken();
   }
 
   @computed
@@ -32,13 +31,7 @@ class AuthState {
   @action
   checkToken() {
     const token = this.getToken;
-    this.validateToken(token).then((isLogin) => this.setIsLogin(isLogin));
-  }
-
-  validateToken(token: string): Promise<boolean> {
-    return checkToken(token)
-      .then(() => true)
-      .catch(() => false);
+    requestCheckToken(token).then((isLogin) => this.setIsLogin(isLogin));
   }
 
   @action
