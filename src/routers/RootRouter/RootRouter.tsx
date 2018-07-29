@@ -1,18 +1,19 @@
 import * as React from "react";
 import { Layout } from "antd";
-import { BrowserRouter } from "react-router-dom";
-const Router = BrowserRouter;
+import { Router } from "react-router-dom";
 import styled from "theme";
 const { Content, Footer } = Layout;
 import { RootHeader, RootContents } from ".";
+import { inject } from "mobx-react";
 
+@inject("browserHistoryState")
 class RootRouter extends React.Component<any, any> {
   render() {
     const RootFooter = () => <Footer id="footer">Drag-it 2018</Footer>;
 
     const { className } = this.props;
     return (
-      <Router>
+      <Router history={this.props.browserHistoryState.getHistory}>
         <Layout className={className}>
           <RootHeader />
           <Content className="contents">

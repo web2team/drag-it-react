@@ -52,7 +52,7 @@ class LoginForm extends React.Component<any, any> {
     const { getIsLogin } = this.props.authState;
 
     if (getIsLogin) {
-      return <Redirect to="" />;
+      return <Redirect to="home" />;
     }
     return (
       <div id="login">

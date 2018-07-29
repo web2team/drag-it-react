@@ -3,15 +3,16 @@ import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 const Header = Layout.Header;
 import { getKey } from "./helper";
-import { authState } from "state/authState";
 import { inject, observer } from "mobx-react";
 
 @inject("authState")
+@inject("browserHistoryState")
 @observer
-export class RootHeader extends React.Component<any, any> {
+export class RootHeader extends React.PureComponent<any, any> {
   onSelect = ({ key }) => {
     if (key === "logout") {
       this.props.authState.onLogout();
+      this.props.browserHistoryState.push("");
     } else {
       this.props.authState.checkToken();
     }
