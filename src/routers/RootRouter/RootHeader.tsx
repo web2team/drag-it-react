@@ -9,6 +9,14 @@ import { inject, observer } from "mobx-react";
 @inject("authState")
 @observer
 export class RootHeader extends React.Component<any, any> {
+  onSelect = ({ key }) => {
+    if (key === "logout") {
+      this.props.authState.onLogout();
+    } else {
+      this.props.authState.checkToken();
+    }
+  };
+
   render() {
     return (
       <Header id="header">
@@ -18,13 +26,7 @@ export class RootHeader extends React.Component<any, any> {
           mode="horizontal"
           defaultSelectedKeys={["0"]}
           style={{ lineHeight: "64px" }}
-          onSelect={({ key }) => {
-            if (key === "logout") {
-              this.props.authState.onLogout();
-            } else {
-              this.props.authState.checkToken();
-            }
-          }}
+          onSelect={(itemProps) => this.onSelect(itemProps)}
         >
           {this.props.authState.getIsLogin ? AuthMenuItems : NormalMenuItems}
         </Menu>

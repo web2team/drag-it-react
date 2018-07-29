@@ -10,3 +10,9 @@ export const requestCheckToken = (token: string) =>
     })
     .then(() => true)
     .catch(() => false);
+
+export const requestLogin = ({ email, password }) =>
+  axios.post(`${API_ENDPOINT}/login`, {
+    email,
+    password
+  });

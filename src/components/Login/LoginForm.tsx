@@ -9,14 +9,14 @@ import {
   Col,
   notification
 } from "antd";
-import axios from "axios";
 const FormItem = Form.Item;
 import styled from "theme";
-import { API_ENDPOINT } from "constants/urls";
-import { setToken } from "state/helper";
-import { inject } from "mobx-react";
+import { inject, observer } from "mobx-react";
+import { requestLogin } from "request/auth";
+import { Redirect } from "react-router-dom";
 
 @inject("authState")
+@observer
 class LoginForm extends React.Component<any, any> {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -26,22 +26,18 @@ class LoginForm extends React.Component<any, any> {
         return;
       }
 
-      axios
-        .post(`${API_ENDPOINT}/login`, {
-          email: values.email,
-          password: values.password
-        })
+      requestLogin(values)
         .then(({ data }) => {
           this.props.authState.setToken(data.token);
           this.props.authState.setIsLogin(true);
           return data;
         })
-        .then((data) =>
+        .then((data) => {
           notification.success({
             message: "SUCCESS",
             description: `안녕하세요, ${data.userName}님`
-          })
-        )
+          });
+        })
         .catch((e) =>
           notification.error({
             message: "Fail to Login",
@@ -53,7 +49,11 @@ class LoginForm extends React.Component<any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { getIsLogin } = this.props.authState;
 
+    if (getIsLogin) {
+      return <Redirect to="" />;
+    }
     return (
       <div id="login">
         <Row className={this.props.className}>
