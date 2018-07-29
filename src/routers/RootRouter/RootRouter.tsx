@@ -1,53 +1,13 @@
 import * as React from "react";
-import { Icon, Layout, Menu } from "antd";
-import { Link, Route, Switch, BrowserRouter } from "react-router-dom";
+import { Layout } from "antd";
+import { BrowserRouter } from "react-router-dom";
 const Router = BrowserRouter;
-import { Calendar, Card, Login, Register } from "components";
 import styled from "theme";
-import SmallCalenderContainer from "components/dragExamples/SmallCalenderContainer";
-import { FrontPage } from "components/FrontPage";
-import { MessageList } from "components/Chatting";
-import { RootHeader } from "./RootHeader";
-
 const { Content, Footer } = Layout;
+import { RootHeader, RootContents } from ".";
 
 class RootRouter extends React.Component<any, any> {
   render() {
-    const ContentsRouter = () => {
-      return (
-        <Switch>
-          <Route exact={true} path="/" render={(props) => <FrontPage />} />
-          <Route exact={true} path="/login" render={(props) => <Login />} />
-          <Route
-            exact={true}
-            path="/drag"
-            render={(props) => <SmallCalenderContainer />}
-          />
-          <Route
-            exact={true}
-            path="/calendar"
-            render={(props) => <Calendar />}
-          />
-          <Route
-            exact={true}
-            path="/register"
-            render={(props) => <Register />}
-          />
-        </Switch>
-      );
-    };
-
-    const AuthContents = () => {
-      return (
-        <Switch>
-          <Route
-            exact={true}
-            path="/chat"
-            render={(props) => <MessageList />}
-          />
-        </Switch>
-      );
-    };
     const Footers = () => <Footer id="footer">Drag-it 2018</Footer>;
 
     const { className } = this.props;
@@ -56,7 +16,7 @@ class RootRouter extends React.Component<any, any> {
         <Layout className={className}>
           <RootHeader />
           <Content className="contents">
-            <ContentsRouter />
+            <RootContents />
           </Content>
           <Footers />
         </Layout>
@@ -65,7 +25,7 @@ class RootRouter extends React.Component<any, any> {
   }
 }
 
-export default styled(RootRouter)`
+const styledRootRouer = styled(RootRouter)`
   background: white;
 
   #header #logo {
@@ -87,3 +47,5 @@ export default styled(RootRouter)`
     text-align: center;
   }
 `;
+
+export { styledRootRouer as RootRouter };

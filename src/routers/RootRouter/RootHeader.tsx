@@ -2,14 +2,7 @@ import * as React from "react";
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 const Header = Layout.Header;
-function* idMaker() {
-  var index = 0;
-  while (true) {
-    yield index++;
-  }
-}
-const gen = idMaker();
-const getKey = () => gen.next().value;
+import { getKey } from "./helper";
 
 export const RootHeader = () => (
   <Header id="header">

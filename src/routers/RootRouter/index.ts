@@ -1,3 +1,3 @@
-import RootRouter from "routers/RootRouter/rootRouter";
-
-export default RootRouter;
+export { RootRouter } from "./rootRouter";
+export { RootContents } from "./RootContents";
+export { RootHeader } from "./RootHeader";
