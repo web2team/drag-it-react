@@ -64,10 +64,13 @@ class LoginForm extends React.Component<any, any> {
                   rules: [{ required: true, message: "이메일을 입력해주세요!" }]
                 })(
                   <Input
+                    id="email"
+                    className="login-form-input"
                     prefix={
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
-                    placeholder="아이디"
+                    placeholder="email"
+                    size="large"
                   />
                 )}
               </FormItem>
@@ -82,26 +85,23 @@ class LoginForm extends React.Component<any, any> {
                       <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
                     type="password"
-                    placeholder="비밀번호"
+                    placeholder="password"
+                    size="large"
                   />
                 )}
               </FormItem>
               <FormItem>
-                {getFieldDecorator("remember", {
-                  valuePropName: "checked",
-                  initialValue: true
-                })(<Checkbox>로그인 상태 유지</Checkbox>)}
-                <a className="login-form-forgot" href="">
-                  비밀번호 찾기
-                </a>
                 <Button
+                  id="submit"
+                  className="login-form-button"
                   type="primary"
                   htmlType="submit"
-                  className="login-form-button"
+                  size="large"
                 >
-                  로그인!
+                  Sign In
                 </Button>
-                Drag-it에 처음이신가요? <a href="">회원가입!</a>
+                <br />
+                Drag-it에 처음이신가요? <a href="register">회원가입!</a>
               </FormItem>
             </Form>
           </Col>
@@ -130,7 +130,8 @@ const styledForm = styled(WrappedNormalLoginForm)`
 
   .login-form-button {
     width: 100%;
-    height: auto;
+    height: 2rem;
+    margin: 1rem 0 1rem 0;
   }
 
   #login {

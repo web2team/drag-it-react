@@ -26,7 +26,6 @@ export class RootHeader extends React.PureComponent<any, any> {
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["0"]}
-          style={{ lineHeight: "64px" }}
           onSelect={(itemProps) => this.onSelect(itemProps)}
         >
           {this.props.authState.getIsLogin ? AuthMenuItems : NormalMenuItems}
