@@ -8,7 +8,7 @@ import { RootHeader, RootContents } from ".";
 
 class RootRouter extends React.Component<any, any> {
   render() {
-    const Footers = () => <Footer id="footer">Drag-it 2018</Footer>;
+    const RootFooter = () => <Footer id="footer">Drag-it 2018</Footer>;
 
     const { className } = this.props;
     return (
@@ -18,7 +18,7 @@ class RootRouter extends React.Component<any, any> {
           <Content className="contents">
             <RootContents />
           </Content>
-          <Footers />
+          <RootFooter />
         </Layout>
       </Router>
     );

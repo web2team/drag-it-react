@@ -21,6 +21,9 @@
       "constants/*": [
         "constants/*"
       ],
+      "request/*": [
+        "request/*"
+      ],
       "theme/*": [
         "theme/*"
       ],

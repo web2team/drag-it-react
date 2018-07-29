@@ -21,6 +21,7 @@ module.exports = {
       routers: path.resolve(__dirname, 'src/routers/'),
       constants: path.resolve(__dirname, 'src/constants/'),
       state: path.resolve(__dirname, 'src/state/'),
+      request: path.resolve(__dirname, 'src/request/'),
     }
   },
   stats: {
