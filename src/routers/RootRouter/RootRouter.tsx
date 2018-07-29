@@ -5,53 +5,18 @@ const Router = BrowserRouter;
 import { Calendar, Card, Login, Register } from "components";
 import styled from "theme";
 import SmallCalenderContainer from "components/dragExamples/SmallCalenderContainer";
+import { FrontPage } from "components/FrontPage";
+import { MessageList } from "components/Chatting";
+import { RootHeader } from "./RootHeader";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 class RootRouter extends React.Component<any, any> {
   render() {
-    const Headers = () => (
-      <Header id="header">
-        <div id="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["0"]}
-          style={{ lineHeight: "64px" }}
-        >
-          <Menu.Item key="0">
-            <Link to="">
-              <span>Dashboard</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="login">
-              <span>Sign in</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Link to="register">
-              <span>Sign up</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link to="calendar">
-              <span>Calendar</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="5">
-            <Link to="drag">
-              <span>Personal Board</span>
-            </Link>
-          </Menu.Item>
-        </Menu>
-      </Header>
-    );
-
     const ContentsRouter = () => {
       return (
         <Switch>
-          <Route exact={true} path="/" render={(props) => <Card />} />
+          <Route exact={true} path="/" render={(props) => <FrontPage />} />
           <Route exact={true} path="/login" render={(props) => <Login />} />
           <Route
             exact={true}
@@ -71,17 +36,27 @@ class RootRouter extends React.Component<any, any> {
         </Switch>
       );
     };
+
+    const AuthContents = () => {
+      return (
+        <Switch>
+          <Route
+            exact={true}
+            path="/chat"
+            render={(props) => <MessageList />}
+          />
+        </Switch>
+      );
+    };
     const Footers = () => <Footer id="footer">Drag-it 2018</Footer>;
 
     const { className } = this.props;
     return (
       <Router>
         <Layout className={className}>
-          <Headers />
+          <RootHeader />
           <Content className="contents">
-            <div className="contents-container">
-              <ContentsRouter />
-            </div>
+            <ContentsRouter />
           </Content>
           <Footers />
         </Layout>
@@ -102,10 +77,6 @@ export default styled(RootRouter)`
   }
 
   .contents {
-    padding: 0 50px;
-  }
-
-  .contents-container {
     padding: 24px;
     min-height: 280px;
     max-height: 100%;
