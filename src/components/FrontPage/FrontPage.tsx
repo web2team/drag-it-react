@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "theme";
+import { styled } from "theme";
 
 class FrontPage extends React.Component {
   render() {

@@ -1,12 +1,11 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import SmallCalenderContainer from "components/dragExamples/SmallCalenderContainer";
 import { FrontPage } from "components/FrontPage";
-import { MessageList } from "components/Chatting";
-import { Calendar, Card, Login, Register } from "components";
+import { Chatting } from "components/Chatting";
+import { Calendar, Login, Register } from "components";
 
-import { getKey } from "./helper";
+import { getKey } from "routers/RootRouter/helper";
 
 export const RootContents = () => (
   <Switch>
@@ -35,13 +34,14 @@ const AuthContents = [
     key={getKey()}
     exact={true}
     path="/chat"
-    render={(props) => <MessageList />}
+    render={(props) => <Chatting width={400} />}
   />,
   <Route
     key={getKey()}
     exact={true}
     path="/drag"
-    render={(props) => <SmallCalenderContainer />}
+    render={(props) => <div />}
+    // render={(props) => <SmallCalenderContainer />}
   />,
   <Route
     key={getKey()}

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Layout } from "antd";
 import { Router } from "react-router-dom";
-import styled from "theme";
+import { styled } from "theme";
 const { Content, Footer } = Layout;
-import { RootHeader, RootContents } from ".";
+import { RootHeader, RootContents } from "routers/RootRouter";
 import { inject } from "mobx-react";
 
 @inject("browserHistoryState")

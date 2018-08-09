@@ -1,6 +1,6 @@
 import { Calendar, Badge } from "antd";
 import * as React from "react";
-import styled from "theme";
+import { styled } from "theme";
 
 import moment from "moment";
 import "moment/locale/ko";
@@ -70,7 +70,7 @@ class MyCalendar extends React.Component<any, any> {
         className={this.props.className}
         dateCellRender={this.dateCellRender}
         monthCellRender={this.monthCellRender}
-        onSelect={s => console.log(s)}
+        onSelect={(s) => console.log(s)}
       />
     );
   }

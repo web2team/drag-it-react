@@ -24,7 +24,7 @@
       true,
       "spaces"
     ],
-    
+
     "interface-name": [
       true,
       "never-prefix"
@@ -37,7 +37,7 @@
     "label-position": true,
     "max-line-length": [
       true,
-      100
+      120
     ],
     "member-ordering": [
       false,

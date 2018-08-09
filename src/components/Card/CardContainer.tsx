@@ -5,8 +5,6 @@ import HTML5Backend from "react-dnd-html5-backend";
 import Card from "components/Card/Card";
 import gql from "graphql-tag";
 import { Mutation, Query } from "react-apollo";
-import { MessageList } from "../Chatting";
-import { InputChatting } from "components/Chatting/InputChatting";
 
 const style = {
   width: 400
@@ -151,9 +149,6 @@ class CardContainer extends Component<any, any> {
             moveCard={this.moveCard}
           />
         ))}
-        <MessageList />
-        -----
-        <InputChatting />
       </div>
     );
   }
@@ -161,4 +156,4 @@ class CardContainer extends Component<any, any> {
 
 const CardContainerWithContext = DragDropContext(HTML5Backend)(CardContainer);
 
-export { CardContainerWithContext as CardContainer };
+// export { CardContainerWithContext as CardContainer };

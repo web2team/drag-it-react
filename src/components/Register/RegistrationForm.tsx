@@ -11,7 +11,7 @@ import {
   AutoComplete,
   notification
 } from "antd";
-import styled from "theme";
+import { styled } from "theme";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;

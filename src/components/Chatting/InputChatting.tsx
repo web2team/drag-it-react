@@ -3,27 +3,27 @@ import { Input } from "antd";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 
+const ADD_BOOK = gql`
+  mutation newChatMessage(
+    $chat_thread_id: ID!
+    $contents: String!
+    $username: String!
+  ) {
+    newChatMessage(
+      chat_thread_id: $chat_thread_id
+      contents: $contents
+      username: $username
+    ) {
+      id
+      username
+      contents
+      createdAt
+    }
+  }
+`;
+
 export class InputChatting extends React.Component<any, any> {
   render() {
-    const ADD_BOOK = gql`
-      mutation newChatMessage(
-        $chat_thread_id: ID!
-        $contents: String!
-        $username: String!
-      ) {
-        newChatMessage(
-          chat_thread_id: $chat_thread_id
-          contents: $contents
-          username: $username
-        ) {
-          id
-          username
-          contents
-          createdAt
-        }
-      }
-    `;
-
     const SendNewMessage = () => {
       let input;
 
@@ -34,6 +34,7 @@ export class InputChatting extends React.Component<any, any> {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
+
                   newChatMessage({
                     variables: {
                       contents: input.value,
@@ -45,11 +46,14 @@ export class InputChatting extends React.Component<any, any> {
                 }}
               >
                 <input
+                  style={{ width: "85%" }}
                   ref={(node) => {
                     input = node;
                   }}
                 />
-                <button type="submit">Enter</button>
+                <button style={{ width: "15%" }} type="submit">
+                  Enter
+                </button>
               </form>
             </div>
           )}

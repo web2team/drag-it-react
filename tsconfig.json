@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
+    
     "sourceMap": true,
     "target": "es5",
     "lib": ["es2015", "es2017", "dom"],
@@ -32,6 +33,9 @@
       ],
       "state/*": [
         "state/*"
+      ],
+      "interface/*" : [
+        "interface/*"
       ]
     },
     "plugins": [{

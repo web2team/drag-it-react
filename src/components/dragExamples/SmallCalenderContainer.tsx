@@ -107,8 +107,8 @@ class Container extends Component<any, any> {
   }
 }
 
-export default DragDropContext(HTML5Backend)(
-  DropTarget(ItemTypes.BOX, boxTarget, (connect) => ({
-    connectDropTarget: connect.dropTarget()
-  }))(Container)
-);
+// export default DragDropContext(HTML5Backend)(
+//   DropTarget(ItemTypes.BOX, boxTarget, (connect) => ({
+//     connectDropTarget: connect.dropTarget()
+//   }))(Container)
+// );

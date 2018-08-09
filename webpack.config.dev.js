@@ -22,6 +22,7 @@ module.exports = {
       constants: path.resolve(__dirname, 'src/constants/'),
       state: path.resolve(__dirname, 'src/state/'),
       request: path.resolve(__dirname, 'src/request/'),
+      interface: path.resolve(__dirname, 'src/interface/'),
     }
   },
   stats: {
@@ -42,6 +43,23 @@ module.exports = {
             ]
           })
         }
+      },
+      {
+        test: /\.css$/,
+        use: [{
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+              minimize: {
+                safe: true
+              }
+            }
+          },
+        ]
       },
       {
         test: /\.less$/,

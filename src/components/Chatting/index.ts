@@ -1,3 +1,3 @@
 // export { Chatting } from "./Chatting";
 
-export { MessageList } from "./Chatting";
+export { Chatting } from "./Chatting";

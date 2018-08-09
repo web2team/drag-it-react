@@ -2,7 +2,7 @@ import * as React from "react";
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 const Header = Layout.Header;
-import { getKey } from "./helper";
+import { getKey } from "routers/RootRouter/helper";
 import { inject, observer } from "mobx-react";
 
 @inject("authState")
@@ -67,6 +67,16 @@ const AuthMenuItems = [
   <Menu.Item key={getKey()}>
     <Link to="drag">
       <span>Personal Board</span>
+    </Link>
+  </Menu.Item>,
+  <Menu.Item key={getKey()}>
+    <Link to="chat">
+      <span>Chatting</span>
+    </Link>
+  </Menu.Item>,
+  <Menu.Item key={getKey()}>
+    <Link to="test">
+      <span>test</span>
     </Link>
   </Menu.Item>,
   <Menu.Item key="logout">

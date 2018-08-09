@@ -1,5 +1,5 @@
 import { authState } from "state/authState";
-import { browserHistoryState } from "./browserHistoryState";
+import { browserHistoryState } from "state/browserHistoryState";
 
 const store = {
   authState,

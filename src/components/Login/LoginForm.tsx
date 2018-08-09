@@ -10,7 +10,7 @@ import {
   notification
 } from "antd";
 const FormItem = Form.Item;
-import styled from "theme";
+import { styled } from "theme";
 import { inject, observer } from "mobx-react";
 import { requestLogin } from "request/auth";
 import { Redirect } from "react-router-dom";
