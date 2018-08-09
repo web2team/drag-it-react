@@ -1,0 +1,2 @@
+export const DRAG_HANDLER_HEIGHT = 20;
+export const DRAG_CHATTING_INPUT_HEIGHT = 20;

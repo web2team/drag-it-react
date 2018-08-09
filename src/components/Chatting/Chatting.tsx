@@ -3,7 +3,6 @@ import { MessageListContainer } from "./MessageListContainer";
 import { InputChatting } from "./InputChatting";
 import { styled } from "theme";
 import { BORDER_COLOR } from "theme/color";
-import { withDraggable } from "utility/withDraggable";
 
 const Chatting = ({ className }: any) => (
   <div className={className}>
@@ -13,8 +12,8 @@ const Chatting = ({ className }: any) => (
 );
 
 const styledChatting = styled(Chatting)`
-  border: 1px solid ${BORDER_COLOR};
+  display: flex;
+  flex-flow: column;
 `;
 
-const DraggableChatting = withDraggable(Chatting);
-export { styledChatting as Chatting, DraggableChatting };
+export { styledChatting as Chatting };

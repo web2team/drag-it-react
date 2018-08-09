@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input } from "antd";
+import { Form } from "antd";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { styled } from "theme";
@@ -35,7 +35,7 @@ class InputChatting extends React.Component<any, any> {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  
+
                   newChatMessage({
                     variables: {
                       contents: input.value,
@@ -45,6 +45,7 @@ class InputChatting extends React.Component<any, any> {
                   });
                   input.value = "";
                 }}
+                style={{ padding: 0, margin: 0 }}
               >
                 <div>
                   <input
@@ -63,18 +64,15 @@ class InputChatting extends React.Component<any, any> {
         </Mutation>
       );
     };
-    return (
-      <div>
-        <SendNewMessage />
-      </div>
-    );
+    return <SendNewMessage />;
   }
 }
 
 const styledInputChatting = styled(InputChatting)`
-  position: absolute;
   width: 100%;
-  bottom: 0;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
 `;
 
 export { styledInputChatting as InputChatting };

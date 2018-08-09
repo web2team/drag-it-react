@@ -45,13 +45,12 @@ const MessageListView = class extends React.PureComponent<Props> {
 const styledMessageListView = styled(MessageListView)`
   list-style-type: none;
   padding: 0;
-
   ul {
     padding: 0;
   }
   word-break: break-word;
   overflow: scroll;
-  height: 90%;
+  flex: 0 1 auto;
 `;
 
 export { styledMessageListView as MessageListView };

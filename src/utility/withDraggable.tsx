@@ -1,21 +1,24 @@
 import * as React from "react";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 interface DraggableProps {
-  key: any;
   x: number;
   y: number;
   w: number;
   h: number;
   draggableHandle: string;
 }
+interface Props {
+  draggableProps: DraggableProps;
+}
 export const withDraggable = (Component: any) => {
-  return class extends React.Component<DraggableProps, any> {
+  return class extends React.Component<Props, any> {
     render() {
-      const { key, x, y, w, h, draggableHandle } = this.props;
+      const { x, y, w, h, draggableHandle } = this.props.draggableProps;
 
       return (
         <div
-          key={key}
           data-grid={{
             x,
             y,

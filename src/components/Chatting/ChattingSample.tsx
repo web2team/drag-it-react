@@ -4,7 +4,6 @@ import _ from "lodash";
 import { styled } from "theme";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { withDraggable } from "utility/withDraggable";
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -18,7 +17,7 @@ class StaticElementsLayout extends React.PureComponent<any, any> {
   onLayoutChange(layout: any) {
     console.log(layout);
   }
-
+  
   render() {
     return (
       <ReactGridLayout
