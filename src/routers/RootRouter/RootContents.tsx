@@ -6,6 +6,7 @@ import { Chatting } from "components/Chatting";
 import { Calendar, Login, Register } from "components";
 
 import { getKey } from "routers/RootRouter/helper";
+import { Dashboard } from "components/Dashboard";
 
 export const RootContents = () => (
   <Switch>
@@ -33,8 +34,23 @@ const AuthContents = [
   <Route
     key={getKey()}
     exact={true}
+    path="/dashboard"
+    render={(props) => <Dashboard />}
+  />,
+  <Route
+    key={getKey()}
+    exact={true}
     path="/chat"
-    render={(props) => <Chatting width={400} />}
+    render={(props) => (
+      <Chatting
+        gridProps={{
+          x: 1,
+          y: 1,
+          w: 1,
+          h: 1
+        }}
+      />
+    )}
   />,
   <Route
     key={getKey()}

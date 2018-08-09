@@ -23,6 +23,7 @@ module.exports = {
       state: path.resolve(__dirname, 'src/state/'),
       request: path.resolve(__dirname, 'src/request/'),
       interface: path.resolve(__dirname, 'src/interface/'),
+      utility: path.resolve(__dirname, 'src/utility/'),
     }
   },
   stats: {

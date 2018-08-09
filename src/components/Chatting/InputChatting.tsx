@@ -2,6 +2,7 @@ import * as React from "react";
 import { Input } from "antd";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import { styled } from "theme";
 
 const ADD_BOOK = gql`
   mutation newChatMessage(
@@ -22,7 +23,7 @@ const ADD_BOOK = gql`
   }
 `;
 
-export class InputChatting extends React.Component<any, any> {
+class InputChatting extends React.Component<any, any> {
   render() {
     const SendNewMessage = () => {
       let input;
@@ -30,11 +31,11 @@ export class InputChatting extends React.Component<any, any> {
       return (
         <Mutation mutation={ADD_BOOK}>
           {(newChatMessage, { data }) => (
-            <div>
+            <div className={this.props.className}>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-
+                  
                   newChatMessage({
                     variables: {
                       contents: input.value,
@@ -45,15 +46,17 @@ export class InputChatting extends React.Component<any, any> {
                   input.value = "";
                 }}
               >
-                <input
-                  style={{ width: "85%" }}
-                  ref={(node) => {
-                    input = node;
-                  }}
-                />
-                <button style={{ width: "15%" }} type="submit">
-                  Enter
-                </button>
+                <div>
+                  <input
+                    style={{ width: "85%" }}
+                    ref={(node) => {
+                      input = node;
+                    }}
+                  />
+                  <button style={{ width: "15%" }} type="submit">
+                    Enter
+                  </button>
+                </div>
               </form>
             </div>
           )}
@@ -67,3 +70,11 @@ export class InputChatting extends React.Component<any, any> {
     );
   }
 }
+
+const styledInputChatting = styled(InputChatting)`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+`;
+
+export { styledInputChatting as InputChatting };

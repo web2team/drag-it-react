@@ -32,9 +32,9 @@ const MessageListView = class extends React.PureComponent<Props> {
     return (
       <div className={this.props.className}>
         <ul ref={(el) => (this.messagesEnds = el)}>
-          {getAllMessages
-            .slice(length - 15, length)
-            .map((data, key) => <MessageItem key={key} {...data} />)}
+          {getAllMessages.slice(length - 15, length).map((data, key) => (
+            <MessageItem key={key} {...data} />
+          ))}
         </ul>
         <div ref={(el) => (this.messagesEnd = el)} />
       </div>
@@ -45,11 +45,13 @@ const MessageListView = class extends React.PureComponent<Props> {
 const styledMessageListView = styled(MessageListView)`
   list-style-type: none;
   padding: 0;
+
   ul {
     padding: 0;
   }
   word-break: break-word;
-  overflow-y: scroll;
+  overflow: scroll;
+  height: 90%;
 `;
 
 export { styledMessageListView as MessageListView };

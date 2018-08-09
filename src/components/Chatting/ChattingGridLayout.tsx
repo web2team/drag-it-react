@@ -1,23 +1,21 @@
 import * as React from "react";
 import RGL, { WidthProvider } from "react-grid-layout";
-import _ from "lodash";
 import { styled } from "theme";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { withDraggable } from "utility/withDraggable";
+import { Chatting } from "components/Chatting/Chatting";
 
 const ReactGridLayout = WidthProvider(RGL);
+const DRAG_HANDLER_CLASSNAME = ".drag-handler";
 
-class StaticElementsLayout extends React.PureComponent<any, any> {
+class ChattingGridLayout extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
-
-    this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
-  onLayoutChange(layout: any) {
+  onLayoutChange = (layout: any) => {
     console.log(layout);
-  }
+  };
 
   render() {
     return (
@@ -25,8 +23,17 @@ class StaticElementsLayout extends React.PureComponent<any, any> {
         className={this.props.className}
         onLayoutChange={this.onLayoutChange}
         rowHeight={30}
-        draggableHandle=".react-grid-dragHandleExample"
+        draggableHandle={`".react-grid-dragHandleExample"`}
       >
+        <Chatting
+          gridProps={{
+            x: 10,
+            y: 10,
+            w: 2,
+            h: 2,
+            s: false
+          }}
+        />
         <div key="1" data-grid={{ x: 0, y: 0, w: 2, h: 3 }}>
           <span className="text">1</span>
         </div>
@@ -60,7 +67,7 @@ class StaticElementsLayout extends React.PureComponent<any, any> {
   }
 }
 
-const styledStaticElementsLayout = styled(StaticElementsLayout)`
+const styledChattingGridLayout = styled(ChattingGridLayout)`
   background: #eee;
 
   body {
@@ -73,4 +80,4 @@ const styledStaticElementsLayout = styled(StaticElementsLayout)`
   }
 `;
 
-export { styledStaticElementsLayout as StaticElementsLayout };
+export { styledChattingGridLayout as ChattingGridLayout };

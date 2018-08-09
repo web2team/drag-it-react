@@ -8,7 +8,7 @@ import { inject, observer } from "mobx-react";
 @inject("authState")
 @inject("browserHistoryState")
 @observer
-export class RootHeader extends React.PureComponent<any, any> {
+export class RootHeader extends React.Component<any, any> {
   onSelect = ({ key }) => {
     if (key === "logout") {
       this.props.authState.onLogout();
@@ -55,7 +55,7 @@ const NormalMenuItems = [
 
 const AuthMenuItems = [
   <Menu.Item key={getKey()}>
-    <Link to="home">
+    <Link to="dashboard">
       <span>Dashboard</span>
     </Link>
   </Menu.Item>,
