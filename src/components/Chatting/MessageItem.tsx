@@ -28,7 +28,7 @@ const styledMessageItem = styled(MessageItem)`
     font-weight: 800;
   }
   .contents {
-    padding: 0 1em 0 1em;
+    padding: 0 10px 0 10px;
   }
   .createdAt {
   }

@@ -4,8 +4,8 @@ import { Query } from "react-apollo";
 import { MessageListView } from "components/Chatting/MessageListView";
 
 const query = gql`
-  query getAllMessages($chat_thread_id: ID!) {
-    getAllMessages(chat_thread_id: $chat_thread_id) {
+  query getMessages($chat_thread_id: ID!, $page: Int!, $size: Int!) {
+    getMessages(chat_thread_id: $chat_thread_id, page: $page, size: $size) {
       username
       contents
       createdAt
@@ -24,23 +24,24 @@ const subscription = gql`
 `;
 
 export const MessageListContainer = () => (
-  <Query query={query} variables={{ chat_thread_id: 1 }}>
-    {({ loading, error, data, subscribeToMore }) => {
+  <Query query={query} variables={{ chat_thread_id: 1, page: 0, size: 10 }}>
+    {({ loading, error, data, subscribeToMore, fetchMore }) => {
       if (loading) {
         return <p>Loading...</p>;
       }
       if (error) {
         return <p>Error: {error.message}</p>;
       }
+
       const more = () => {
-        const updateQuery = (prev, { subscriptionData: { data } }) => {
+        const updateQuery: any = (prev, { subscriptionData: { data } }) => {
           const { ChatMessage } = data;
 
           if (!data) {
             return prev;
           }
           return Object.assign({}, prev, {
-            getAllMessages: [...prev.getAllMessages, ChatMessage]
+            getMessages: [...prev.getMessages, ChatMessage]
           });
         };
 
@@ -50,7 +51,32 @@ export const MessageListContainer = () => (
           updateQuery
         });
       };
-      return <MessageListView data={data} subscribeToMore={more} />;
+
+      const onLoadPrevious = (page: number, size: number) => {
+        const updateQuery: any = (prev: any, { fetchMoreResult }) => {
+          if (!fetchMoreResult) {
+            return prev;
+          }
+          console.log(fetchMoreResult);
+          return Object.assign({}, prev, {
+            getMessages: [...fetchMoreResult.getMessages, ...prev.getMessages]
+          });
+        };
+
+        fetchMore({
+          query,
+          variables: { chat_thread_id: 1, page, size },
+          updateQuery
+        });
+      };
+
+      return (
+        <MessageListView
+          data={data}
+          subscribeToMore={more}
+          onLoadPrevious={onLoadPrevious}
+        />
+      );
     }}
   </Query>
 );

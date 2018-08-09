@@ -35,63 +35,29 @@ class InputChatting extends React.Component<any, any> {
   };
 
   handleSubmit = (newChatMessage) => (value, e) => {
+    const trimmedValue = value.trim();
+    if (!trimmedValue) {
+      return;
+    }
+
     newChatMessage({
       variables: {
-        contents: value,
+        contents: trimmedValue,
         username: "na",
         chat_thread_id: 1
       }
     });
+
     this.setState({ value: "" });
   };
 
   render() {
-    const SendNewMessage = () => {
-      let input;
-
-      return (
-        <Mutation mutation={ADD_BOOK}>
-          {(newChatMessage, { data }) => (
-            <div className={this.props.className}>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-
-                  newChatMessage({
-                    variables: {
-                      contents: input.value,
-                      username: "na",
-                      chat_thread_id: 1
-                    }
-                  });
-                  input.value = "";
-                }}
-                style={{ padding: 0, margin: 0 }}
-              >
-                <div>
-                  <input
-                    style={{ width: "85%" }}
-                    ref={(node) => {
-                      input = node;
-                    }}
-                  />
-                  <button style={{ width: "15%" }} type="submit">
-                    Enter
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
-        </Mutation>
-      );
-    };
-
     return (
       <Mutation mutation={ADD_BOOK}>
         {(newChatMessage, { data }) => (
           <div className={this.props.className}>
             <Search
-              placeholder="input search text"
+              placeholder="내용을 입력해주세요"
               enterButton="Enter"
               onSearch={this.handleSubmit(newChatMessage)}
               ref={(ref) => (this.input = ref)}
