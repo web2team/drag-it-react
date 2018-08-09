@@ -44,7 +44,7 @@ const MessageListView = class extends React.PureComponent<Props> {
 
 const styledMessageListView = styled(MessageListView)`
   list-style-type: none;
-  padding: 0;
+  padding: 10px 10px 0 10px;
   ul {
     padding: 0;
   }
