@@ -3,7 +3,7 @@ import { Input, Button } from "antd";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { styled } from "theme";
-import _ from "lodash";
+import { Styled } from "interface/global";
 const Search = Input.Search;
 
 const ADD_BOOK = gql`
@@ -24,18 +24,22 @@ const ADD_BOOK = gql`
     }
   }
 `;
+
+interface Props extends Styled {
+  chat_thread_id: number;
+}
 interface State {
   value: string;
   sending: boolean;
 }
-class MessageInput extends React.Component<any, State> {
+class MessageInput extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      value: "",
+      sending: false
+    };
   }
-  state = {
-    value: "",
-    sending: false
-  };
 
   onChange = (e) => {
     this.setState({ value: e.target.value });
@@ -52,7 +56,7 @@ class MessageInput extends React.Component<any, State> {
       variables: {
         contents: trimmedValue,
         username: "na",
-        chat_thread_id: 1
+        chat_thread_id: this.props.chat_thread_id
       }
     });
   };
@@ -97,11 +101,6 @@ const styledMessageInput = styled(MessageInput)`
 
   .ant-input-search .ant-input-search-button {
     border-radius: 0;
-
-    /* color: rgba(0, 0, 0, 0.25);
-    background-color: #f5f5f5;
-    border-color: #d9d9d9;
-    cursor: not-allowed; */
   }
 `;
 

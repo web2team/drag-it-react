@@ -6,7 +6,7 @@ import { styled } from "theme";
 const Chatting = ({ className, chat_thread_id }: any) => (
   <div className={className}>
     <MessageListContainer chat_thread_id={chat_thread_id} />
-    <MessageInput />
+    <MessageInput chat_thread_id={chat_thread_id} />
   </div>
 );
 
