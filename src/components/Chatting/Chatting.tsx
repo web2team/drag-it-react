@@ -3,9 +3,9 @@ import { MessageListContainer } from "components/Chatting/MessageListContainer";
 import { MessageInput } from "components/Chatting/MessageInput";
 import { styled } from "theme";
 
-const Chatting = ({ className }: any) => (
+const Chatting = ({ className, chat_thread_id }: any) => (
   <div className={className}>
-    <MessageListContainer />
+    <MessageListContainer chat_thread_id={chat_thread_id} />
     <MessageInput />
   </div>
 );

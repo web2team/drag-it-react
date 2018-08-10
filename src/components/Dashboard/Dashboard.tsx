@@ -7,11 +7,8 @@ import { Styled } from "interface/global";
 import { Chatting } from "components/Chatting/Chatting";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT } from "theme/constant";
-import {
-  GridDraggableProps,
-  GridData,
-  GridComponentType
-} from "interface/Grid";
+import { GridDraggableProps, GridComponentType } from "interface/Grid";
+import { getComponent } from "./componentResolver";
 
 const ReactGridLayout = WidthProvider(RGL);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
@@ -35,7 +32,38 @@ class Dashboard extends React.Component<Props, State> {
             h: 10,
             draggableHandle: DRAG_HANDLER_CLASSNAME
           },
-          componentType: GridComponentType.Chatting
+          componentType: GridComponentType.CHATTING,
+          componentProps: {
+            chat_thread_id: 1
+          }
+        },
+        {
+          gridData: {
+            key: "13",
+            x: 4,
+            y: 4,
+            w: 4,
+            h: 12,
+            draggableHandle: DRAG_HANDLER_CLASSNAME
+          },
+          componentType: GridComponentType.CHATTING,
+          componentProps: {
+            chat_thread_id: 2
+          }
+        },
+        {
+          gridData: {
+            key: "14",
+            x: 4,
+            y: 10,
+            w: 4,
+            h: 12,
+            draggableHandle: DRAG_HANDLER_CLASSNAME
+          },
+          componentType: GridComponentType.CHATTING,
+          componentProps: {
+            chat_thread_id: 3
+          }
         }
       ]
     };
@@ -47,14 +75,11 @@ class Dashboard extends React.Component<Props, State> {
 
   withDraggable = ({
     componentType,
+    componentProps,
     gridData: { key, x, y, w, h, draggableHandle = "" }
   }: GridDraggableProps) => {
-    const componentResolver = (componentType: GridComponentType) => {
-      const map = new Map();
-      map.set(GridComponentType.Chatting, () => <Chatting />);
+    const Component = getComponent(componentType);
 
-      return map.get(componentType)();
-    };
     return (
       <div
         key={key}
@@ -69,7 +94,9 @@ class Dashboard extends React.Component<Props, State> {
       >
         <div className={`${draggableHandle} top-bar`} />
         <span className="top-button-X">X</span>
-        <div className="component">{componentResolver(componentType)}</div>
+        <div className="component">
+          <Component {...componentProps} />
+        </div>
       </div>
     );
   };
@@ -111,9 +138,9 @@ const styledDashBoard = styled(Dashboard)`
 
   .top-button-X {
     position: absolute;
-    cursor: pointer;
     top: 0;
     right: 2;
+    cursor: pointer;
   }
 `;
 

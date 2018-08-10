@@ -29,8 +29,6 @@ interface State {
   sending: boolean;
 }
 class MessageInput extends React.Component<any, State> {
-  input: any;
-
   constructor(props: any) {
     super(props);
   }
@@ -72,7 +70,6 @@ class MessageInput extends React.Component<any, State> {
               placeholder="내용을 입력해주세요"
               enterButton="Enter"
               onSearch={this.handleSubmit(newChatMessage)}
-              ref={(ref) => (this.input = ref)}
               value={this.state.value}
               onChange={this.onChange}
             />

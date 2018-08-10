@@ -1,5 +1,5 @@
 export enum GridComponentType {
-  Chatting
+  CHATTING
 }
 
 export interface GridData {

@@ -63,7 +63,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
   }
 
   scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    this.messagesEnd.scrollIntoView({ behavior: "instant" });
   };
 
   render() {
@@ -77,7 +77,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
               <MessageItem key={key} {...data} />
             ))}
           </ul>
-          <div ref={(el) => (this.messagesEnd = el)} />
+          <div key={"1"} ref={(el) => (this.messagesEnd = el)} />
         </Spin>
       </div>
     );

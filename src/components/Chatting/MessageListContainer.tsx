@@ -16,6 +16,7 @@ const query = gql`
 const subscription = gql`
   subscription Message($chat_thread_id: ID!) {
     ChatMessage(chat_thread_id: $chat_thread_id) {
+      id
       username
       contents
       createdAt
@@ -23,11 +24,8 @@ const subscription = gql`
   }
 `;
 const LOAD_SIZE = 30;
-export const MessageListContainer = () => (
-  <Query
-    query={query}
-    variables={{ chat_thread_id: 1, page: 0, size: LOAD_SIZE }}
-  >
+export const MessageListContainer = ({ chat_thread_id }) => (
+  <Query query={query} variables={{ chat_thread_id, page: 0, size: LOAD_SIZE }}>
     {({ loading, error, data, subscribeToMore, fetchMore }) => {
       if (loading) {
         return <p>Loading...</p>;
@@ -67,7 +65,7 @@ export const MessageListContainer = () => (
           };
 
           fetchMore({
-            variables: { chat_thread_id: 1, page, size },
+            variables: { chat_thread_id, page, size },
             updateQuery
           }).then(() => resolve());
         });
