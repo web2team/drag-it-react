@@ -21,7 +21,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
     this.state = {
       page: 0
     };
-    this.handleScroll = _.throttle(this.handleScroll, 1000);
+    this.handleScroll = _.throttle(this.handleScroll, 500);
   }
 
   componentDidMount() {
@@ -71,7 +71,7 @@ const styledMessageListView = styled(MessageListView)`
   padding: 10px 10px 0 10px;
   word-break: break-word;
   overflow: scroll;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
 
   ul {
     padding: 0;

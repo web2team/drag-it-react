@@ -5,7 +5,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { Chatting } from "components/Chatting/Chatting";
-import { DRAG_HANDLER_COLOR } from "theme/color";
+import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT } from "theme/constant";
 
 const ReactGridLayout = WidthProvider(RGL);
@@ -39,27 +39,15 @@ class Dashboard extends React.Component<Props, any> {
           h,
           draggableHandle: `.${draggableHandle}`
         }}
-        style={{
-          border: "1px solid #e8e8e8",
-          display: "flex",
-          flexFlow: "column"
-        }}
+        className="with-draggable"
       >
-        <div
-          className={draggableHandle}
-          style={{
-            width: "100%",
-            height: DRAG_HANDLER_HEIGHT,
-            background: DRAG_HANDLER_COLOR,
-            flex: "0 0 20px"
-          }}
-        />
+        <div className={`${draggableHandle} top-bar`} />
         <span
           style={{ position: "absolute", cursor: "pointer", top: 0, right: 2 }}
         >
           X
         </span>
-        {Component}
+        <div className="component">{Component}</div>
       </div>
     );
   };
@@ -76,8 +64,8 @@ class Dashboard extends React.Component<Props, any> {
           key: "12",
           x: 0,
           y: 1,
-          w: 8,
-          h: 10,
+          w: 4,
+          h: 25,
           draggableHandle: DRAG_HANDLER_CLASSNAME
         })}
         <div
@@ -104,6 +92,25 @@ class Dashboard extends React.Component<Props, any> {
   }
 }
 
-const styledDashBoard = styled(Dashboard)``;
+const styledDashBoard = styled(Dashboard)`
+  .with-draggable {
+    border: 1px solid ${BORDER_COLOR};
+    display: flex;
+    flex-flow: column;
+
+    .component {
+      display: flex;
+      flex-flow: column;
+      flex: auto;
+    }
+  }
+
+  .top-bar {
+    width: 100%;
+    height: ${DRAG_HANDLER_HEIGHT};
+    background: ${DRAG_HANDLER_COLOR};
+    flex: 0 0 auto;
+  }
+`;
 
 export { styledDashBoard as Dashboard };

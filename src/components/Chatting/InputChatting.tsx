@@ -72,7 +72,7 @@ class InputChatting extends React.Component<any, any> {
 }
 const styledInputChatting = styled(InputChatting)`
   width: 100%;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   margin: 0;
   padding: 0;
 
