@@ -48,7 +48,7 @@ export const MessageListContainer = ({ chat_thread_id }) => (
 
         subscribeToMore({
           document: subscription,
-          variables: { chat_thread_id: 1 },
+          variables: { chat_thread_id },
           updateQuery
         });
       };
