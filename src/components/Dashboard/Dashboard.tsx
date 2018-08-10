@@ -7,28 +7,54 @@ import { Styled } from "interface/global";
 import { Chatting } from "components/Chatting/Chatting";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT } from "theme/constant";
+import {
+  GridDraggableProps,
+  GridData,
+  GridComponentType
+} from "interface/Grid";
 
 const ReactGridLayout = WidthProvider(RGL);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
-interface DraggableProps {
-  key: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  draggableHandle: string;
-}
 interface Props extends Styled {}
-class Dashboard extends React.Component<Props, any> {
+interface State {
+  gridData: GridDraggableProps[];
+}
+class Dashboard extends React.Component<Props, State> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      gridData: [
+        {
+          gridData: {
+            key: "12",
+            x: 0,
+            y: 1,
+            w: 4,
+            h: 10,
+            draggableHandle: DRAG_HANDLER_CLASSNAME
+          },
+          componentType: GridComponentType.Chatting
+        }
+      ]
+    };
+  }
+
   onLayoutChange = (p) => {
     console.log(p);
   };
 
-  withDraggable = (
-    Component,
-    { key, x, y, w, h, draggableHandle }: DraggableProps
-  ) => {
+  withDraggable = ({
+    componentType,
+    gridData: { key, x, y, w, h, draggableHandle = "" }
+  }: GridDraggableProps) => {
+    const componentResolver = (componentType: GridComponentType) => {
+      const map = new Map();
+      map.set(GridComponentType.Chatting, () => <Chatting />);
+
+      return map.get(componentType)();
+    };
     return (
       <div
         key={key}
@@ -42,12 +68,8 @@ class Dashboard extends React.Component<Props, any> {
         className="with-draggable"
       >
         <div className={`${draggableHandle} top-bar`} />
-        <span
-          style={{ position: "absolute", cursor: "pointer", top: 0, right: 2 }}
-        >
-          X
-        </span>
-        <div className="component">{Component}</div>
+        <span className="top-button-X">X</span>
+        <div className="component">{componentResolver(componentType)}</div>
       </div>
     );
   };
@@ -60,14 +82,7 @@ class Dashboard extends React.Component<Props, any> {
         rowHeight={30}
         draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
       >
-        {this.withDraggable(<Chatting />, {
-          key: "12",
-          x: 0,
-          y: 1,
-          w: 4,
-          h: 10,
-          draggableHandle: DRAG_HANDLER_CLASSNAME
-        })}
+        {this.state.gridData.map(this.withDraggable)}
       </ReactGridLayout>
     );
   }
@@ -92,6 +107,13 @@ const styledDashBoard = styled(Dashboard)`
     background: ${DRAG_HANDLER_COLOR};
     flex: 0 0 auto;
     cursor: move;
+  }
+
+  .top-button-X {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 2;
   }
 `;
 

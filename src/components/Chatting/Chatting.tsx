@@ -1,6 +1,6 @@
 import * as React from "react";
-import { MessageListContainer } from "./MessageListContainer";
-import { MessageInput } from "./MessageInput";
+import { MessageListContainer } from "components/Chatting/MessageListContainer";
+import { MessageInput } from "components/Chatting/MessageInput";
 import { styled } from "theme";
 
 const Chatting = ({ className }: any) => (
