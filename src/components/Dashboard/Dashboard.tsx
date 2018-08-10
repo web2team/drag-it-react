@@ -65,7 +65,7 @@ class Dashboard extends React.Component<Props, any> {
           x: 0,
           y: 1,
           w: 4,
-          h: 25,
+          h: 10,
           draggableHandle: DRAG_HANDLER_CLASSNAME
         })}
         <div
@@ -110,6 +110,7 @@ const styledDashBoard = styled(Dashboard)`
     height: ${DRAG_HANDLER_HEIGHT};
     background: ${DRAG_HANDLER_COLOR};
     flex: 0 0 auto;
+    cursor: move;
   }
 `;
 

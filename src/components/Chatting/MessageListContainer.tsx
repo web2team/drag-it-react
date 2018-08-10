@@ -22,9 +22,12 @@ const subscription = gql`
     }
   }
 `;
-
+const LOAD_SIZE = 30;
 export const MessageListContainer = () => (
-  <Query query={query} variables={{ chat_thread_id: 1, page: 0, size: 10 }}>
+  <Query
+    query={query}
+    variables={{ chat_thread_id: 1, page: 0, size: LOAD_SIZE }}
+  >
     {({ loading, error, data, subscribeToMore, fetchMore }) => {
       if (loading) {
         return <p>Loading...</p>;
@@ -52,28 +55,31 @@ export const MessageListContainer = () => (
         });
       };
 
-      const onLoadPrevious = (page: number, size: number) => {
-        const updateQuery: any = (prev: any, { fetchMoreResult }) => {
-          if (!fetchMoreResult) {
-            return prev;
-          }
-          return Object.assign({}, prev, {
-            getMessages: [...fetchMoreResult.getMessages, ...prev.getMessages]
-          });
-        };
+      const onLoadPrevious = (page: number, size: number) =>
+        new Promise((resolve) => {
+          const updateQuery: any = (prev: any, { fetchMoreResult }) => {
+            if (!fetchMoreResult) {
+              return prev;
+            }
+            console.log(prev.getMessages);
+            console.log(fetchMoreResult.getMessages);
+            return Object.assign({}, prev, {
+              getMessages: [...fetchMoreResult.getMessages, ...prev.getMessages]
+            });
+          };
 
-        fetchMore({
-          query,
-          variables: { chat_thread_id: 1, page, size },
-          updateQuery
+          fetchMore({
+            variables: { chat_thread_id: 1, page, size },
+            updateQuery
+          }).then(() => resolve());
         });
-      };
 
       return (
         <MessageListView
           data={data}
           subscribeToMore={more}
           onLoadPrevious={onLoadPrevious}
+          size={LOAD_SIZE}
         />
       );
     }}

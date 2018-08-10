@@ -3,6 +3,7 @@ import { Input, Button } from "antd";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 import { styled } from "theme";
+import _ from "lodash";
 const Search = Input.Search;
 
 const ADD_BOOK = gql`
@@ -23,11 +24,19 @@ const ADD_BOOK = gql`
     }
   }
 `;
-
-class InputChatting extends React.Component<any, any> {
+interface State {
+  value: string;
+  sending: boolean;
+}
+class InputChatting extends React.Component<any, State> {
   input: any;
+
+  constructor(props: any) {
+    super(props);
+  }
   state = {
-    value: ""
+    value: "",
+    sending: false
   };
 
   onChange = (e) => {
@@ -40,6 +49,7 @@ class InputChatting extends React.Component<any, any> {
       return;
     }
 
+    this.setState({ value: "", sending: true });
     newChatMessage({
       variables: {
         contents: trimmedValue,
@@ -47,13 +57,15 @@ class InputChatting extends React.Component<any, any> {
         chat_thread_id: 1
       }
     });
+  };
 
-    this.setState({ value: "" });
+  onCompleted = () => {
+    this.setState({ sending: false });
   };
 
   render() {
     return (
-      <Mutation mutation={ADD_BOOK}>
+      <Mutation mutation={ADD_BOOK} onCompleted={this.onCompleted}>
         {(newChatMessage, { data }) => (
           <div className={this.props.className}>
             <Search
@@ -88,6 +100,11 @@ const styledInputChatting = styled(InputChatting)`
 
   .ant-input-search .ant-input-search-button {
     border-radius: 0;
+
+    /* color: rgba(0, 0, 0, 0.25);
+    background-color: #f5f5f5;
+    border-color: #d9d9d9;
+    cursor: not-allowed; */
   }
 `;
 

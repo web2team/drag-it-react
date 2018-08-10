@@ -4,24 +4,33 @@ import { styled } from "theme";
 import { Message } from "interface/Message";
 import { Styled } from "interface/global";
 import _ from "lodash";
+import { Spin } from "antd";
 
 interface Props extends Styled {
   data: { getMessages: Message[] };
   subscribeToMore: Function;
   onLoadPrevious: any;
+  size: number;
 }
 interface State {
   page: number;
+  loading: boolean;
+  shouldScroll: boolean;
 }
 const MessageListView = class extends React.PureComponent<Props, State> {
   messagesEnd: any;
   container: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
-      page: 0
+      page: 1,
+      loading: false,
+      shouldScroll: true
     };
-    this.handleScroll = _.throttle(this.handleScroll, 500);
+    this.handleScroll = _.throttle(this.handleScroll, 2000, {
+      trailing: false
+    });
   }
 
   componentDidMount() {
@@ -34,16 +43,26 @@ const MessageListView = class extends React.PureComponent<Props, State> {
   };
 
   handleScroll = (target) => {
-    const isTop = target.scrollTop === 0;
+    const isTop = +target.scrollTop <= 50;
 
     if (isTop) {
-      this.props.onLoadPrevious(this.state.page, 10);
+      this.setState({ loading: true, shouldScroll: false });
+
+      this.props
+        .onLoadPrevious(this.state.page, this.props.size)
+        .then(() =>
+          _.debounce(() => this.setState({ loading: false }), 1000)()
+        );
+
       this.setState({ page: this.state.page + 1 });
     }
   };
 
   componentDidUpdate() {
-    this.scrollToBottom();
+    if (this.state.shouldScroll) {
+      this.scrollToBottom();
+      this.setState({ shouldScroll: true });
+    }
   }
 
   scrollToBottom = () => {
@@ -54,13 +73,15 @@ const MessageListView = class extends React.PureComponent<Props, State> {
     const { getMessages } = this.props.data;
 
     return (
-      <div className={this.props.className} onScroll={(e) => this.onScroll(e)}>
-        <ul>
-          {getMessages.map((data, key) => (
-            <MessageItem key={key} {...data} />
-          ))}
-        </ul>
-        <div ref={(el) => (this.messagesEnd = el)} />
+      <div className={this.props.className} onScroll={this.onScroll}>
+        <Spin spinning={this.state.loading}>
+          <ul>
+            {getMessages.map((data, key) => (
+              <MessageItem key={key} {...data} />
+            ))}
+          </ul>
+          <div ref={(el) => (this.messagesEnd = el)} />
+        </Spin>
       </div>
     );
   }
