@@ -28,9 +28,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
       loading: false,
       shouldScroll: true
     };
-    this.handleScroll = _.throttle(this.handleScroll, 2000, {
-      trailing: false
-    });
+    this.handleScroll = _.throttle(this.handleScroll, 1000);
   }
 
   componentDidMount() {
@@ -43,7 +41,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
   };
 
   handleScroll = (target) => {
-    const isTop = +target.scrollTop <= 50;
+    const isTop = target.scrollTop === 0;
 
     if (isTop) {
       this.setState({ loading: true, shouldScroll: false });
@@ -61,7 +59,6 @@ const MessageListView = class extends React.PureComponent<Props, State> {
   componentDidUpdate() {
     if (this.state.shouldScroll) {
       this.scrollToBottom();
-      this.setState({ shouldScroll: true });
     }
   }
 

@@ -61,8 +61,6 @@ export const MessageListContainer = () => (
             if (!fetchMoreResult) {
               return prev;
             }
-            console.log(prev.getMessages);
-            console.log(fetchMoreResult.getMessages);
             return Object.assign({}, prev, {
               getMessages: [...fetchMoreResult.getMessages, ...prev.getMessages]
             });

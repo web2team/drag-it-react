@@ -1,12 +1,12 @@
 import * as React from "react";
 import { MessageListContainer } from "./MessageListContainer";
-import { InputChatting } from "./InputChatting";
+import { MessageInput } from "./MessageInput";
 import { styled } from "theme";
 
 const Chatting = ({ className }: any) => (
   <div className={className}>
     <MessageListContainer />
-    <InputChatting />
+    <MessageInput />
   </div>
 );
 

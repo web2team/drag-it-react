@@ -68,25 +68,6 @@ class Dashboard extends React.Component<Props, any> {
           h: 10,
           draggableHandle: DRAG_HANDLER_CLASSNAME
         })}
-        <div
-          key="4"
-          data-grid={{
-            x: 8,
-            y: 4,
-            w: 2,
-            h: 4,
-            draggableHandle: `.${DRAG_HANDLER_CLASSNAME}`
-          }}
-        >
-          <span className="text">
-            4 - Draggable with Handles
-            <hr />
-            <hr />
-            <span className={DRAG_HANDLER_CLASSNAME}>[DRAG HERE]</span>
-            <hr />
-            <hr />
-          </span>
-        </div>
       </ReactGridLayout>
     );
   }

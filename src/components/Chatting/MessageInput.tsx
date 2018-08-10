@@ -28,7 +28,7 @@ interface State {
   value: string;
   sending: boolean;
 }
-class InputChatting extends React.Component<any, State> {
+class MessageInput extends React.Component<any, State> {
   input: any;
 
   constructor(props: any) {
@@ -82,7 +82,7 @@ class InputChatting extends React.Component<any, State> {
     );
   }
 }
-const styledInputChatting = styled(InputChatting)`
+const styledMessageInput = styled(MessageInput)`
   width: 100%;
   flex: 0 0 auto;
   margin: 0;
@@ -108,4 +108,4 @@ const styledInputChatting = styled(InputChatting)`
   }
 `;
 
-export { styledInputChatting as InputChatting };
+export { styledMessageInput as MessageInput };
