@@ -39,6 +39,9 @@
       ],
       "utility/*": [
         "utility/*"
+      ],
+      "helper/*": [
+        "helper/*"
       ]
     },
     "plugins": [{

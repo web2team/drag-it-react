@@ -6,16 +6,16 @@ class ComponentResolver {
   map = new Map();
 
   constructor() {
-    this.map.set(GridComponentType.CHATTING, Chatting);
+    this.map.set("CHATTING", Chatting);
   }
 
-  getComponent(componentType: GridComponentType) {
+  getComponent(componentType: string) {
     return this.map.get(componentType);
   }
 }
 
 const resolver = new ComponentResolver();
 
-export const getComponent = (componentType) => {
+export const getComponent = (componentType: string) => {
   return resolver.getComponent(componentType);
 };

@@ -23,6 +23,6 @@ export interface GridData {
 
 export interface GridDraggableProps {
   gridData: GridData;
-  componentType: GridComponentType;
-  componentProps?: any;
+  gridComponentType: string;
+  gridComponentProps?: any;
 }

@@ -24,6 +24,7 @@ module.exports = {
       request: path.resolve(__dirname, 'src/request/'),
       interface: path.resolve(__dirname, 'src/interface/'),
       utility: path.resolve(__dirname, 'src/utility/'),
+      helper: path.resolve(__dirname, 'src/helper/'),
     }
   },
   stats: {
