@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export const GET_GRID_DRAGGABLE_PROPS = gql`
   query getGridDraggableProps($grid_id: ID!) {
     getGridDraggableProps(grid_id: $grid_id) {
+      id
       gridData {
         key
         x

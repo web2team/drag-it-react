@@ -22,6 +22,7 @@ export interface GridData {
 }
 
 export interface GridDraggableProps {
+  id: number;
   gridData: GridData;
   gridComponentType: string;
   gridComponentProps?: any;

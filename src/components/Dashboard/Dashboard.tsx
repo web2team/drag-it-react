@@ -38,13 +38,14 @@ class Dashboard extends React.Component<Props, State> {
     );
   }
 
-  onLayoutChange = (newGridData) => {
+  onLayoutChange = (newGridData, propsid: number) => {
+    console.log(propsid);
     const temp = _.omit(newGridData, ["i", "moved", "static"]);
     const operation = {
       query: CHANGE_LAYOUT,
       variables: {
         grid_id: 1,
-        gridDraggableProps_id: 1,
+        gridDraggableProps_id: propsid,
         newGridData: { ...temp, isStatic: newGridData.static }
       }
     };
@@ -53,6 +54,7 @@ class Dashboard extends React.Component<Props, State> {
   };
 
   withDraggable = ({
+    id,
     gridComponentType,
     gridComponentProps,
     gridData: { key, x, y, w, h }
@@ -62,6 +64,7 @@ class Dashboard extends React.Component<Props, State> {
     return (
       <div
         key={key}
+        data-propsid={id}
         data-grid={{
           x,
           y,
@@ -84,8 +87,12 @@ class Dashboard extends React.Component<Props, State> {
     return (
       <ReactGridLayout
         className={this.props.className}
-        onDragStop={(_1, _2, newGridData) => this.onLayoutChange(newGridData)}
-        onResizeStop={(_1, _2, newGridData) => this.onLayoutChange(newGridData)}
+        onDragStop={(_1, _2, newGridData, _3, _4, element) =>
+          this.onLayoutChange(newGridData, +element.dataset.propsid)
+        }
+        onResizeStop={(_1, _2, newGridData, _3, _4, element) => {
+          this.onLayoutChange(newGridData, +element.parentElement.dataset.propsid);
+        }}
         cols={30}
         rowHeight={30}
         draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
