@@ -21,7 +21,7 @@ export interface GridData {
   draggableHandle?: string;
 }
 
-export interface GridDraggableProps {
+export interface GridDraggableLayout {
   id: number;
   gridData: GridData;
   gridComponentType: string;

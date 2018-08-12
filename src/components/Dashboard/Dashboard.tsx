@@ -6,7 +6,7 @@ import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT } from "theme/constant";
-import { GridDraggableProps, GridData } from "interface/Grid";
+import { GridDraggableLayout, GridData } from "interface/Grid";
 import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
@@ -16,7 +16,7 @@ const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
 interface Props extends Styled {}
 interface State {
-  gridDraggableProps: GridDraggableProps[];
+  gridDraggableProps: GridDraggableLayout[];
 }
 class Dashboard extends React.Component<Props, State> {
   constructor(props: any) {
@@ -39,9 +39,7 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   onLayoutChange = (newGridDatas: any) => {
-    console.log("start");
     newGridDatas.map((newGridData) => {
-      console.log("d");
       const temp = _.omit(newGridData, ["i", "moved", "static"]);
       const operation = {
         query: CHANGE_LAYOUT,
@@ -61,7 +59,7 @@ class Dashboard extends React.Component<Props, State> {
     gridComponentType,
     gridComponentProps,
     gridData: { key, x, y, w, h }
-  }: GridDraggableProps) => {
+  }: GridDraggableLayout) => {
     const Component = getComponent(gridComponentType);
 
     return (
