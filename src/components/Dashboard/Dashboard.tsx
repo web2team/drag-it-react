@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "theme";
-import RGL, { WidthProvider } from "react-grid-layout";
+import { WidthProvider, Responsive } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
@@ -11,7 +11,7 @@ import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
 import { GET_GRID_DRAGGABLE_PROPS, CHANGE_LAYOUT } from "./gql";
-const ReactGridLayout = WidthProvider(RGL);
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
 interface Props extends Styled {}
@@ -39,7 +39,6 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   onLayoutChange = (newGridData, propsid: number) => {
-    console.log(propsid);
     const temp = _.omit(newGridData, ["i", "moved", "static"]);
     const operation = {
       query: CHANGE_LAYOUT,
@@ -85,20 +84,24 @@ class Dashboard extends React.Component<Props, State> {
 
   render() {
     return (
-      <ReactGridLayout
+      <ResponsiveReactGridLayout
+        breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600, xxs: 0 }}
+        cols={{ lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 }}
         className={this.props.className}
         onDragStop={(_1, _2, newGridData, _3, _4, element) =>
           this.onLayoutChange(newGridData, +element.dataset.propsid)
         }
         onResizeStop={(_1, _2, newGridData, _3, _4, element) => {
-          this.onLayoutChange(newGridData, +element.parentElement.dataset.propsid);
+          this.onLayoutChange(
+            newGridData,
+            +element.parentElement.dataset.propsid
+          );
         }}
-        cols={30}
         rowHeight={30}
         draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
       >
         {this.state.gridDraggableProps.map(this.withDraggable)}
-      </ReactGridLayout>
+      </ResponsiveReactGridLayout>
     );
   }
 }
