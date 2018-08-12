@@ -65,8 +65,8 @@ const AuthMenuItems = [
     </Link>
   </Menu.Item>,
   <Menu.Item key={getKey()}>
-    <Link to="drag">
-      <span>Personal Board</span>
+    <Link to="tab">
+      <span>Tab</span>
     </Link>
   </Menu.Item>,
   <Menu.Item key={getKey()}>

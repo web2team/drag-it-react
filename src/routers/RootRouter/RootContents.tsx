@@ -7,6 +7,7 @@ import { Calendar, Login, Register } from "components";
 
 import { getKey } from "routers/RootRouter/helper";
 import { Dashboard } from "components/Dashboard";
+import { GridTab } from "components/GridTab/GridTab";
 
 export const RootContents = () => (
   <Switch>
@@ -55,9 +56,8 @@ const AuthContents = [
   <Route
     key={getKey()}
     exact={true}
-    path="/drag"
-    render={(props) => <div />}
-    // render={(props) => <SmallCalenderContainer />}
+    path="/tab"
+    render={(props) => <GridTab />}
   />,
   <Route
     key={getKey()}
