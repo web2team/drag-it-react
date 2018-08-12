@@ -35,7 +35,7 @@ const AuthContents = [
     key={getKey()}
     exact={true}
     path="/dashboard"
-    render={(props) => <Dashboard />}
+    render={(props) => <Dashboard gridId={1} />}
   />,
   <Route
     key={getKey()}
@@ -45,7 +45,7 @@ const AuthContents = [
       <Chatting
         gridProps={{
           x: 1,
-          y: 1,
+          y: 1, 
           w: 1,
           h: 1
         }}

@@ -11,10 +11,13 @@ import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
 import { GET_GRID_DRAGGABLE_PROPS, CHANGE_LAYOUT } from "./gql";
+import { FloatingMenu } from "components/Dashboard/FloatingMenu";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
-interface Props extends Styled {}
+interface Props extends Styled {
+  gridId: number;
+}
 interface State {
   gridDraggableProps: GridDraggableLayout[];
 }
@@ -30,7 +33,7 @@ class Dashboard extends React.Component<Props, State> {
     const operation = {
       query: GET_GRID_DRAGGABLE_PROPS,
       variables: {
-        grid_id: 1
+        grid_id: this.props.gridId
       }
     };
     excute(operation).then(({ data: { getGridDraggableProps } }) =>
@@ -44,7 +47,7 @@ class Dashboard extends React.Component<Props, State> {
       const operation = {
         query: CHANGE_LAYOUT,
         variables: {
-          grid_id: 1,
+          grid_id: this.props.gridId,
           gridDraggableProps_id: newGridData.i,
           newGridData: { ...temp, isStatic: newGridData.static }
         }
@@ -86,16 +89,18 @@ class Dashboard extends React.Component<Props, State> {
 
   render() {
     return (
-      <ResponsiveReactGridLayout
-        breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600, xxs: 0 }}
-        cols={{ lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 }}
-        className={this.props.className}
-        onLayoutChange={this.onLayoutChange}
-        rowHeight={30}
-        draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
-      >
-        {this.state.gridDraggableProps.map(this.withDraggable)}
-      </ResponsiveReactGridLayout>
+      <div className={this.props.className}>
+        <FloatingMenu />
+        <ResponsiveReactGridLayout
+          breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600, xxs: 0 }}
+          cols={{ lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 }}
+          onLayoutChange={this.onLayoutChange}
+          rowHeight={30}
+          draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
+        >
+          {this.state.gridDraggableProps.map(this.withDraggable)}
+        </ResponsiveReactGridLayout>
+      </div>
     );
   }
 }
