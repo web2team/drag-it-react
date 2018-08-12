@@ -6,7 +6,7 @@ import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT } from "theme/constant";
-import { GridDraggableProps } from "interface/Grid";
+import { GridDraggableProps, GridData } from "interface/Grid";
 import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
@@ -38,18 +38,22 @@ class Dashboard extends React.Component<Props, State> {
     );
   }
 
-  onLayoutChange = (newGridData, propsid: number) => {
-    const temp = _.omit(newGridData, ["i", "moved", "static"]);
-    const operation = {
-      query: CHANGE_LAYOUT,
-      variables: {
-        grid_id: 1,
-        gridDraggableProps_id: propsid,
-        newGridData: { ...temp, isStatic: newGridData.static }
-      }
-    };
+  onLayoutChange = (newGridDatas: any) => {
+    console.log("start");
+    newGridDatas.map((newGridData) => {
+      console.log("d");
+      const temp = _.omit(newGridData, ["i", "moved", "static"]);
+      const operation = {
+        query: CHANGE_LAYOUT,
+        variables: {
+          grid_id: 1,
+          gridDraggableProps_id: newGridData.i,
+          newGridData: { ...temp, isStatic: newGridData.static }
+        }
+      };
 
-    excute(operation);
+      excute(operation);
+    });
   };
 
   withDraggable = ({
@@ -88,15 +92,7 @@ class Dashboard extends React.Component<Props, State> {
         breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600, xxs: 0 }}
         cols={{ lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 }}
         className={this.props.className}
-        onDragStop={(_1, _2, newGridData, _3, _4, element) =>
-          this.onLayoutChange(newGridData, +element.dataset.propsid)
-        }
-        onResizeStop={(_1, _2, newGridData, _3, _4, element) => {
-          this.onLayoutChange(
-            newGridData,
-            +element.parentElement.dataset.propsid
-          );
-        }}
+        onLayoutChange={this.onLayoutChange}
         rowHeight={30}
         draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
       >
