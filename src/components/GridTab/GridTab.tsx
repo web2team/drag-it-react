@@ -3,6 +3,7 @@ import { Styled } from "interface/global";
 import { Tabs } from "antd";
 import { styled } from "theme";
 import { EditableForm } from "components/GridTab/EditableForm";
+import { UPDATE_GRID_NAME } from "components/GridTab/gql";
 const TabPane = Tabs.TabPane;
 
 interface Props extends Styled {}
@@ -81,22 +82,22 @@ class GridTab extends React.Component<Props, State> {
           <TabPane
             tab={
               <EditableForm
+                request={{
+                  query: UPDATE_GRID_NAME,
+                  variables: {
+                    grid_id: 1
+                  }
+                }}
                 editable={true}
-                dataIndex={1}
-                data={["1", "2", "3"]}
-                title={"title"}
+                data={"123"}
+                dataFieldName="name"
               />
             }
             key={pane.key}
             closable={pane.closable}
           >
             {pane.content}
-            <EditableForm
-              editable={true}
-              dataIndex={1}
-              data={["1", "2", "3"]}
-              title={"title"}
-            />
+            <EditableForm editable={true} data={"12345"} />
           </TabPane>
         ))}
       </Tabs>

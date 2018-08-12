@@ -1,23 +1,34 @@
 import * as React from "react";
-import { Table, Input, Button, Popconfirm, Form } from "antd";
+import { Input, Form } from "antd";
 import { styled } from "theme";
 import { Styled } from "interface/global";
+import { excute } from "helper/apolloConfig";
+import { DocumentNode, GraphQLRequest } from "apollo-link";
 
 const FormItem = Form.Item;
 interface Props extends Styled {
   editable: boolean;
-  dataIndex: number;
-  data: any[];
-  title: string;
-  form: any;
+  data: any;
+  form?: any;
+
+  request: GraphQLRequest;
+  dataFieldName: string;
 }
-class EditableForm extends React.Component<Props, any> {
-  state = {
-    editing: false
-  };
+interface State {
+  editing: boolean;
+  data: any;
+}
+class EditableForm extends React.Component<Props, State> {
   input: any;
   cell: any;
-  form: any;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      editing: false,
+      data: props.data || ""
+    };
+  }
 
   componentDidMount() {
     if (this.props.editable) {
@@ -49,32 +60,49 @@ class EditableForm extends React.Component<Props, any> {
 
   save = () => {
     this.props.form.validateFields((error, values) => {
-      console.log(values);
-
       if (error) {
         return;
       }
+      if (this.props.request) {
+        const { query, variables } = this.props.request;
+
+        const operation = {
+          query,
+          variables: {
+            ...variables,
+            formData: values.formData
+          }
+        };
+
+        // @ts-ignore
+        const queryName = operation.query.definitions[0].name.value;
+        excute(operation).then(({ data }) =>
+          this.setState({ data: data[queryName][this.props.dataFieldName] })
+        );
+      }
+
       this.toggleEdit();
     });
   };
 
   render() {
-    const { editing } = this.state;
-    const { editable, dataIndex, title, data, ...restProps } = this.props;
+    const { editing, data } = this.state;
+    const { editable } = this.props;
+
     return (
       <div className={this.props.className} ref={(node) => (this.cell = node)}>
         {editable ? (
           editing ? (
             <div className="editable-cell-edit-wrap">
               <FormItem>
-                {this.props.form.getFieldDecorator("dataIndex", {
+                {this.props.form.getFieldDecorator("formData", {
                   rules: [
                     {
                       required: true,
-                      message: `${title}을(를) 입력해주세요.`
+                      message: `내용을 입력해주세요.`
                     }
                   ],
-                  initialValue: data[dataIndex]
+                  initialValue: data
                 })(
                   <Input
                     ref={(node) => (this.input = node)}
@@ -88,19 +116,19 @@ class EditableForm extends React.Component<Props, any> {
               className="editable-cell-value-wrap"
               onDoubleClick={this.toggleEdit}
             >
-              {data[dataIndex]}
+              {data}
             </div>
           )
         ) : (
-          restProps.children
+          data
         )}
       </div>
     );
   }
 }
 
-const EditableFormEditableForm = Form.create()(EditableForm);
-const styledEditableFormEditableForm = styled(EditableFormEditableForm)`
+const EditableFormEditableForm = Form.create()(EditableForm as any);
+const styledEditableFormEditableForm = styled(EditableFormEditableForm as any)`
   display: inline-block;
   line-height: 30px;
   margin: 5px 0;

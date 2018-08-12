@@ -46,7 +46,7 @@ const AuthContents = [
       <Chatting
         gridProps={{
           x: 1,
-          y: 1, 
+          y: 1,
           w: 1,
           h: 1
         }}
