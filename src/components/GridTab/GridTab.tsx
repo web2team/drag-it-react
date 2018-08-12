@@ -3,13 +3,19 @@ import { Styled } from "interface/global";
 import { Tabs } from "antd";
 import { styled } from "theme";
 import { EditableForm } from "components/GridTab/EditableForm";
-import { UPDATE_GRID_NAME } from "components/GridTab/gql";
+import { UPDATE_GRID_NAME, GET_GRIDS } from "components/GridTab/gql";
+import { excute } from "helper/apolloConfig";
 const TabPane = Tabs.TabPane;
+
+interface Pane {
+  id: number;
+  name: string;
+}
 
 interface Props extends Styled {}
 interface State {
-  panes: any;
-  activeKey: any;
+  panes: Pane[];
+  activeId: number;
 }
 class GridTab extends React.Component<Props, State> {
   newTabIndex: number;
@@ -17,55 +23,55 @@ class GridTab extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.newTabIndex = 0;
-    const panes = [
-      {
-        title: "Tab 1",
-        content: "Content of Tab 1",
-        key: "1",
-        closable: false
-      },
-      { title: "Tab 2", content: "Content of Tab 2", key: "2" }
-    ];
+
     this.state = {
-      activeKey: panes[0].key,
-      panes
+      activeId: 0,
+      panes: []
     };
   }
+  componentDidMount() {
+    const operation = {
+      query: GET_GRIDS,
+      variables: {
+        userId: 17
+      }
+    };
+    excute(operation).then(({ data: { getGrids } }) => {
+      const panes = getGrids.map((pane) => ({ ...pane }));
+      this.setState({ panes, activeId: panes[0].id });
+      this.newTabIndex = panes.length;
+    });
+  }
 
-  onChange = (activeKey) => {
-    this.setState({ activeKey });
+  onChange = (activeId) => {
+    this.setState({ activeId });
   };
 
-  onEdit = (targetKey, action) => {
-    console.log(targetKey, action);
-    this[action](targetKey);
+  onEdit = (targetId, action) => {
+    this[action](targetId);
   };
 
   add = () => {
     const panes = this.state.panes;
-    const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({
-      title: "New Tab",
-      content: "Content of new Tab",
-      key: activeKey
-    });
-    this.setState({ panes, activeKey });
+    const activeId = this.newTabIndex++;
+
+    panes.push({ name: "New Tab", id: activeId });
+    this.setState({ panes, activeId });
   };
 
-  remove = (targetKey) => {
-    let activeKey = this.state.activeKey;
+  remove = (targetId) => {
+    let activeId = this.state.activeId;
     let lastIndex;
-    this.state.panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
-        lastIndex = i - 1;
+    this.state.panes.forEach((pane, index) => {
+      if (pane.id === targetId) {
+        lastIndex = index - 1;
       }
     });
-    const panes = this.state.panes.filter((pane) => pane.key !== targetKey);
-    if (lastIndex >= 0 && activeKey === targetKey) {
-      activeKey = panes[lastIndex].key;
+    const panes = this.state.panes.filter((pane) => pane.id !== targetId);
+    if (lastIndex >= 0 && activeId === targetId) {
+      activeId = panes[lastIndex].id;
     }
-
-    this.setState({ panes, activeKey });
+    this.setState({ panes, activeId });
   };
 
   render() {
@@ -73,7 +79,7 @@ class GridTab extends React.Component<Props, State> {
       <Tabs
         onChange={this.onChange}
         onEdit={this.onEdit}
-        activeKey={this.state.activeKey}
+        activeKey={this.state.activeId + ""}
         type="editable-card"
         tabBarGutter={10}
         tabBarExtraContent={"extra"}
@@ -85,19 +91,18 @@ class GridTab extends React.Component<Props, State> {
                 request={{
                   query: UPDATE_GRID_NAME,
                   variables: {
-                    grid_id: 1
+                    grid_id: pane.id
                   }
                 }}
                 editable={true}
-                data={"123"}
+                data={pane.name}
                 dataFieldName="name"
               />
             }
-            key={pane.key}
-            closable={pane.closable}
+            key={pane.id}
+            closable={true}
           >
-            {pane.content}
-            <EditableForm editable={true} data={"12345"} />
+            {"contenxt"}
           </TabPane>
         ))}
       </Tabs>
