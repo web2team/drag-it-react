@@ -4,9 +4,12 @@ import { Query } from "react-apollo";
 import { MessageListView } from "components/Chatting/MessageListView";
 
 const query = gql`
-  query getMessages($chat_thread_id: ID!, $page: Int!, $size: Int!) {
-    getMessages(chat_thread_id: $chat_thread_id, page: $page, size: $size) {
-      username
+  query getChatMessages($chatThreadId: ID!, $page: Int!, $size: Int!) {
+    getChatMessages(chatThreadId: $chatThreadId, page: $page, size: $size) {
+      user {
+        id
+        name
+      }
       contents
       createdAt
     }
@@ -14,18 +17,21 @@ const query = gql`
 `;
 
 const subscription = gql`
-  subscription Message($chat_thread_id: ID!) {
-    ChatMessage(chat_thread_id: $chat_thread_id) {
+  subscription linkChatMessage($chatThreadId: ID!) {
+    linkChatMessage(chatThreadId: $chatThreadId) {
       id
-      username
+      user {
+        id
+        name
+      }
       contents
       createdAt
     }
   }
 `;
 const LOAD_SIZE = 30;
-export const MessageListContainer = ({ chat_thread_id }) => (
-  <Query query={query} variables={{ chat_thread_id, page: 0, size: LOAD_SIZE }}>
+export const MessageListContainer = ({ chatThreadId }) => (
+  <Query query={query} variables={{ chatThreadId, page: 0, size: LOAD_SIZE }}>
     {({ loading, error, data, subscribeToMore, fetchMore }) => {
       if (loading) {
         return <p>Loading...</p>;
@@ -36,19 +42,19 @@ export const MessageListContainer = ({ chat_thread_id }) => (
 
       const more = () => {
         const updateQuery: any = (prev, { subscriptionData: { data } }) => {
-          const { ChatMessage } = data;
+          const { linkChatMessage } = data;
 
           if (!data) {
             return prev;
           }
           return Object.assign({}, prev, {
-            getMessages: [...prev.getMessages, ChatMessage]
+            getChatMessages: [...prev.getChatMessages, linkChatMessage]
           });
         };
 
         subscribeToMore({
           document: subscription,
-          variables: { chat_thread_id },
+          variables: { chatThreadId },
           updateQuery
         });
       };
@@ -60,12 +66,15 @@ export const MessageListContainer = ({ chat_thread_id }) => (
               return prev;
             }
             return Object.assign({}, prev, {
-              getMessages: [...fetchMoreResult.getMessages, ...prev.getMessages]
+              getChatMessages: [
+                ...fetchMoreResult.getChatMessages,
+                ...prev.getChatMessages
+              ]
             });
           };
 
           fetchMore({
-            variables: { chat_thread_id, page, size },
+            variables: { chatThreadId, page, size },
             updateQuery
           }).then(() => resolve());
         });

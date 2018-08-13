@@ -4,11 +4,11 @@ import { MessageInput } from "components/Chatting/MessageInput";
 import { styled } from "theme";
 import { MessageHeader } from "components/Chatting/MessageHeader";
 
-const Chatting = ({ className, chat_thread_id }: any) => (
+const Chatting = ({ className, chatThreadId }: any) => (
   <div className={className}>
     <MessageHeader />
-    <MessageListContainer chat_thread_id={chat_thread_id} />
-    <MessageInput chat_thread_id={chat_thread_id} />
+    <MessageListContainer chatThreadId={chatThreadId} />
+    <MessageInput chatThreadId={chatThreadId} />
   </div>
 );
 

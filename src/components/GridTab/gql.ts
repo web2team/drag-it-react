@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const UPDATE_GRID_NAME = gql`
-  mutation updateGridName($grid_id: ID!, $formData: String!) {
-    updateGridName(grid_id: $grid_id, name: $formData) {
+  mutation updateGridName($gridId: ID!, $formData: String!) {
+    updateGridName(gridId: $gridId, name: $formData) {
       id
       name
     }

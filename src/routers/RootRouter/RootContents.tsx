@@ -9,66 +9,68 @@ import { getKey } from "routers/RootRouter/helper";
 import { Dashboard } from "components/Dashboard";
 import { GridTab } from "components/GridTab/GridTab";
 
-export const RootContents = () => (
-  <Switch>
-    {NormalContents}
-    {AuthContents}
-  </Switch>
-);
+export const RootContents = ({ userId }) => {
+  const NormalContents = [
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/"
+      render={(props) => <FrontPage />}
+    />,
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/login"
+      render={(props) => <Login />}
+    />
+  ];
 
-const NormalContents = [
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/"
-    render={(props) => <FrontPage />}
-  />,
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/login"
-    render={(props) => <Login />}
-  />
-];
+  const AuthContents = [
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/dashboard"
+      render={(props) => <Dashboard gridId={1} />}
+    />,
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/chat"
+      render={(props) => (
+        <Chatting
+          gridProps={{
+            x: 1,
+            y: 1,
+            w: 1,
+            h: 1
+          }}
+        />
+      )}
+    />,
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/tab"
+      render={(props) => <GridTab userId={userId} />}
+    />,
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/calendar"
+      render={(props) => <Calendar />}
+    />,
+    <Route
+      key={getKey()}
+      exact={true}
+      path="/register"
+      render={(props) => <Register />}
+    />
+  ];
 
-const AuthContents = [
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/dashboard"
-    render={(props) => <Dashboard gridId={1} />}
-  />,
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/chat"
-    render={(props) => (
-      <Chatting
-        gridProps={{
-          x: 1,
-          y: 1,
-          w: 1,
-          h: 1
-        }}
-      />
-    )}
-  />,
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/tab"
-    render={(props) => <GridTab userId={17} />}
-  />,
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/calendar"
-    render={(props) => <Calendar />}
-  />,
-  <Route
-    key={getKey()}
-    exact={true}
-    path="/register"
-    render={(props) => <Register />}
-  />
-];
+  return (
+    <Switch>
+      {NormalContents}
+      {AuthContents}
+    </Switch>
+  );
+};

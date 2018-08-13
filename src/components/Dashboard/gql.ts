@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const GET_GRID_DRAGGABLE_PROPS = gql`
-  query getGridDraggableProps($grid_id: ID!) {
-    getGridDraggableProps(grid_id: $grid_id) {
+export const GET_GRID_DRAGGABLE_LAYOUT = gql`
+  query getGridDraggableLayout($gridId: ID!) {
+    getGridDraggableLayout(gridId: $gridId) {
       id
       gridData {
         key
@@ -14,21 +14,21 @@ export const GET_GRID_DRAGGABLE_PROPS = gql`
       }
       gridComponentType
       gridComponentProps {
-        chat_thread_id
+        chatThreadId
       }
     }
   }
 `;
 
 export const CHANGE_LAYOUT = gql`
-  mutation changeGridLayout(
-    $grid_id: ID!
-    $gridDraggableProps_id: ID!
+  mutation updateGridLayout(
+    $gridId: ID!
+    $gridDraggablePropsId: ID!
     $newGridData: GridDataInput!
   ) {
-    changeGridLayout(
-      grid_id: $grid_id
-      gridDraggableProps_id: $gridDraggableProps_id
+    updateGridLayout(
+      gridId: $gridId
+      gridDraggablePropsId: $gridDraggablePropsId
       newGridData: $newGridData
     ) {
       x

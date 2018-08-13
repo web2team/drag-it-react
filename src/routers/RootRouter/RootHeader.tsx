@@ -14,7 +14,16 @@ export class RootHeader extends React.Component<any, any> {
       this.props.authState.onLogout();
       this.props.browserHistoryState.push("");
     } else {
-      this.props.authState.checkToken();
+      if (!this.props.authState.getIsLogin) {
+        return;
+      }
+      this.props.authState.checkToken().then((isValid: boolean) => {
+        if (isValid) {
+          return;
+        }
+        this.props.authState.onLogout();
+        this.props.browserHistoryState.push("");
+      });
     }
   };
 

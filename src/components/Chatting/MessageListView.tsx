@@ -7,7 +7,7 @@ import _ from "lodash";
 import { Spin } from "antd";
 
 interface Props extends Styled {
-  data: { getMessages: Message[] };
+  data: { getChatMessages: Message[] };
   subscribeToMore: Function;
   onLoadPrevious: any;
   size: number;
@@ -67,14 +67,14 @@ const MessageListView = class extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { getMessages } = this.props.data;
+    const { getChatMessages } = this.props.data;
 
     return (
       <div className={this.props.className} onScroll={this.onScroll}>
         
         <Spin spinning={this.state.loading}>
           <ul>
-            {getMessages.map((data, key) => (
+            {getChatMessages.map((data, key) => (
               <MessageItem key={key} {...data} />
             ))}
           </ul>

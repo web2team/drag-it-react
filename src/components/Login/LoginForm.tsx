@@ -29,7 +29,10 @@ class LoginForm extends React.Component<any, any> {
       requestLogin(values)
         .then(({ data }) => {
           this.props.authState.setToken(data.token);
+          this.props.authState.setUserId(data.userId); 
           this.props.authState.setIsLogin(true);
+
+          console.log(data);
           return data;
         })
         .then((data) => {

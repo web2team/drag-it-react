@@ -3,8 +3,14 @@ import { requestCheckToken } from "request/auth";
 import * as store from "store";
 
 class AuthState {
-  @observable token: string = "";
-  @observable isLogin: boolean = false;
+  @observable
+  token: string = "";
+
+  @observable
+  isLogin: boolean = false;
+
+  @observable
+  userId: number;
 
   constructor() {
     this.checkToken();
@@ -31,7 +37,21 @@ class AuthState {
   @action
   checkToken() {
     const token = this.getToken;
-    requestCheckToken(token).then((isLogin) => this.setIsLogin(isLogin));
+
+    return requestCheckToken(token).then((isLogin) => {
+      this.setIsLogin(isLogin);
+      return true;
+    });
+  }
+
+  @action
+  setUserId(userId: number): void {
+    store.set("userId", userId);
+    this.userId = userId;
+  }
+  @computed
+  get getUserId(): void {
+    return this.userId || store.get("userId");
   }
 
   @action

@@ -4,12 +4,15 @@ import { Router } from "react-router-dom";
 import { styled } from "theme";
 const { Content, Footer } = Layout;
 import { RootHeader, RootContents } from "routers/RootRouter";
-import { inject } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
+@inject("authState")
 @inject("browserHistoryState")
+@observer
 class RootRouter extends React.Component<any, any> {
   render() {
     const RootFooter = () => <Footer id="footer">Drag-it 2018</Footer>;
+    const userId = this.props.authState.getUserId;
 
     const { className } = this.props;
     return (
@@ -17,7 +20,7 @@ class RootRouter extends React.Component<any, any> {
         <Layout className={className}>
           <RootHeader />
           <Content className="contents">
-            <RootContents />
+            <RootContents userId={userId} />
           </Content>
           <RootFooter />
         </Layout>
