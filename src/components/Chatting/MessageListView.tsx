@@ -5,6 +5,7 @@ import { Message } from "interface/Message";
 import { Styled } from "interface/global";
 import _ from "lodash";
 import { Spin } from "antd";
+import Scrollbars from "react-custom-scrollbars";
 
 interface Props extends Styled {
   data: { getChatMessages: Message[] };
@@ -70,8 +71,11 @@ const MessageListView = class extends React.PureComponent<Props, State> {
     const { getChatMessages } = this.props.data;
 
     return (
-      <div className={this.props.className} onScroll={this.onScroll}>
-        
+      <Scrollbars
+        className={this.props.className}
+        onScroll={this.onScroll}
+        autoHide={true}
+      >
         <Spin spinning={this.state.loading}>
           <ul>
             {getChatMessages.map((data, key) => (
@@ -80,7 +84,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
           </ul>
           <div key={"1"} ref={(el) => (this.messagesEnd = el)} />
         </Spin>
-      </div>
+      </Scrollbars>
     );
   }
 };
@@ -93,7 +97,7 @@ const styledMessageListView = styled(MessageListView)`
   flex: 1 1 auto;
 
   ul {
-    padding: 0;
+    padding: 0 10px 0 10px;
   }
 `;
 

@@ -1,5 +1,3 @@
-import * as React from "react";
-import { GridComponentType } from "interface/Grid";
 import { Chatting } from "components/Chatting";
 
 class ComponentResolver {

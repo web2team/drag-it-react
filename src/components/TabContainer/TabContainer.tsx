@@ -2,7 +2,7 @@ import * as React from "react";
 import { Styled } from "interface/global";
 import { Tabs, Modal, Button, Icon } from "antd";
 import { styled } from "theme";
-import { EditableForm } from "./EditableForm";
+import { EditableForm } from "utility/EditableForm";
 import { UPDATE_GRID_NAME, GET_GRIDS, NEW_GRID, DELETE_GRID } from "./gql";
 import { excute } from "helper/apolloConfig";
 import { GridLayout } from "components/GridLayout";

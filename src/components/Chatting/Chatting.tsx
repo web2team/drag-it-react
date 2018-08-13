@@ -1,14 +1,14 @@
 import * as React from "react";
-import { MessageListContainer } from "components/Chatting/MessageListContainer";
-import { MessageInput } from "components/Chatting/MessageInput";
 import { styled } from "theme";
-import { MessageHeader } from "components/Chatting/MessageHeader";
+import { MessageListContainer } from "./MessageListContainer";
+import { MessageInput } from "./MessageInput";
+import { MessageHeader } from "./MessageHeader";
 
-const Chatting = ({ className, chatThreadId, userId }: any) => (
+const Chatting = ({ className, ...props }: any) => (
   <div className={className}>
-    <MessageHeader />
-    <MessageListContainer chatThreadId={chatThreadId} />
-    <MessageInput chatThreadId={chatThreadId} userId={userId} />
+    <MessageHeader {...props} />
+    <MessageListContainer {...props} />
+    <MessageInput {...props} />
   </div>
 );
 

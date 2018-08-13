@@ -1,28 +1,10 @@
 import * as React from "react";
 import { Input, Button } from "antd";
-import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import { NEW_CHAT_MESSAGE } from "./gql";
 import { styled } from "theme";
 import { Styled } from "interface/global";
 const Search = Input.Search;
-
-const NEW_CHAT_MESSAGE = gql`
-  mutation newChatMessage(
-    $chatThreadId: ID!
-    $userId: ID!
-    $contents: String!
-  ) {
-    newChatMessage(
-      chatThreadId: $chatThreadId
-      userId: $userId
-      contents: $contents
-    ) {
-      id
-      contents
-      createdAt
-    }
-  }
-`;
 
 interface Props extends Styled {
   chatThreadId: number;

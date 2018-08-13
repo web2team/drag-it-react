@@ -1,37 +1,14 @@
 import * as React from "react";
-import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import { MessageListView } from "components/Chatting/MessageListView";
+import { MessageListView } from "./MessageListView";
+import { GET_CHAT_MESSAGES, LINK_CHAT_MESSAGES } from "./gql";
 
-const query = gql`
-  query getChatMessages($chatThreadId: ID!, $page: Int!, $size: Int!) {
-    getChatMessages(chatThreadId: $chatThreadId, page: $page, size: $size) {
-      user {
-        id
-        name
-      }
-      contents
-      createdAt
-    }
-  }
-`;
-
-const subscription = gql`
-  subscription linkChatMessage($chatThreadId: ID!) {
-    linkChatMessage(chatThreadId: $chatThreadId) {
-      id
-      user {
-        id
-        name
-      }
-      contents
-      createdAt
-    }
-  }
-`;
 const LOAD_SIZE = 30;
 export const MessageListContainer = ({ chatThreadId }) => (
-  <Query query={query} variables={{ chatThreadId, page: 0, size: LOAD_SIZE }}>
+  <Query
+    query={GET_CHAT_MESSAGES}
+    variables={{ chatThreadId, page: 0, size: LOAD_SIZE }}
+  >
     {({ loading, error, data, subscribeToMore, fetchMore }) => {
       if (loading) {
         return <p>Loading...</p>;
@@ -53,7 +30,7 @@ export const MessageListContainer = ({ chatThreadId }) => (
         };
 
         subscribeToMore({
-          document: subscription,
+          document: LINK_CHAT_MESSAGES,
           variables: { chatThreadId },
           updateQuery
         });

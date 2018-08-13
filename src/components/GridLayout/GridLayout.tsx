@@ -37,9 +37,9 @@ class GridLayout extends React.Component<Props, State> {
         gridId: this.props.gridId
       }
     };
-    excute(operation).then(({ data: { getGridDraggableLayout } }) =>
-      this.setState({ gridDraggableLayout: getGridDraggableLayout })
-    );
+    excute(operation).then(({ data: { getGridDraggableLayout } }) => {
+      this.setState({ gridDraggableLayout: getGridDraggableLayout });
+    });
   }
 
   onLayoutChange = (newGridDatas: any) => {
@@ -82,7 +82,7 @@ class GridLayout extends React.Component<Props, State> {
         <div className={`${DRAG_HANDLER_CLASSNAME} top-bar`} />
         <span className="top-button-X">X</span>
         <div className="component">
-          <Component {...gridComponentProps} userId={this.props.userId} />
+          <Component {...gridComponentProps} {...this.props} />
         </div>
       </div>
     );
