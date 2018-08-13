@@ -3,32 +3,53 @@ import { styled } from "theme";
 import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
 import { Styled } from "interface/global";
+import { ShowGridItemDrawer } from "components/Dashboard/CreateGridItem";
 
-interface Props extends Styled {}
-class FloatingMenu extends React.Component<Props, {}> {
+interface Props extends Styled {
+  gridId: number;
+}
+class FloatingMenu extends React.Component<Props, any> {
+  state = {
+    drawerVisible: false
+  };
+  
+  onClick = () => {
+    this.setState({ drawerVisible: true });
+  };
+
+  onDismiss = () => {
+    this.setState({ drawerVisible: false });
+  };
+
   render() {
     return (
-      <Menu
-        effect={"zoomin"}
-        method={"hover"}
-        position={"br"}
-        className={this.props.className}
-      >
-        <MainButton
-          iconResting="anticon anticon-plus"
-          iconActive="anticon anticon-close"
+      <div>
+        <Menu
+          effect={"zoomin"}
+          method={"hover"}
+          position={"br"}
+          className={this.props.className}
+        >
+          <MainButton
+            iconResting="anticon anticon-plus"
+            iconActive="anticon anticon-close"
+          />
+          <ChildButton
+            icon="anticon anticon-form"
+            label="add Chatting"
+            onClick={this.onClick}
+          />
+          <ChildButton
+            icon="anticon anticon-calendar"
+            label="add Calendar"
+            onClick={() => console.log("clicked")}
+          />
+        </Menu>
+        <ShowGridItemDrawer
+          visible={this.state.drawerVisible}
+          onDismiss={this.onDismiss}
         />
-        <ChildButton
-          icon="anticon anticon-form"
-          label="add Chatting"
-          onClick={() => console.log("clicked")}
-        />
-        <ChildButton
-          icon="anticon anticon-calendar"
-          label="add Calendar"
-          onClick={() => console.log("clicked")}
-        />
-      </Menu>
+      </div>
     );
   }
 }

@@ -133,7 +133,6 @@ class GridTab extends React.Component<Props, State> {
           <TabPane
             tab={
               <EditableForm
-                key="1"
                 request={{
                   query: UPDATE_GRID_NAME,
                   variables: {

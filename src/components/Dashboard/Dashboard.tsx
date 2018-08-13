@@ -90,7 +90,7 @@ class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <div className={this.props.className}>
-        <FloatingMenu />
+        <FloatingMenu gridId={this.props.gridId} />
         <ResponsiveReactGridLayout
           breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600, xxs: 0 }}
           cols={{ lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 }}
