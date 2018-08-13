@@ -98,6 +98,8 @@ class GridTab extends React.Component<Props, State> {
         type="editable-card"
         tabBarGutter={10}
         tabBarExtraContent={"extra"}
+        tabPosition="top"
+        className={this.props.className}
       >
         {this.state.panes.map((pane) => (
           <TabPane
@@ -125,6 +127,10 @@ class GridTab extends React.Component<Props, State> {
   }
 }
 
-const styledGridTab = styled(GridTab)``;
+const styledGridTab = styled(GridTab)`
+  .ant-tabs-tab {
+    padding: 1px 16px !important;
+  }
+`;
 
 export { styledGridTab as GridTab };

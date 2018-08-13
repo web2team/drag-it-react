@@ -151,7 +151,7 @@ const styledEditableFormEditableForm = styled(EditableFormEditableForm as any)`
   .ant-form-explain {
     position: fixed !important;
     margin-top: 2px;
-  }
+  }  
 `;
 
 export { styledEditableFormEditableForm as EditableForm };
