@@ -3,7 +3,7 @@ import { styled } from "theme";
 import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
 import { Styled } from "interface/global";
-import { ShowGridItemDrawer } from "components/Dashboard/CreateGridItem";
+import { ShowGridItemDrawer } from "./CreateGridItem";
 
 interface Props extends Styled {
   gridId: number;
@@ -12,7 +12,7 @@ class FloatingMenu extends React.Component<Props, any> {
   state = {
     drawerVisible: false
   };
-  
+
   onClick = () => {
     this.setState({ drawerVisible: true });
   };

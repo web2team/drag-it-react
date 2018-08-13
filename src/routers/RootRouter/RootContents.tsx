@@ -6,8 +6,8 @@ import { Chatting } from "components/Chatting";
 import { Calendar, Login, Register } from "components";
 
 import { getKey } from "routers/RootRouter/helper";
-import { Dashboard } from "components/Dashboard";
-import { GridTab } from "components/GridTab/GridTab";
+import { GridLayout } from "components/GridLayout";
+import { TabContainer } from "components/TabContainer";
 
 export const RootContents = ({ userId }) => {
   const NormalContents = [
@@ -30,7 +30,7 @@ export const RootContents = ({ userId }) => {
       key={getKey()}
       exact={true}
       path="/dashboard"
-      render={(props) => <Dashboard gridId={1} />}
+      render={(props) => <GridLayout gridId={1} />}
     />,
     <Route
       key={getKey()}
@@ -51,7 +51,7 @@ export const RootContents = ({ userId }) => {
       key={getKey()}
       exact={true}
       path="/tab"
-      render={(props) => <GridTab userId={userId} />}
+      render={(props) => <TabContainer userId={userId} />}
     />,
     <Route
       key={getKey()}

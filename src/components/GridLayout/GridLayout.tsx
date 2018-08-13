@@ -11,7 +11,7 @@ import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
 import { GET_GRID_DRAGGABLE_LAYOUT, CHANGE_LAYOUT } from "./gql";
-import { FloatingMenu } from "components/Dashboard/FloatingMenu";
+import { FloatingMenu } from "./FloatingMenu";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
@@ -22,7 +22,7 @@ interface Props extends Styled {
 interface State {
   gridDraggableLayout: GridDraggableLayout[];
 }
-class Dashboard extends React.Component<Props, State> {
+class GridLayout extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -115,7 +115,7 @@ class Dashboard extends React.Component<Props, State> {
   }
 }
 
-const styledDashBoard = styled(Dashboard)`
+const styledGridLayout = styled(GridLayout)`
   .with-draggable {
     border: 1px solid ${BORDER_COLOR};
     display: flex;
@@ -144,4 +144,4 @@ const styledDashBoard = styled(Dashboard)`
   }
 `;
 
-export { styledDashBoard as Dashboard };
+export { styledGridLayout as GridLayout };

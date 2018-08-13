@@ -2,15 +2,10 @@ import * as React from "react";
 import { Styled } from "interface/global";
 import { Tabs, Modal, Button, Icon } from "antd";
 import { styled } from "theme";
-import { EditableForm } from "components/GridTab/EditableForm";
-import {
-  UPDATE_GRID_NAME,
-  GET_GRIDS,
-  NEW_GRID,
-  DELETE_GRID
-} from "components/GridTab/gql";
+import { EditableForm } from "./EditableForm";
+import { UPDATE_GRID_NAME, GET_GRIDS, NEW_GRID, DELETE_GRID } from "./gql";
 import { excute } from "helper/apolloConfig";
-import { Dashboard } from "components/Dashboard";
+import { GridLayout } from "components/GridLayout";
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
 
@@ -26,7 +21,7 @@ interface State {
   panes: Pane[];
   activeId: number;
 }
-class GridTab extends React.Component<Props, State> {
+class TabContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -97,7 +92,7 @@ class GridTab extends React.Component<Props, State> {
 
     confirm({
       title: "Are you sure delete this task?",
-      content: "그리드 안의 모든 내용이 지워집니다. 계속하시겠습니까?",
+      content: "모든 내용이 지워집니다. 계속하시겠습니까?",
       okText: "Yes",
       okType: "danger",
       cancelText: "No",
@@ -147,7 +142,7 @@ class GridTab extends React.Component<Props, State> {
             key={pane.id}
             closable={true}
           >
-            <Dashboard gridId={pane.id} userId={this.props.userId} />
+            <GridLayout gridId={pane.id} userId={this.props.userId} />
           </TabPane>
         ))}
       </Tabs>
@@ -155,10 +150,10 @@ class GridTab extends React.Component<Props, State> {
   }
 }
 
-const styledGridTab = styled(GridTab)`
+const styledTabContainer = styled(TabContainer)`
   .ant-tabs-tab {
     padding: 1px 16px !important;
   }
 `;
 
-export { styledGridTab as GridTab };
+export { styledTabContainer as TabContainer };
