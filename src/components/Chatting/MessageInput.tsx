@@ -6,19 +6,18 @@ import { styled } from "theme";
 import { Styled } from "interface/global";
 const Search = Input.Search;
 
-const ADD_BOOK = gql`
+const NEW_CHAT_MESSAGE = gql`
   mutation newChatMessage(
-    $chat_thread_id: ID!
+    $chatThreadId: ID!
+    $userId: ID!
     $contents: String!
-    $username: String!
   ) {
     newChatMessage(
-      chat_thread_id: $chat_thread_id
+      chatThreadId: $chatThreadId
+      userId: $userId
       contents: $contents
-      username: $username
     ) {
       id
-      username
       contents
       createdAt
     }
@@ -26,7 +25,8 @@ const ADD_BOOK = gql`
 `;
 
 interface Props extends Styled {
-  chat_thread_id: number;
+  chatThreadId: number;
+  userId: number;
 }
 interface State {
   value: string;
@@ -55,8 +55,8 @@ class MessageInput extends React.Component<Props, State> {
     newChatMessage({
       variables: {
         contents: trimmedValue,
-        username: "na",
-        chat_thread_id: this.props.chat_thread_id
+        userId: this.props.userId,
+        chatThreadId: this.props.chatThreadId
       }
     });
   };
@@ -67,7 +67,7 @@ class MessageInput extends React.Component<Props, State> {
 
   render() {
     return (
-      <Mutation mutation={ADD_BOOK} onCompleted={this.onCompleted}>
+      <Mutation mutation={NEW_CHAT_MESSAGE} onCompleted={this.onCompleted}>
         {(newChatMessage, { data }) => (
           <div className={this.props.className}>
             <Search

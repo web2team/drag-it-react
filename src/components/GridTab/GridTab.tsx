@@ -147,7 +147,7 @@ class GridTab extends React.Component<Props, State> {
             key={pane.id}
             closable={true}
           >
-            <Dashboard gridId={pane.id} />
+            <Dashboard gridId={pane.id} userId={this.props.userId} />
           </TabPane>
         ))}
       </Tabs>

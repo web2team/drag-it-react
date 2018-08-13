@@ -17,6 +17,7 @@ const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
 interface Props extends Styled {
   gridId: number;
+  userId: number;
 }
 interface State {
   gridDraggableLayout: GridDraggableLayout[];
@@ -64,7 +65,8 @@ class Dashboard extends React.Component<Props, State> {
     gridData: { key, x, y, w, h }
   }: GridDraggableLayout) => {
     const Component = getComponent(gridComponentType);
-
+    console.log(gridComponentProps);
+    
     return (
       <div
         key={key}
@@ -81,7 +83,7 @@ class Dashboard extends React.Component<Props, State> {
         <div className={`${DRAG_HANDLER_CLASSNAME} top-bar`} />
         <span className="top-button-X">X</span>
         <div className="component">
-          <Component {...gridComponentProps} />
+          <Component {...gridComponentProps} userId={this.props.userId} />
         </div>
       </div>
     );
