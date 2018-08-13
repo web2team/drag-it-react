@@ -15,19 +15,13 @@ const { Option } = Select;
 interface Props extends Styled {
   visible: boolean;
   form: any;
-  onDismiss: () => void;
+  onClose: () => void;
 }
 class DrawerForm extends React.Component<Props, any> {
   state = { visible: false };
 
-  showDrawer = () => {
-    this.setState({
-      visible: true
-    });
-  };
-
   onClose = () => {
-    this.props.onDismiss();
+    this.props.onClose();
   };
 
   render() {
@@ -175,7 +169,7 @@ class DrawerForm extends React.Component<Props, any> {
             >
               Cancel
             </Button>
-            <Button onClick={this.onClose} type="primary">
+            <Button  onClick={this.onClose} type="primary">
               Submit
             </Button>
           </div>

@@ -88,12 +88,21 @@ class Dashboard extends React.Component<Props, State> {
   };
 
   render() {
+    const breakpoints = {
+      lg: 1200,
+      md: 1000,
+      sm: 800,
+      xs: 600,
+      xxs: 0
+    };
+    const cols = { lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 };
+
     return (
       <div className={this.props.className}>
         <FloatingMenu gridId={this.props.gridId} />
         <ResponsiveReactGridLayout
-          breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600, xxs: 0 }}
-          cols={{ lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 }}
+          breakpoints={breakpoints}
+          cols={cols}
           onLayoutChange={this.onLayoutChange}
           rowHeight={30}
           draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}

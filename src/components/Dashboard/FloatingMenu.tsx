@@ -17,7 +17,7 @@ class FloatingMenu extends React.Component<Props, any> {
     this.setState({ drawerVisible: true });
   };
 
-  onDismiss = () => {
+  onClose = () => {
     this.setState({ drawerVisible: false });
   };
 
@@ -47,7 +47,7 @@ class FloatingMenu extends React.Component<Props, any> {
         </Menu>
         <ShowGridItemDrawer
           visible={this.state.drawerVisible}
-          onDismiss={this.onDismiss}
+          onClose={this.onClose}
         />
       </div>
     );

@@ -71,6 +71,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
 
     return (
       <div className={this.props.className} onScroll={this.onScroll}>
+        
         <Spin spinning={this.state.loading}>
           <ul>
             {getMessages.map((data, key) => (
