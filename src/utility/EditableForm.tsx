@@ -112,6 +112,7 @@ class EditableForm extends React.Component<Props, State> {
                     initialValue: data
                   })(
                     <Input
+                      style={{ width: "fitContent" }}
                       ref={(node) => (this.input = node)}
                       onPressEnter={this.save}
                     />
@@ -156,9 +157,14 @@ const styledEditableFormEditableForm = styled(EditableFormEditableForm as any)`
     }
   }
 
+  .editable-cell-edit-wrap .ant-row.ant-form-item {
+    margin: 0;
+  }
+
   .ant-form-explain {
     position: fixed !important;
     margin-top: 2px;
+    background-color: ghostwhite;
   }
 
   .ant-spin-blur {

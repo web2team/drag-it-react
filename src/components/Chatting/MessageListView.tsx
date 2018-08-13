@@ -82,7 +82,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
               <MessageItem key={key} {...data} />
             ))}
           </ul>
-          <div key={"1"} ref={(el) => (this.messagesEnd = el)} />
+          <div ref={(el) => (this.messagesEnd = el)} />
         </Spin>
       </Scrollbars>
     );
@@ -97,7 +97,7 @@ const styledMessageListView = styled(MessageListView)`
   flex: 1 1 auto;
 
   ul {
-    padding: 0 10px 0 10px;
+    padding: 0 15px 0 15px;
   }
 `;
 

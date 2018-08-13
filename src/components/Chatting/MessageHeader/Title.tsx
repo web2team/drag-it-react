@@ -1,11 +1,11 @@
 import * as React from "react";
 import { styled } from "theme";
-import { MESSAGE_HEADER_HEIGHT } from "theme/constant";
+
 import { Query } from "react-apollo";
-import { GET_MAP_USER_CHAT_THREAD, UPDATE_USER_CHAT_THREAD_NAME } from "./gql";
+import { GET_MAP_USER_CHAT_THREAD, UPDATE_USER_CHAT_THREAD_NAME } from "../gql";
 import { EditableForm } from "utility/EditableForm";
 
-const MessageHeader = ({ className, userId, chatThreadId }) => (
+const Title = ({ className, userId, chatThreadId }) => (
   <Query query={GET_MAP_USER_CHAT_THREAD} variables={{ userId, chatThreadId }}>
     {({ loading, error, data: { getMapUserChatThread } }) => {
       if (loading) {
@@ -35,9 +35,8 @@ const MessageHeader = ({ className, userId, chatThreadId }) => (
   </Query>
 );
 
-const styledMessageHeader = styled(MessageHeader)`
-  /* width: 100%; */
-  /* margin: ${MESSAGE_HEADER_HEIGHT}px 0; */
+const styledTitle = styled(Title)`
+  display: inline;
 `;
 
-export { styledMessageHeader as MessageHeader };
+export { styledTitle as Title };

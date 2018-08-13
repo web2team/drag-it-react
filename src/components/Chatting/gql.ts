@@ -49,7 +49,10 @@ export const GET_CHAT_THREAD = gql`
   query getChatThread($chatThreadId: ID!) {
     getChatThread(chatThreadId: $chatThreadId) {
       id
-      users
+      users {
+        id
+        name
+      }
     }
   }
 `;
