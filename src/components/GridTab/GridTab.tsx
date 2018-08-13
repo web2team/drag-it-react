@@ -136,7 +136,7 @@ class GridTab extends React.Component<Props, State> {
                 request={{
                   query: UPDATE_GRID_NAME,
                   variables: {
-                    grid_id: pane.id
+                    gridId: pane.id
                   }
                 }}
                 editable={true}

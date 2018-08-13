@@ -65,8 +65,7 @@ class Dashboard extends React.Component<Props, State> {
     gridData: { key, x, y, w, h }
   }: GridDraggableLayout) => {
     const Component = getComponent(gridComponentType);
-    console.log(gridComponentProps);
-    
+
     return (
       <div
         key={key}

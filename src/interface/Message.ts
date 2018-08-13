@@ -1,5 +1,7 @@
+import { User } from "interface/User";
+
 export interface Message {
-  username: string;
+  user: User;
   contents: string;
   createdAt: string;
 }

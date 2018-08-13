@@ -8,11 +8,11 @@ interface Props extends Message, Styled {
 }
 class MessageItem extends React.PureComponent<Props> {
   render() {
-    const { username, contents, createdAt, className } = this.props;
+    const { user, contents, createdAt, className } = this.props;
 
     return (
       <div className={className}>
-        <span className="username">{username}</span>
+        <span className="name">{user.name}</span>
         <span className="contents">{contents}</span>
         <div className="createdAt">[{createdAt}]</div>
       </div>
@@ -24,7 +24,7 @@ const styledMessageItem = styled(MessageItem)`
   margin-bottom: 1em;
   position: relative;
 
-  .username {
+  .name {
     font-weight: 800;
   }
   .contents {
