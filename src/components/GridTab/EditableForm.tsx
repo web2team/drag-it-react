@@ -65,12 +65,12 @@ class EditableForm extends React.Component<Props, State> {
       if (error) {
         return;
       }
-      this.setState({ loading: true });
-      this.toggleEdit();
-
       if (!this.props.request) {
         return;
       }
+      this.setState({ loading: true });
+      this.toggleEdit();
+
       const { query, variables } = this.props.request;
 
       const operation: any = {

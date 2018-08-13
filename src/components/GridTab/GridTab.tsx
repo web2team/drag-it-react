@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Styled } from "interface/global";
-import { Tabs, Spin } from "antd";
+import { Tabs, Modal, Button, Icon } from "antd";
 import { styled } from "theme";
 import { EditableForm } from "components/GridTab/EditableForm";
 import {
@@ -10,14 +10,18 @@ import {
   DELETE_GRID
 } from "components/GridTab/gql";
 import { excute } from "helper/apolloConfig";
+import { Dashboard } from "components/Dashboard";
 const TabPane = Tabs.TabPane;
+const confirm = Modal.confirm;
 
 interface Pane {
   id: number;
   name: string;
 }
 
-interface Props extends Styled {}
+interface Props extends Styled {
+  userId: number;
+}
 interface State {
   panes: Pane[];
   activeId: number;
@@ -35,7 +39,7 @@ class GridTab extends React.Component<Props, State> {
     const operation = {
       query: GET_GRIDS,
       variables: {
-        userId: 17
+        userId: this.props.userId
       }
     };
     excute(operation).then(({ data: { getGrids } }) => {
@@ -49,6 +53,7 @@ class GridTab extends React.Component<Props, State> {
   };
 
   onEdit = (targetId, action) => {
+    console.log(targetId);
     this[action](targetId);
   };
 
@@ -57,7 +62,7 @@ class GridTab extends React.Component<Props, State> {
       query: NEW_GRID,
       variables: {
         name: "newTab",
-        userId: 17
+        userId: this.props.userId
       }
     };
 
@@ -66,27 +71,50 @@ class GridTab extends React.Component<Props, State> {
     );
   };
 
-  remove = (targetId) => {
-    let activeId = this.state.activeId;
-    let lastIndex;
-    this.state.panes.forEach((pane, index) => {
-      if (pane.id === targetId) {
-        lastIndex = index - 1;
+  remove = (targetId: number) => {
+    const doRemove = (targetId: number) => {
+      let activeId = this.state.activeId;
+      let lastIndex;
+      this.state.panes.forEach((pane, index) => {
+        if (pane.id === targetId) {
+          lastIndex = index - 1;
+        }
+      });
+      const panes = this.state.panes.filter((pane) => pane.id !== targetId);
+      if (lastIndex >= 0 && activeId === targetId) {
+        activeId = panes[lastIndex].id;
+      }
+      this.setState({ panes, activeId });
+
+      const operation = {
+        query: DELETE_GRID,
+        variables: {
+          gridId: targetId
+        }
+      };
+      excute(operation);
+    };
+
+    confirm({
+      title: "Are you sure delete this task?",
+      content: "그리드 안의 모든 내용이 지워집니다. 계속하시겠습니까?",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      centered: true,
+      onOk() {
+        doRemove(targetId);
+
+        return new Promise((resolve) =>
+          setTimeout(() => {
+            resolve();
+          }, 1000)
+        );
+      },
+      onCancel() {
+        console.log("Cancel");
       }
     });
-    const panes = this.state.panes.filter((pane) => pane.id !== targetId);
-    if (lastIndex >= 0 && activeId === targetId) {
-      activeId = panes[lastIndex].id;
-    }
-    this.setState({ panes, activeId });
-
-    const operation = {
-      query: DELETE_GRID,
-      variables: {
-        gridId: targetId
-      }
-    };
-    excute(operation);
   };
 
   render() {
@@ -105,6 +133,7 @@ class GridTab extends React.Component<Props, State> {
           <TabPane
             tab={
               <EditableForm
+                key="1"
                 request={{
                   query: UPDATE_GRID_NAME,
                   variables: {
@@ -119,7 +148,7 @@ class GridTab extends React.Component<Props, State> {
             key={pane.id}
             closable={true}
           >
-            {"contenxt"}
+            <Dashboard gridId={pane.id} />
           </TabPane>
         ))}
       </Tabs>

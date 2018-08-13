@@ -57,7 +57,7 @@ const AuthContents = [
     key={getKey()}
     exact={true}
     path="/tab"
-    render={(props) => <GridTab />}
+    render={(props) => <GridTab userId={17} />}
   />,
   <Route
     key={getKey()}
