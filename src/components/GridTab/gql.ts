@@ -17,3 +17,18 @@ export const GET_GRIDS = gql`
     }
   }
 `;
+
+export const NEW_GRID = gql`
+  mutation newGrid($name: String!, $userId: ID!) {
+    newGrid(name: $name, userId: $userId) {
+      id
+      name
+    }
+  }
+`;
+
+export const DELETE_GRID = gql`
+  mutation deleteGrid($gridId: ID!) {
+    deleteGrid(gridId: $gridId)
+  }
+`;
