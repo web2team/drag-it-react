@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Styled } from "interface/global";
-import { Tabs } from "antd";
+import { Tabs, Spin } from "antd";
 import { styled } from "theme";
 import { EditableForm } from "components/GridTab/EditableForm";
 import {

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Input, Form } from "antd";
+import { Input, Form, Spin } from "antd";
 import { styled } from "theme";
 import { Styled } from "interface/global";
 import { excute } from "helper/apolloConfig";
-import { DocumentNode, GraphQLRequest } from "apollo-link";
+import { GraphQLRequest } from "apollo-link";
 
 const FormItem = Form.Item;
 interface Props extends Styled {
@@ -17,6 +17,7 @@ interface Props extends Styled {
 interface State {
   editing: boolean;
   data: any;
+  loading: boolean;
 }
 class EditableForm extends React.Component<Props, State> {
   input: any;
@@ -26,7 +27,8 @@ class EditableForm extends React.Component<Props, State> {
     super(props);
     this.state = {
       editing: false,
-      data: props.data || ""
+      data: props.data || "",
+      loading: false
     };
   }
 
@@ -63,10 +65,12 @@ class EditableForm extends React.Component<Props, State> {
       if (error) {
         return;
       }
+      this.setState({ loading: true });
+
       if (this.props.request) {
         const { query, variables } = this.props.request;
 
-        const operation = {
+        const operation: any = {
           query,
           variables: {
             ...variables,
@@ -74,10 +78,12 @@ class EditableForm extends React.Component<Props, State> {
           }
         };
 
-        // @ts-ignore
         const queryName = operation.query.definitions[0].name.value;
         excute(operation).then(({ data }) =>
-          this.setState({ data: data[queryName][this.props.dataFieldName] })
+          this.setState({
+            loading: false,
+            data: data[queryName][this.props.dataFieldName]
+          })
         );
       }
 
@@ -91,37 +97,39 @@ class EditableForm extends React.Component<Props, State> {
 
     return (
       <div className={this.props.className} ref={(node) => (this.cell = node)}>
-        {editable ? (
-          editing ? (
-            <div className="editable-cell-edit-wrap">
-              <FormItem>
-                {this.props.form.getFieldDecorator("formData", {
-                  rules: [
-                    {
-                      required: true,
-                      message: `내용을 입력해주세요.`
-                    }
-                  ],
-                  initialValue: data
-                })(
-                  <Input
-                    ref={(node) => (this.input = node)}
-                    onPressEnter={this.save}
-                  />
-                )}
-              </FormItem>
-            </div>
+        <Spin spinning={this.state.loading}>
+          {editable ? (
+            editing ? (
+              <div className="editable-cell-edit-wrap">
+                <FormItem>
+                  {this.props.form.getFieldDecorator("formData", {
+                    rules: [
+                      {
+                        required: true,
+                        message: `내용을 입력해주세요.`
+                      }
+                    ],
+                    initialValue: data
+                  })(
+                    <Input
+                      ref={(node) => (this.input = node)}
+                      onPressEnter={this.save}
+                    />
+                  )}
+                </FormItem>
+              </div>
+            ) : (
+              <div
+                className="editable-cell-value-wrap"
+                onDoubleClick={this.toggleEdit}
+              >
+                {data}
+              </div>
+            )
           ) : (
-            <div
-              className="editable-cell-value-wrap"
-              onDoubleClick={this.toggleEdit}
-            >
-              {data}
-            </div>
-          )
-        ) : (
-          data
-        )}
+            data
+          )}
+        </Spin>
       </div>
     );
   }
@@ -151,7 +159,11 @@ const styledEditableFormEditableForm = styled(EditableFormEditableForm as any)`
   .ant-form-explain {
     position: fixed !important;
     margin-top: 2px;
-  }  
+  }
+
+  .ant-spin-blur {
+    overflow: initial;
+  }
 `;
 
 export { styledEditableFormEditableForm as EditableForm };
