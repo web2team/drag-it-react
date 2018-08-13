@@ -66,28 +66,28 @@ class EditableForm extends React.Component<Props, State> {
         return;
       }
       this.setState({ loading: true });
-
-      if (this.props.request) {
-        const { query, variables } = this.props.request;
-
-        const operation: any = {
-          query,
-          variables: {
-            ...variables,
-            formData: values.formData
-          }
-        };
-
-        const queryName = operation.query.definitions[0].name.value;
-        excute(operation).then(({ data }) =>
-          this.setState({
-            loading: false,
-            data: data[queryName][this.props.dataFieldName]
-          })
-        );
-      }
-
       this.toggleEdit();
+
+      if (!this.props.request) {
+        return;
+      }
+      const { query, variables } = this.props.request;
+
+      const operation: any = {
+        query,
+        variables: {
+          ...variables,
+          formData: values.formData
+        }
+      };
+
+      const queryName = operation.query.definitions[0].name.value;
+      excute(operation).then(({ data }) =>
+        this.setState({
+          loading: false,
+          data: data[queryName][this.props.dataFieldName]
+        })
+      );
     });
   };
 
