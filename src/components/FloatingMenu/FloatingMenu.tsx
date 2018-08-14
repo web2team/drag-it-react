@@ -4,6 +4,7 @@ import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
 import { Styled } from "interface/global";
 import { ShowGridItemDrawer } from "./CreateGridItem";
+import { CreateChatting  } from "./CreateChatting";
 
 interface Props extends Styled {
   gridId: number;
@@ -45,7 +46,7 @@ class FloatingMenu extends React.Component<Props, any> {
             onClick={() => console.log("clicked")}
           />
         </Menu>
-        <ShowGridItemDrawer
+        <CreateChatting
           visible={this.state.drawerVisible}
           onClose={this.onClose}
         />

@@ -45,6 +45,8 @@ class TabContainer extends React.Component<Props, State> {
 
   onChange = (activeId) => {
     this.setState({ activeId });
+
+    // TODO: should update tabid(gridID) using mobx 
   };
 
   onEdit = (targetId, action) => {

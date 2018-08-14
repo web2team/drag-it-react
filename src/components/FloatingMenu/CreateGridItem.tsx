@@ -28,7 +28,6 @@ class DrawerForm extends React.Component<Props, any> {
         console.log(values);
         return;
       }
-      this.onClose();
       console.log(values);
     });
   };
@@ -196,7 +195,7 @@ class DrawerForm extends React.Component<Props, any> {
             >
               Cancel
             </Button>
-            <Button onClick={this.onSubmit} type="primary">
+            <Button onClick={this.onClose} type="primary">
               Submit
             </Button>
           </div>

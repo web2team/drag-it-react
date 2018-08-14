@@ -5,13 +5,14 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
-import { DRAG_HANDLER_HEIGHT } from "theme/constant";
+import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
 import { GridDraggableLayout, GridData } from "interface/Grid";
 import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
 import { GET_GRID_DRAGGABLE_LAYOUT, CHANGE_LAYOUT } from "./gql";
 import { FloatingMenu } from "components/FloatingMenu/FloatingMenu";
+import { Icon } from "antd";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
@@ -80,7 +81,9 @@ class GridLayout extends React.Component<Props, State> {
         className="with-draggable"
       >
         <div className={`${DRAG_HANDLER_CLASSNAME} top-bar`} />
-        <span className="top-button-X">X</span>
+        <span className="top-button-X">
+          <Icon type="close" />
+        </span>
         <div className="component">
           <Component {...gridComponentProps} {...this.props} />
         </div>
@@ -118,6 +121,9 @@ class GridLayout extends React.Component<Props, State> {
 const styledGridLayout = styled(GridLayout)`
   .with-draggable {
     border: 1px solid ${BORDER_COLOR};
+    border-radius: ${GRID_ITEM_BORDER_RADIUS}px;
+    overflow: hidden;
+
     display: flex;
     flex-flow: column;
 
@@ -138,9 +144,19 @@ const styledGridLayout = styled(GridLayout)`
 
   .top-button-X {
     position: absolute;
-    top: 0;
-    right: 2;
+    top: 3.3px;
+    right: 3px;
     cursor: pointer;
+  }
+
+  .react-resizable-handle {
+    background: 0 !important;
+    &::after {
+      border: 0 !important;
+    }
+  }
+  .react-grid-item.react-grid-placeholder.cssTransforms {
+    border-radius: ${GRID_ITEM_BORDER_RADIUS}px !important;
   }
 `;
 

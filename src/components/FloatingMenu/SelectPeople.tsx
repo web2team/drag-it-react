@@ -1,8 +1,12 @@
 import * as React from "react";
-
 import { Transfer } from "antd";
+import { Styled } from "interface/global";
+import { styled } from "theme";
 
-export class SelectPeople extends React.Component<any, any> {
+interface Props extends Styled {
+  onChange?: (updatedValue: any) => void;
+}
+class SelectPeople extends React.Component<Props, any> {
   state = {
     mockData: [],
     targetKeys: []
@@ -45,15 +49,25 @@ export class SelectPeople extends React.Component<any, any> {
   render() {
     return (
       <Transfer
+        className={this.props.className}
         dataSource={this.state.mockData}
         // showSearch={true}
-        
         filterOption={this.filterOption}
-        operations={["to add", "to remove"]}
+        operations={["to Add", "to Remove"]}
         targetKeys={this.state.targetKeys}
         onChange={this.handleChange}
         render={(item) => item.title}
+        notFoundContent="비었습니다."
       />
     );
   }
 }
+
+const styledSelectPeople = styled(SelectPeople)`
+  .ant-transfer-operation .ant-btn.ant-btn-primary.ant-btn-sm {
+    width: 100%;
+    text-align: left;
+  }
+`;
+
+export { styledSelectPeople as SelectPeople };
