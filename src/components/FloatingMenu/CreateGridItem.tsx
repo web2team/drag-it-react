@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { Styled } from "interface/global";
 const { Option } = Select;
+import { SelectPeople } from "./SelectPeople";
 
 interface Props extends Styled {
   visible: boolean;
@@ -20,6 +21,18 @@ interface Props extends Styled {
 class DrawerForm extends React.Component<Props, any> {
   state = { visible: false };
 
+  onSubmit = () => {
+    this.props.form.validateFields((err, values) => {
+      if (err) {
+        console.log(err);
+        console.log(values);
+        return;
+      }
+      this.onClose();
+      console.log(values);
+    });
+  };
+  
   onClose = () => {
     this.props.onClose();
   };
@@ -147,6 +160,20 @@ class DrawerForm extends React.Component<Props, any> {
                 </Form.Item>
               </Col>
             </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item label="select">
+                  {getFieldDecorator("select", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "please enter url description"
+                      }
+                    ]
+                  })(<SelectPeople />)}
+                </Form.Item>
+              </Col>
+            </Row>
           </Form>
           <div
             style={{
@@ -169,7 +196,7 @@ class DrawerForm extends React.Component<Props, any> {
             >
               Cancel
             </Button>
-            <Button  onClick={this.onClose} type="primary">
+            <Button onClick={this.onSubmit} type="primary">
               Submit
             </Button>
           </div>

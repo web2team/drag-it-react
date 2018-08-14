@@ -11,7 +11,7 @@ import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
 import { GET_GRID_DRAGGABLE_LAYOUT, CHANGE_LAYOUT } from "./gql";
-import { FloatingMenu } from "./FloatingMenu";
+import { FloatingMenu } from "components/FloatingMenu/FloatingMenu";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 

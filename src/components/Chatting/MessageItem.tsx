@@ -2,6 +2,7 @@ import * as React from "react";
 import { styled } from "theme";
 import { Message } from "interface/Message";
 import { Styled } from "interface/global";
+import Moment from "react-moment";
 
 interface Props extends Message, Styled {
   className?: string;
@@ -14,7 +15,9 @@ class MessageItem extends React.PureComponent<Props> {
       <div className={className}>
         <span className="name">{user.name}</span>
         <span className="contents">{contents}</span>
-        <div className="createdAt">[{createdAt}]</div>
+        <span className="createdAt">
+          <Moment date={createdAt} fromNow={true} ago={true} /> 전
+        </span>
       </div>
     );
   }
@@ -31,6 +34,8 @@ const styledMessageItem = styled(MessageItem)`
     padding: 0 10px 0 10px;
   }
   .createdAt {
+    color: darkgray;
+    font-size: 0.9em;
   }
 `;
 

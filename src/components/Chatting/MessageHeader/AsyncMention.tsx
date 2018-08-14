@@ -2,7 +2,7 @@ import * as React from "react";
 import { Mention } from "antd";
 import { styled } from "theme";
 
-const users = ["afc163", "benjycui", "yiminghe", "jljsj33", "dqaria", "RaoHai"];
+const users = ["afc163", "benjycui", "yiminghe", "jljsj33", "dqaria", "RaoHai", "가나다"];
 
 class AsyncMention extends React.Component {
   state = {
@@ -10,21 +10,23 @@ class AsyncMention extends React.Component {
     loading: false
   };
 
-  fetchSuggestions = (value, callback) => {
-    setTimeout(() => {
-      callback(users.filter((item) => item.indexOf(value) !== -1));
-    }, 500);
-  };
+  fetchSuggestions = (value) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(users.filter((item: string) => item.indexOf(value) !== -1));
+      }, 500);
+    });
 
   onSearchChange = (value) => {
-    this.fetchSuggestions(value, (suggestions) => {
+    this.setState({
+      loading: true
+    });
+
+    this.fetchSuggestions(value).then((suggestions) => {
       this.setState({
         suggestions,
         loading: false
       });
-    });
-    this.setState({
-      loading: true
     });
   };
 
