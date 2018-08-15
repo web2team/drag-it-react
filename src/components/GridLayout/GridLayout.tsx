@@ -10,9 +10,13 @@ import { GridLayoutItem, GridLayoutItemPosition } from "interface/GridLayout";
 import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
-import { GET_GRID_LAYOUT_ITEMS, UPDATE_GRID_LAYOUT } from "./gql";
+import {
+  GET_GRID_LAYOUT_ITEMS,
+  UPDATE_GRID_LAYOUT,
+  DELETE_GRID_LAYOUT_ITEM
+} from "./gql";
 import { FloatingMenu } from "components/FloatingMenu/FloatingMenu";
-import { Icon } from "antd";
+import { Icon, Popconfirm } from "antd";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
@@ -22,12 +26,14 @@ interface Props extends Styled {
 }
 interface State {
   gridLayoutItems: GridLayoutItem[];
+  popconfirmVisible: number;
 }
 class GridLayout extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      gridLayoutItems: []
+      gridLayoutItems: [],
+      popconfirmVisible: -1
     };
   }
 
@@ -67,18 +73,39 @@ class GridLayout extends React.Component<Props, State> {
     });
   };
 
-  withDraggable = ({
-    id,
-    gridLayoutItemType,
-    gridLayoutItemProps,
-    gridLayoutItemPosition: { key, x, y, w, h }
-  }: GridLayoutItem) => {
+  onVisibleChange = (key: number) => {
+    // this.setState({ popconfirmVisible: !this.state.popconfirmVisible });
+  };
+  onDeleteLayoutItem = (gridLayoutItemId: number) => {
+    const operation = {
+      query: DELETE_GRID_LAYOUT_ITEM,
+      variables: {
+        gridLayoutItemId
+      }
+    };
+    excute(operation)
+      .then((d) => console.log(d))
+      .catch(() => console.error("error on delete layout item"));
+    // this.onDismiss();
+  };
+  // onCancel = () => this.onDismiss();
+  // onDismiss = () => this.setState({ popconfirmVisible: false });
+
+  createGridLayoutItem = (
+    {
+      id,
+      gridLayoutItemType,
+      gridLayoutItemProps,
+      gridLayoutItemPosition: { key, x, y, w, h }
+    }: GridLayoutItem,
+    index: number
+  ) => {
     const Component = getComponent(gridLayoutItemType);
 
     return (
       <div
         key={id}
-        data-propsid={id}
+        data-itemid={id}
         data-grid={{
           x,
           y,
@@ -89,9 +116,15 @@ class GridLayout extends React.Component<Props, State> {
         className="with-draggable"
       >
         <div className={`${DRAG_HANDLER_CLASSNAME} top-bar`} />
-        <span className="top-button-X">
-          <Icon type="close" />
-        </span>
+        <Popconfirm
+          title="are you sure to delete?"
+          onConfirm={() => this.onDeleteLayoutItem(id)}
+          // onCancel={this.onCancel}
+        >
+          <span className="top-button-X">
+            <Icon type="close" />
+          </span>
+        </Popconfirm>
         <div className="component">
           <Component {...gridLayoutItemProps} {...this.props} />
         </div>
@@ -119,7 +152,7 @@ class GridLayout extends React.Component<Props, State> {
           rowHeight={30}
           draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
         >
-          {this.state.gridLayoutItems.map(this.withDraggable)}
+          {this.state.gridLayoutItems.map(this.createGridLayoutItem)}
         </ResponsiveReactGridLayout>
       </div>
     );

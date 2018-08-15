@@ -38,3 +38,9 @@ export const UPDATE_GRID_LAYOUT = gql`
     }
   }
 `;
+
+export const DELETE_GRID_LAYOUT_ITEM = gql`
+  mutation deleteGridLayoutItem($gridLayoutItemId: ID!) {
+    deleteGridLayoutItem(gridLayoutItemId: $gridLayoutItemId)
+  }
+`;
