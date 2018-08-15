@@ -3,9 +3,16 @@ import { Styled } from "interface/global";
 import { Tabs, Modal, Button, Icon } from "antd";
 import { styled } from "theme";
 import { EditableForm } from "utility/EditableForm";
-import { UPDATE_GRID_NAME, GET_GRIDS, NEW_GRID, DELETE_GRID } from "./gql";
+import {
+  UPDATE_GRID_LAYOUT_NAME,
+  GET_GRID_LAYOUTS,
+  NEW_GRID_LAYOUT,
+  DELETE_GRID_LAYOUT
+} from "./gql";
 import { excute } from "helper/apolloConfig";
 import { GridLayout } from "components/GridLayout";
+import { inject } from "mobx-react";
+import { GridState } from "state/gridState";
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
 
@@ -16,11 +23,13 @@ interface Pane {
 
 interface Props extends Styled {
   userId: number;
+  gridState?: GridState;
 }
 interface State {
   panes: Pane[];
   activeId: number;
 }
+@inject("gridState")
 class TabContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -32,21 +41,22 @@ class TabContainer extends React.Component<Props, State> {
   }
   componentDidMount() {
     const operation = {
-      query: GET_GRIDS,
+      query: GET_GRID_LAYOUTS,
       variables: {
         userId: this.props.userId
       }
     };
-    excute(operation).then(({ data: { getGrids } }) => {
-      const panes = getGrids.map((pane) => ({ ...pane }));
+    excute(operation).then(({ data: { getGridLayouts } }) => {
+      const panes = getGridLayouts.map((pane) => ({ ...pane }));
       this.setState({ panes, activeId: panes[0].id });
     });
   }
 
   onChange = (activeId) => {
     this.setState({ activeId });
+    this.props.gridState.currentGridLayoutId = activeId;
 
-    // TODO: should update tabid(gridID) using mobx 
+    // TODO: should update tabid(gridID) using mobx
   };
 
   onEdit = (targetId, action) => {
@@ -56,15 +66,15 @@ class TabContainer extends React.Component<Props, State> {
 
   add = () => {
     const operation = {
-      query: NEW_GRID,
+      query: NEW_GRID_LAYOUT,
       variables: {
         name: "newTab",
         userId: this.props.userId
       }
     };
 
-    excute(operation).then(({ data: { newGrid } }) =>
-      this.setState({ panes: [...this.state.panes, ...newGrid] })
+    excute(operation).then(({ data: { newGridLayout } }) =>
+      this.setState({ panes: [...this.state.panes, ...newGridLayout] })
     );
   };
 
@@ -84,9 +94,9 @@ class TabContainer extends React.Component<Props, State> {
       this.setState({ panes, activeId });
 
       const operation = {
-        query: DELETE_GRID,
+        query: DELETE_GRID_LAYOUT,
         variables: {
-          gridId: targetId
+          gridLayoutId: targetId
         }
       };
       excute(operation);
@@ -131,9 +141,9 @@ class TabContainer extends React.Component<Props, State> {
             tab={
               <EditableForm
                 request={{
-                  query: UPDATE_GRID_NAME,
+                  query: UPDATE_GRID_LAYOUT_NAME,
                   variables: {
-                    gridId: pane.id
+                    gridLayoutId: pane.id
                   }
                 }}
                 editable={true}
@@ -144,7 +154,7 @@ class TabContainer extends React.Component<Props, State> {
             key={pane.id}
             closable={true}
           >
-            <GridLayout gridId={pane.id} userId={this.props.userId} />
+            <GridLayout gridLayoutId={pane.id} userId={this.props.userId} />
           </TabPane>
         ))}
       </Tabs>

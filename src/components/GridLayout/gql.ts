@@ -1,10 +1,14 @@
 import gql from "graphql-tag";
 
-export const GET_GRID_DRAGGABLE_LAYOUT = gql`
-  query getGridDraggableLayout($gridId: ID!) {
-    getGridDraggableLayout(gridId: $gridId) {
+export const GET_GRID_LAYOUT_ITEMS = gql`
+  query getGridLayoutItems($gridLayoutId: ID!) {
+    getGridLayoutItems(gridLayoutId: $gridLayoutId) {
       id
-      gridData {
+      gridLayoutItemType
+      gridLayoutItemProps {
+        chatThreadId
+      }
+      gridLayoutItemPosition {
         key
         x
         y
@@ -12,24 +16,20 @@ export const GET_GRID_DRAGGABLE_LAYOUT = gql`
         h
         draggableHandle
       }
-      gridComponentType
-      gridComponentProps {
-        chatThreadId
-      }
     }
   }
 `;
 
-export const CHANGE_LAYOUT = gql`
+export const UPDATE_GRID_LAYOUT = gql`
   mutation updateGridLayout(
-    $gridId: ID!
-    $gridDraggablePropsId: ID!
-    $newGridData: GridDataInput!
+    $gridLayoutId: ID!
+    $gridLayoutItemId: ID!
+    $gridLayoutItemPosition: GridLayoutItemPositionInput!
   ) {
     updateGridLayout(
-      gridId: $gridId
-      gridDraggablePropsId: $gridDraggablePropsId
-      newGridData: $newGridData
+      gridLayoutId: $gridLayoutId
+      gridLayoutItemId: $gridLayoutItemId
+      gridLayoutItemPosition: $gridLayoutItemPosition
     ) {
       x
       y

@@ -7,19 +7,29 @@ import {
   Row,
   Input,
   Select,
-  DatePicker
+  DatePicker,
+  notification
 } from "antd";
 import { Styled } from "interface/global";
 const { Option } = Select;
 import { SelectPeople } from "./SelectPeople";
+import { excute } from "helper/apolloConfig";
+import { NEW_CHAT_THREAD } from "components/FloatingMenu/gql";
+import { inject } from "mobx-react";
+import { GridState } from "state/gridState";
 
 interface Props extends Styled {
   visible: boolean;
   form: any;
   onClose: () => void;
+  gridState?: GridState;
 }
-class CreateChatting extends React.Component<Props, any> {
-  state = { visible: false };
+interface State {
+  loading: boolean;
+}
+@inject("gridState")
+class CreateChatting extends React.Component<Props, State> {
+  state = { visible: false, loading: false };
 
   onSubmit = () => {
     this.props.form.validateFields((err, values) => {
@@ -28,8 +38,30 @@ class CreateChatting extends React.Component<Props, any> {
         console.log(values);
         return;
       }
-      this.onClose();
-      console.log(values);
+      this.setState({
+        loading: true
+      });
+
+      const operation = {
+        query: NEW_CHAT_THREAD,
+        variables: {
+          gridLayoutId: this.props.gridState.currentGridLayoutId,
+          users: values.users.map((user) => ({ id: user.userId })),
+          threadName: values.title
+        }
+      };
+      excute(operation)
+        .then(({ data }) => {
+          this.setState({ loading: false });
+          this.onClose();
+          console.log(data);
+        })
+        .catch((e) => {
+          notification.error({
+            message: "ERROR",
+            description: `${e.message}`
+          });
+        });
     });
   };
 
@@ -87,7 +119,7 @@ class CreateChatting extends React.Component<Props, any> {
             <Row>
               <Col>
                 <Form.Item label="Select People to Chat">
-                  {getFieldDecorator("people", {
+                  {getFieldDecorator("users", {
                     rules: [
                       {
                         required: true,
@@ -120,7 +152,11 @@ class CreateChatting extends React.Component<Props, any> {
             >
               Cancel
             </Button>
-            <Button onClick={this.onSubmit} type="primary">
+            <Button
+              onClick={this.onSubmit}
+              type="primary"
+              loading={this.state.loading}
+            >
               Submit
             </Button>
           </div>

@@ -6,52 +6,60 @@ import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
-import { GridDraggableLayout, GridData } from "interface/Grid";
+import { GridLayoutItem, GridLayoutItemPosition } from "interface/GridLayout";
 import { getComponent } from "./componentResolver";
 import { excute } from "helper/apolloConfig";
 import _ from "lodash";
-import { GET_GRID_DRAGGABLE_LAYOUT, CHANGE_LAYOUT } from "./gql";
+import { GET_GRID_LAYOUT_ITEMS, UPDATE_GRID_LAYOUT } from "./gql";
 import { FloatingMenu } from "components/FloatingMenu/FloatingMenu";
 import { Icon } from "antd";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
 interface Props extends Styled {
-  gridId: number;
+  gridLayoutId: number;
   userId: number;
 }
 interface State {
-  gridDraggableLayout: GridDraggableLayout[];
+  gridLayoutItems: GridLayoutItem[];
 }
 class GridLayout extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      gridDraggableLayout: []
+      gridLayoutItems: []
     };
   }
 
   componentDidMount() {
     const operation = {
-      query: GET_GRID_DRAGGABLE_LAYOUT,
+      query: GET_GRID_LAYOUT_ITEMS,
       variables: {
-        gridId: this.props.gridId
+        gridLayoutId: this.props.gridLayoutId
       }
     };
-    excute(operation).then(({ data: { getGridDraggableLayout } }) => {
-      this.setState({ gridDraggableLayout: getGridDraggableLayout });
+    excute(operation).then(({ data: { getGridLayoutItems } }) => {
+      this.setState({ gridLayoutItems: getGridLayoutItems });
     });
   }
 
-  onLayoutChange = (newGridDatas: any) => {
-    newGridDatas.map((newGridData) => {
-      const temp = _.omit(newGridData, ["i", "moved", "static"]);
+  onLayoutChange = (gridLayoutItemPositions: any) => {
+    gridLayoutItemPositions.map((gridLayoutItemPosition) => {
+      const tempPosition = _.omit(gridLayoutItemPosition, [
+        "i",
+        "moved",
+        "static"
+      ]);
+
       const operation = {
-        query: CHANGE_LAYOUT,
+        query: UPDATE_GRID_LAYOUT,
         variables: {
-          gridId: this.props.gridId,
-          gridDraggablePropsId: newGridData.i,
-          newGridData: { ...temp, isStatic: newGridData.static }
+          gridLayoutId: this.props.gridLayoutId,
+          gridLayoutItemId: gridLayoutItemPosition.i,
+          gridLayoutItemPosition: {
+            ...tempPosition,
+            isStatic: gridLayoutItemPosition.static
+          }
         }
       };
 
@@ -61,15 +69,15 @@ class GridLayout extends React.Component<Props, State> {
 
   withDraggable = ({
     id,
-    gridComponentType,
-    gridComponentProps,
-    gridData: { key, x, y, w, h }
-  }: GridDraggableLayout) => {
-    const Component = getComponent(gridComponentType);
+    gridLayoutItemType,
+    gridLayoutItemProps,
+    gridLayoutItemPosition: { key, x, y, w, h }
+  }: GridLayoutItem) => {
+    const Component = getComponent(gridLayoutItemType);
 
     return (
       <div
-        key={key}
+        key={id}
         data-propsid={id}
         data-grid={{
           x,
@@ -85,7 +93,7 @@ class GridLayout extends React.Component<Props, State> {
           <Icon type="close" />
         </span>
         <div className="component">
-          <Component {...gridComponentProps} {...this.props} />
+          <Component {...gridLayoutItemProps} {...this.props} />
         </div>
       </div>
     );
@@ -103,7 +111,7 @@ class GridLayout extends React.Component<Props, State> {
 
     return (
       <div className={this.props.className}>
-        <FloatingMenu gridId={this.props.gridId} />
+        <FloatingMenu gridId={this.props.gridLayoutId} />
         <ResponsiveReactGridLayout
           breakpoints={breakpoints}
           cols={cols}
@@ -111,7 +119,7 @@ class GridLayout extends React.Component<Props, State> {
           rowHeight={30}
           draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
         >
-          {this.state.gridDraggableLayout.map(this.withDraggable)}
+          {this.state.gridLayoutItems.map(this.withDraggable)}
         </ResponsiveReactGridLayout>
       </div>
     );
