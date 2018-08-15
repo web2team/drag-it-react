@@ -36,5 +36,20 @@ interface Operation {
   context?: any;
   extensions?: any;
 }
-export const excute = (operation: Operation) =>
+export const executePromise = (operation: Operation) =>
   makePromise(execute(link, operation));
+
+interface OnExecuteSubscribe {
+  next: (value: any) => void;
+  error: (error: any) => void;
+  complete: () => void;
+}
+export const executePromiseSubscribe = (
+  operation: Operation,
+  { next, error, complete }: OnExecuteSubscribe
+) =>
+  execute(link, operation).subscribe({
+    next,
+    error,
+    complete
+  });

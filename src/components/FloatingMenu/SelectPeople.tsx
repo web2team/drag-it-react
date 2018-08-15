@@ -3,7 +3,7 @@ import { Transfer } from "antd";
 import { Styled } from "interface/global";
 import { styled } from "theme";
 import { GET_PROJECT } from "components/FloatingMenu/gql";
-import { excute } from "helper/apolloConfig";
+import { executePromise } from "helper/apolloConfig";
 import { User } from "interface/User";
 import { ProjectState } from "state/projectState";
 import { inject } from "mobx-react";
@@ -31,7 +31,7 @@ class SelectPeople extends React.Component<Props, any> {
       }
     };
 
-    excute(operation).then(({ data: { getProject } }) => {
+    executePromise(operation).then(({ data: { getProject } }) => {
       const { users } = getProject;
       const data = users.map((user: User, index) => ({
         key: index,

@@ -8,7 +8,7 @@ import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
 import { GridLayoutItem, GridLayoutItemPosition } from "interface/GridLayout";
 import { getComponent } from "./componentResolver";
-import { excute } from "helper/apolloConfig";
+import { executePromise } from "helper/apolloConfig";
 import _ from "lodash";
 import {
   GET_GRID_LAYOUT_ITEMS,
@@ -26,14 +26,12 @@ interface Props extends Styled {
 }
 interface State {
   gridLayoutItems: GridLayoutItem[];
-  popconfirmVisible: number;
 }
 class GridLayout extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      gridLayoutItems: [],
-      popconfirmVisible: -1
+      gridLayoutItems: []
     };
   }
 
@@ -44,7 +42,7 @@ class GridLayout extends React.Component<Props, State> {
         gridLayoutId: this.props.gridLayoutId
       }
     };
-    excute(operation).then(({ data: { getGridLayoutItems } }) => {
+    executePromise(operation).then(({ data: { getGridLayoutItems } }) => {
       this.setState({ gridLayoutItems: getGridLayoutItems });
     });
   }
@@ -69,13 +67,10 @@ class GridLayout extends React.Component<Props, State> {
         }
       };
 
-      excute(operation);
+      executePromise(operation);
     });
   };
 
-  onVisibleChange = (key: number) => {
-    // this.setState({ popconfirmVisible: !this.state.popconfirmVisible });
-  };
   onDeleteLayoutItem = (gridLayoutItemId: number) => {
     const operation = {
       query: DELETE_GRID_LAYOUT_ITEM,
@@ -83,23 +78,17 @@ class GridLayout extends React.Component<Props, State> {
         gridLayoutItemId
       }
     };
-    excute(operation)
+    executePromise(operation)
       .then((d) => console.log(d))
       .catch(() => console.error("error on delete layout item"));
-    // this.onDismiss();
   };
-  // onCancel = () => this.onDismiss();
-  // onDismiss = () => this.setState({ popconfirmVisible: false });
 
-  createGridLayoutItem = (
-    {
-      id,
-      gridLayoutItemType,
-      gridLayoutItemProps,
-      gridLayoutItemPosition: { key, x, y, w, h }
-    }: GridLayoutItem,
-    index: number
-  ) => {
+  createGridLayoutItem = ({
+    id,
+    gridLayoutItemType,
+    gridLayoutItemProps,
+    gridLayoutItemPosition: { key, x, y, w, h }
+  }: GridLayoutItem) => {
     const Component = getComponent(gridLayoutItemType);
 
     return (
@@ -119,7 +108,6 @@ class GridLayout extends React.Component<Props, State> {
         <Popconfirm
           title="are you sure to delete?"
           onConfirm={() => this.onDeleteLayoutItem(id)}
-          // onCancel={this.onCancel}
         >
           <span className="top-button-X">
             <Icon type="close" />

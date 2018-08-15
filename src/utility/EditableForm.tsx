@@ -2,7 +2,7 @@ import * as React from "react";
 import { Input, Form, Spin } from "antd";
 import { styled } from "theme";
 import { Styled } from "interface/global";
-import { excute } from "helper/apolloConfig";
+import { executePromise } from "helper/apolloConfig";
 import { GraphQLRequest } from "apollo-link";
 
 const FormItem = Form.Item;
@@ -82,7 +82,7 @@ class EditableForm extends React.Component<Props, State> {
       };
 
       const queryName = operation.query.definitions[0].name.value;
-      excute(operation).then(({ data }) =>
+      executePromise(operation).then(({ data }) =>
         this.setState({
           loading: false,
           data: data[queryName][this.props.dataFieldName]

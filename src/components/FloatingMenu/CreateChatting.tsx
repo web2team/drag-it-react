@@ -13,7 +13,7 @@ import {
 import { Styled } from "interface/global";
 const { Option } = Select;
 import { SelectPeople } from "./SelectPeople";
-import { excute } from "helper/apolloConfig";
+import { executePromise } from "helper/apolloConfig";
 import { NEW_CHAT_THREAD } from "components/FloatingMenu/gql";
 import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
@@ -50,7 +50,7 @@ class CreateChatting extends React.Component<Props, State> {
           threadName: values.title
         }
       };
-      excute(operation)
+      executePromise(operation)
         .then(({ data }) => {
           this.setState({ loading: false });
           this.onClose();

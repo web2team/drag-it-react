@@ -9,7 +9,7 @@ import {
   NEW_GRID_LAYOUT,
   DELETE_GRID_LAYOUT
 } from "./gql";
-import { excute } from "helper/apolloConfig";
+import { executePromise } from "helper/apolloConfig";
 import { GridLayout } from "components/GridLayout";
 import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
@@ -46,7 +46,7 @@ class TabContainer extends React.Component<Props, State> {
         userId: this.props.userId
       }
     };
-    excute(operation).then(({ data: { getGridLayouts } }) => {
+    executePromise(operation).then(({ data: { getGridLayouts } }) => {
       const panes = getGridLayouts.map((pane) => ({ ...pane }));
       this.setState({ panes, activeId: panes[0].id });
     });
@@ -73,7 +73,7 @@ class TabContainer extends React.Component<Props, State> {
       }
     };
 
-    excute(operation).then(({ data: { newGridLayout } }) =>
+    executePromise(operation).then(({ data: { newGridLayout } }) =>
       this.setState({ panes: [...this.state.panes, ...newGridLayout] })
     );
   };
@@ -99,7 +99,7 @@ class TabContainer extends React.Component<Props, State> {
           gridLayoutId: targetId
         }
       };
-      excute(operation);
+      executePromise(operation);
     };
 
     confirm({
