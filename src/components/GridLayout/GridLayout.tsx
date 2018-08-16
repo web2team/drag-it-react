@@ -6,7 +6,11 @@ import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
-import { GridLayoutItem, GridLayoutItemPosition, GridLayoutProps } from "interface/GridLayout";
+import {
+  GridLayoutItem,
+  GridLayoutItemPosition,
+  GridLayoutProps
+} from "interface/GridLayout";
 import { getComponent } from "./componentResolver";
 import { executePromise } from "helper/apolloConfig";
 import _ from "lodash";
@@ -39,6 +43,7 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
       }
     };
     executePromise(operation).then(({ data: { getGridLayoutItems } }) => {
+      console.log(getGridLayoutItems);
       this.setState({ gridLayoutItems: getGridLayoutItems });
     });
   }
@@ -75,7 +80,15 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
       }
     };
     executePromise(operation)
-      .then((d) => console.log(d))
+      .then((d) => {
+        console.log(d);
+        
+        this.setState({
+          gridLayoutItems: this.state.gridLayoutItems.filter(
+            (item) => item.id !== gridLayoutItemId
+          )
+        });
+      })
       .catch(() => console.error("error on delete layout item"));
   };
 
