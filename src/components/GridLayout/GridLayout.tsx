@@ -6,7 +6,7 @@ import "react-resizable/css/styles.css";
 import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
-import { GridLayoutItem, GridLayoutItemPosition } from "interface/GridLayout";
+import { GridLayoutItem, GridLayoutItemPosition, GridLayoutProps } from "interface/GridLayout";
 import { getComponent } from "./componentResolver";
 import { executePromise } from "helper/apolloConfig";
 import _ from "lodash";
@@ -20,14 +20,10 @@ import { Icon, Popconfirm } from "antd";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
-interface Props extends Styled {
-  gridLayoutId: number;
-  userId: number;
-}
 interface State {
   gridLayoutItems: GridLayoutItem[];
 }
-class GridLayout extends React.Component<Props, State> {
+class GridLayout extends React.Component<GridLayoutProps, State> {
   constructor(props: any) {
     super(props);
     this.state = {

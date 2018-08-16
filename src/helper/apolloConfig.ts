@@ -8,13 +8,15 @@ import { getMainDefinition } from "apollo-utilities";
 import { execute, makePromise } from "apollo-link";
 
 const httpLink = createHttpLink({
-  uri: APOLLO_CLIENT_URL
+  uri: APOLLO_CLIENT_URL,
+
 });
 const wsLink = new WebSocketLink({
   uri: APOLLO_SUBSCRIPTION_URL,
   options: {
     reconnect: true
-  }
+  },
+  
 });
 
 export const link = split(

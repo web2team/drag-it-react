@@ -4,9 +4,13 @@ import { styled } from "theme";
 import { Query } from "react-apollo";
 import { GET_MAP_USER_CHAT_THREAD, UPDATE_USER_CHAT_THREAD_NAME } from "../gql";
 import { EditableForm } from "utility/EditableForm";
+import { ChattingProps } from "interface/Chat";
 
-const Title = ({ className, userId, chatThreadId }) => (
-  <Query query={GET_MAP_USER_CHAT_THREAD} variables={{ userId, chatThreadId }}>
+const Title = ({ className, userId, chatThread }: ChattingProps) => (
+  <Query
+    query={GET_MAP_USER_CHAT_THREAD}
+    variables={{ userId, chatThreadId: chatThread.id }}
+  >
     {({ loading, error, data: { getMapUserChatThread } }) => {
       if (loading) {
         return <p>Loading...</p>;
@@ -22,7 +26,7 @@ const Title = ({ className, userId, chatThreadId }) => (
               query: UPDATE_USER_CHAT_THREAD_NAME,
               variables: {
                 userId,
-                chatThreadId
+                chatThreadId: chatThread.id
               }
             }}
             editable={true}

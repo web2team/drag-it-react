@@ -3,8 +3,9 @@ import { styled } from "theme";
 import { MESSAGE_HEADER_HEIGHT } from "theme/constant";
 import { Title } from "./Title";
 import { PeopleList } from "components/Chatting/MessageHeader/PeopleList";
+import { ChattingProps } from "interface/Chat";
 
-const MessageHeader = ({ className, ...props }: any) => (
+const MessageHeader = ({ className, ...props }: ChattingProps) => (
   <div className={className}>
     <Title {...props} />
     <PeopleList {...props} />

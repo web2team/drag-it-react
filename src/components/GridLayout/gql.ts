@@ -6,7 +6,13 @@ export const GET_GRID_LAYOUT_ITEMS = gql`
       id
       gridLayoutItemType
       gridLayoutItemProps {
-        chatThreadId
+        chatThread {
+          id
+          users {
+            id
+            name
+          }
+        }
       }
       gridLayoutItemPosition {
         key

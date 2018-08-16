@@ -3,14 +3,10 @@ import { styled } from "theme";
 import { Tag, Input, Tooltip, Icon } from "antd";
 import { Query } from "react-apollo";
 import { GET_CHAT_THREAD } from "../gql";
-import { Styled } from "interface/global";
 import { AsyncMention } from "./AsyncMention";
+import { ChattingProps } from "interface/Chat";
 
-interface Props extends Styled {
-  chatThreadId: number;
-}
-
-class PeopleList extends React.Component<Props, any> {
+class PeopleList extends React.Component<ChattingProps, any> {
   state = {
     inputVisible: false,
     inputValue: ""
@@ -43,7 +39,9 @@ class PeopleList extends React.Component<Props, any> {
 
   render() {
     const { inputVisible, inputValue } = this.state;
-    const { chatThreadId } = this.props;
+    const {
+      chatThread: { id: chatThreadId }
+    } = this.props;
     const tagColors = [
       "magenta",
       "red",

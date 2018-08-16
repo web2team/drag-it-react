@@ -3,18 +3,14 @@ import { Input, Button } from "antd";
 import { Mutation } from "react-apollo";
 import { NEW_CHAT_MESSAGE } from "./gql";
 import { styled } from "theme";
-import { Styled } from "interface/global";
+import { ChattingProps } from "interface/Chat";
 const Search = Input.Search;
 
-interface Props extends Styled {
-  chatThreadId: number;
-  userId: number;
-}
 interface State {
   value: string;
   sending: boolean;
 }
-class MessageInput extends React.Component<Props, State> {
+class MessageInput extends React.Component<ChattingProps, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -38,7 +34,7 @@ class MessageInput extends React.Component<Props, State> {
       variables: {
         contents: trimmedValue,
         userId: this.props.userId,
-        chatThreadId: this.props.chatThreadId
+        chatThreadId: this.props.chatThread.id
       }
     });
   };

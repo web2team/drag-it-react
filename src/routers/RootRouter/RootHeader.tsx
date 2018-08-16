@@ -64,11 +64,6 @@ const NormalMenuItems = [
 
 const AuthMenuItems = [
   <Menu.Item key={getKey()}>
-    <Link to="dashboard">
-      <span>Dashboard</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key={getKey()}>
     <Link to="calendar">
       <span>Calendar</span>
     </Link>
@@ -76,11 +71,6 @@ const AuthMenuItems = [
   <Menu.Item key={getKey()}>
     <Link to="tab">
       <span>Tab</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key={getKey()}>
-    <Link to="chat">
-      <span>Chatting</span>
     </Link>
   </Menu.Item>,
   <Menu.Item key={getKey()}>

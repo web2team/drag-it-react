@@ -29,27 +29,6 @@ export const RootContents = ({ userId }) => {
     <Route
       key={getKey()}
       exact={true}
-      path="/dashboard"
-      render={(props) => <GridLayout gridId={1} />}
-    />,
-    <Route
-      key={getKey()}
-      exact={true}
-      path="/chat"
-      render={(props) => (
-        <Chatting
-          gridProps={{
-            x: 1,
-            y: 1,
-            w: 1,
-            h: 1
-          }}
-        />
-      )}
-    />,
-    <Route
-      key={getKey()}
-      exact={true}
       path="/tab"
       render={(props) => <TabContainer userId={userId} />}
     />,

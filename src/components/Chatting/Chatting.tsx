@@ -3,8 +3,9 @@ import { styled } from "theme";
 import { MessageListContainer } from "./MessageListContainer";
 import { MessageInput } from "./MessageInput";
 import { MessageHeader } from "./MessageHeader";
+import { ChattingProps } from "interface/Chat";
 
-const Chatting = ({ className, ...props }: any) => (
+const Chatting = ({ className, ...props }: ChattingProps) => (
   <div className={className}>
     <MessageHeader {...props} />
     <MessageListContainer {...props} />

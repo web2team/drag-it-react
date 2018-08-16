@@ -2,9 +2,12 @@ import * as React from "react";
 import { Query } from "react-apollo";
 import { MessageListView } from "./MessageListView";
 import { GET_CHAT_MESSAGES, LINK_CHAT_MESSAGES } from "./gql";
+import { ChatThread, ChattingProps } from "interface/Chat";
 
 const LOAD_SIZE = 30;
-export const MessageListContainer = ({ chatThreadId }) => (
+export const MessageListContainer = ({
+  chatThread: { id: chatThreadId }
+}: ChattingProps) => (
   <Query
     query={GET_CHAT_MESSAGES}
     variables={{ chatThreadId, page: 0, size: LOAD_SIZE }}

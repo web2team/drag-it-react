@@ -1,3 +1,11 @@
+import { ChatThread } from "interface/Chat";
+import { Styled } from "interface/global";
+
+export interface GridLayoutProps extends Styled {
+  gridLayoutId: number;
+  userId: number;
+}
+
 export enum GridLayoutItemType {
   CHATTING = "CHATTING"
 }
@@ -30,5 +38,5 @@ export interface GridLayoutItemPosition {
 
 export interface GridLayoutItemProps {
   id: number;
-  chatThreadId?: number;
+  chatThread?: ChatThread;
 }
