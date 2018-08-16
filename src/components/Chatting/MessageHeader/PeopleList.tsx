@@ -82,12 +82,12 @@ class PeopleList extends React.Component<ChattingProps, any> {
               {getChatThread.users.map(({ name: tag }, index) => {
                 const isLongTag = tag.length > 10;
                 const tagElem = (
-                  <Tag key={tag} closable={false} color={getRandomColor()}>
+                  <Tag key={index} closable={false} color={getRandomColor()}>
                     {isLongTag ? `${tag.slice(0, 10)}...` : tag}
                   </Tag>
                 );
                 return isLongTag ? (
-                  <Tooltip title={tag} key={tag}>
+                  <Tooltip title={tag} key={index}>
                     {tagElem}
                   </Tooltip>
                 ) : (
@@ -106,14 +106,14 @@ class PeopleList extends React.Component<ChattingProps, any> {
                   onPressEnter={this.handleInputConfirm}
                 />
               )}
-              {!inputVisible && (
+              {/* {!inputVisible && (
                 <Tag
                   onClick={this.showInput}
                   style={{ background: "#fff", borderStyle: "dashed" }}
                 >
                   <Icon type="plus" /> New Tag
                 </Tag>
-              )}
+              )} */}
               <AsyncMention />
             </div>
           );

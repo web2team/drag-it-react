@@ -3,7 +3,6 @@ import { styled } from "theme";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { Styled } from "interface/global";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
 import {
@@ -12,12 +11,13 @@ import {
   GridLayoutProps
 } from "interface/GridLayout";
 import { getComponent } from "./componentResolver";
-import { executePromise } from "helper/apolloConfig";
+import { executePromise, executePromiseSubscribe } from "helper/apolloConfig";
 import _ from "lodash";
 import {
   GET_GRID_LAYOUT_ITEMS,
   UPDATE_GRID_LAYOUT,
-  DELETE_GRID_LAYOUT_ITEM
+  DELETE_GRID_LAYOUT_ITEM,
+  LINK_GRID_LAYOUT_ITEM
 } from "./gql";
 import { FloatingMenu } from "components/FloatingMenu/FloatingMenu";
 import { Icon, Popconfirm } from "antd";
@@ -36,6 +36,11 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
   }
 
   componentDidMount() {
+    this.fetchItems();
+    this.subscribeItems();
+  }
+
+  fetchItems = () => {
     const operation = {
       query: GET_GRID_LAYOUT_ITEMS,
       variables: {
@@ -46,7 +51,24 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
       console.log(getGridLayoutItems);
       this.setState({ gridLayoutItems: getGridLayoutItems });
     });
-  }
+  };
+
+  subscribeItems = () => {
+    const operation = {
+      query: LINK_GRID_LAYOUT_ITEM,
+      variables: {
+        gridLayoutId: this.props.gridLayoutId
+      }
+    };
+    executePromiseSubscribe(operation, {
+      next: ({ data: { linkGridLayoutItem } }) => {
+        console.log(linkGridLayoutItem);
+        this.setState({
+          gridLayoutItems: [...this.state.gridLayoutItems, linkGridLayoutItem]
+        });
+      }
+    });
+  };
 
   onLayoutChange = (gridLayoutItemPositions: any) => {
     gridLayoutItemPositions.map((gridLayoutItemPosition) => {
@@ -79,10 +101,9 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
         gridLayoutItemId
       }
     };
+
     executePromise(operation)
-      .then((d) => {
-        console.log(d);
-        
+      .then(() => {
         this.setState({
           gridLayoutItems: this.state.gridLayoutItems.filter(
             (item) => item.id !== gridLayoutItemId

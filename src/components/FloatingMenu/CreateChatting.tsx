@@ -14,9 +14,10 @@ import { Styled } from "interface/global";
 const { Option } = Select;
 import { SelectPeople } from "./SelectPeople";
 import { executePromise } from "helper/apolloConfig";
-import { NEW_CHAT_THREAD } from "components/FloatingMenu/gql";
+import { NEW_GRID_LAYOUT_ITEM } from "components/FloatingMenu/gql";
 import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
+import { GridLayoutItemType } from "interface/GridLayout";
 
 interface Props extends Styled {
   visible: boolean;
@@ -41,13 +42,18 @@ class CreateChatting extends React.Component<Props, State> {
       this.setState({
         loading: true
       });
-
+      console.log(values);
       const operation = {
-        query: NEW_CHAT_THREAD,
+        query: NEW_GRID_LAYOUT_ITEM,
         variables: {
           gridLayoutId: this.props.gridState.currentGridLayoutId,
-          users: values.users.map((user) => ({ id: user.userId })),
-          threadName: values.title
+          gridLayoutItemType: GridLayoutItemType.CHATTING,
+          gridLayoutItemPropsInput: {
+            chatThreadInput: {
+              threadName: values.title,
+              users: values.users.map((user) => ({ id: user.userId }))
+            }
+          }
         }
       };
       executePromise(operation)

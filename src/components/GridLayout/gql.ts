@@ -50,3 +50,29 @@ export const DELETE_GRID_LAYOUT_ITEM = gql`
     deleteGridLayoutItem(gridLayoutItemId: $gridLayoutItemId)
   }
 `;
+
+export const LINK_GRID_LAYOUT_ITEM = gql`
+  subscription linkGridLayoutItem($gridLayoutId: ID!) {
+    linkGridLayoutItem(gridLayoutId: $gridLayoutId) {
+      id
+      gridLayoutItemType
+      gridLayoutItemProps {
+        chatThread {
+          id
+          users {
+            id
+            name
+          }
+        }
+      }
+      gridLayoutItemPosition {
+        key
+        x
+        y
+        w
+        h
+        draggableHandle
+      }
+    }
+  }
+`;

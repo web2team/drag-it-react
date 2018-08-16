@@ -43,8 +43,8 @@ export const executePromise = (operation: Operation) =>
 
 interface OnExecuteSubscribe {
   next: (value: any) => void;
-  error: (error: any) => void;
-  complete: () => void;
+  error?: (error: any) => void;
+  complete?: () => void;
 }
 export const executePromiseSubscribe = (
   operation: Operation,
