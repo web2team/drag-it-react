@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Transfer } from "antd";
+import { Transfer, Spin } from "antd";
 import { Styled } from "interface/global";
 import { styled } from "theme";
 import { GET_PROJECT } from "components/FloatingMenu/gql";
@@ -12,9 +12,15 @@ interface Props extends Styled {
   onChange?: (updatedValue: any) => void;
   projectState?: ProjectState;
 }
+interface State {
+  loading: boolean;
+  data: { key: number; userId: number; title: string; chosen: boolean }[];
+  targetKeys: string[];
+}
 @inject("projectState")
-class SelectPeople extends React.Component<Props, any> {
+class SelectPeople extends React.Component<Props, State> {
   state = {
+    loading: false,
     data: [],
     targetKeys: []
   };
@@ -30,7 +36,7 @@ class SelectPeople extends React.Component<Props, any> {
         projectId
       }
     };
-
+    this.setState({ loading: true });
     executePromise(operation).then(({ data: { getProject } }) => {
       const { users } = getProject;
       const data = users.map((user: User, index) => ({
@@ -39,7 +45,7 @@ class SelectPeople extends React.Component<Props, any> {
         title: `${user.name} (${user.email})`,
         chosen: false
       }));
-      this.setState({ data });
+      this.setState({ data, loading: false });
     });
   };
 
@@ -57,17 +63,19 @@ class SelectPeople extends React.Component<Props, any> {
 
   render() {
     return (
-      <Transfer
-        className={this.props.className}
-        dataSource={this.state.data}
-        // showSearch={true}
-        filterOption={this.filterOption}
-        operations={["to Add", "to Remove"]}
-        targetKeys={this.state.targetKeys}
-        onChange={this.handleChange}
-        render={(item) => item.title}
-        notFoundContent="비었습니다."
-      />
+      <Spin spinning={this.state.loading}>
+        <Transfer
+          className={this.props.className}
+          dataSource={this.state.data}
+          // showSearch={true}
+          filterOption={this.filterOption}
+          operations={["to Add", "to Remove"]}
+          targetKeys={this.state.targetKeys}
+          onChange={this.handleChange}
+          render={(item) => item.title}
+          notFoundContent="비었습니다."
+        />
+      </Spin>
     );
   }
 }

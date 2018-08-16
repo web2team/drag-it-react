@@ -4,7 +4,7 @@ import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
 import { Styled } from "interface/global";
 import { ShowGridItemDrawer } from "./CreateGridItem";
-import { CreateChatting  } from "./CreateChatting";
+import { CreateChatting } from "./CreateChatting";
 
 interface Props extends Styled {
   gridId: number;
