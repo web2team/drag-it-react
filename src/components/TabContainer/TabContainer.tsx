@@ -13,6 +13,7 @@ import { executePromise } from "helper/apolloConfig";
 import { GridLayout } from "components/GridLayout";
 import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
+import { NotificationCenter } from "components/NotificationCenter";
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
 
@@ -47,12 +48,15 @@ class TabContainer extends React.Component<Props, State> {
       }
     };
     executePromise(operation).then(({ data: { getGridLayouts } }) => {
+      console.log(getGridLayouts);
+
       const panes = getGridLayouts.map((pane) => ({ ...pane }));
       this.setState({ panes, activeId: panes[0].id });
     });
   }
 
   onChange = (activeId) => {
+    console.log(activeId);
     this.setState({ activeId });
     this.props.gridState.currentGridLayoutId = activeId;
 
@@ -126,38 +130,41 @@ class TabContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <Tabs
-        onChange={this.onChange}
-        onEdit={this.onEdit}
-        activeKey={this.state.activeId + ""}
-        type="editable-card"
-        tabBarGutter={10}
-        tabBarExtraContent={"extra"}
-        tabPosition="top"
-        className={this.props.className}
-      >
-        {this.state.panes.map((pane) => (
-          <TabPane
-            tab={
-              <EditableForm
-                request={{
-                  query: UPDATE_GRID_LAYOUT_NAME,
-                  variables: {
-                    gridLayoutId: pane.id
-                  }
-                }}
-                editable={true}
-                data={pane.name}
-                dataFieldName="name"
-              />
-            }
-            key={pane.id}
-            closable={true}
-          >
-            <GridLayout gridLayoutId={pane.id} userId={this.props.userId} />
-          </TabPane>
-        ))}
-      </Tabs>
+      <div>
+        <NotificationCenter userId={this.props.userId} />
+        <Tabs
+          onChange={this.onChange}
+          onEdit={this.onEdit}
+          activeKey={this.state.activeId + ""}
+          type="editable-card"
+          tabBarGutter={10}
+          tabBarExtraContent={"extra"}
+          tabPosition="top"
+          className={this.props.className}
+        >
+          {this.state.panes.map((pane) => (
+            <TabPane
+              tab={
+                <EditableForm
+                  request={{
+                    query: UPDATE_GRID_LAYOUT_NAME,
+                    variables: {
+                      gridLayoutId: pane.id
+                    }
+                  }}
+                  editable={true}
+                  data={pane.name}
+                  dataFieldName="name"
+                />
+              }
+              key={pane.id}
+              closable={true}
+            >
+              <GridLayout gridLayoutId={pane.id} userId={this.props.userId} />
+            </TabPane>
+          ))}
+        </Tabs>
+      </div>
     );
   }
 }
