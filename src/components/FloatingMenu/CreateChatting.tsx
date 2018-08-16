@@ -91,6 +91,7 @@ class CreateChatting extends React.Component<Props, State> {
             overflow: "auto",
             paddingBottom: 53
           }}
+          zIndex={3000}
           destroyOnClose={true}
         >
           <Form layout="vertical">
