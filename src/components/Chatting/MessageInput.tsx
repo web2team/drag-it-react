@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, Button } from "antd";
+import { Input, Button, Spin } from "antd";
 import { Mutation } from "react-apollo";
 import { NEW_CHAT_MESSAGE } from "./gql";
 import { styled } from "theme";
@@ -28,6 +28,9 @@ class MessageInput extends React.Component<ChattingProps, State> {
     if (!trimmedValue) {
       return;
     }
+    if (this.state.sending) {
+      return;
+    }
 
     this.setState({ value: "", sending: true });
     newChatMessage({
@@ -48,13 +51,15 @@ class MessageInput extends React.Component<ChattingProps, State> {
       <Mutation mutation={NEW_CHAT_MESSAGE} onCompleted={this.onCompleted}>
         {(newChatMessage, { data }) => (
           <div className={this.props.className}>
-            <Search
-              placeholder="내용을 입력해주세요"
-              enterButton="Enter"
-              onSearch={this.handleSubmit(newChatMessage)}
-              value={this.state.value}
-              onChange={this.onChange}
-            />
+            <Spin spinning={this.state.sending}>
+              <Search
+                placeholder="내용을 입력해주세요"
+                enterButton="Enter"
+                onSearch={this.handleSubmit(newChatMessage)}
+                value={this.state.value}
+                onChange={this.onChange}
+              />
+            </Spin>
           </div>
         )}
       </Mutation>
