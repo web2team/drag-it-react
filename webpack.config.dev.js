@@ -1,102 +1,100 @@
-const path = require('path');
+const path = require("path");
 
-const tsImportPlugin = require('ts-import-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const tsImportPlugin = require("ts-import-plugin");
+const Dotenv = require("dotenv-webpack");
+const fs = require("fs");
 
 module.exports = {
-  entry: path.resolve('src/index.tsx'),
+  entry: path.resolve("src/index.tsx"),
   output: {
-    filename: 'bundle.js',
-    path: path.resolve('dist'),
+    filename: "bundle.js",
+    path: path.resolve("dist"),
     publicPath: "/"
   },
-  devtool: 'inline-source-map',
-  mode: 'development',
+  devtool: "inline-source-map",
+  mode: "development",
   resolve: {
-    extensions: ['.js', '.json', '.ts', '.tsx'],
+    modules: [path.resolve("node_modules/"), path.resolve("src/")],
+    extensions: [".js", ".json", ".ts", ".tsx"],
     alias: {
-      src: path.resolve(__dirname, 'src/'),
-      components: path.resolve(__dirname, 'src/components/'),
-      theme: path.resolve(__dirname, 'src/theme/'),
-      routers: path.resolve(__dirname, 'src/routers/'),
-      constants: path.resolve(__dirname, 'src/constants/'),
-      state: path.resolve(__dirname, 'src/state/'),
-      request: path.resolve(__dirname, 'src/request/'),
-      interface: path.resolve(__dirname, 'src/interface/'),
-      utility: path.resolve(__dirname, 'src/utility/'),
-      helper: path.resolve(__dirname, 'src/helper/'),
+      src: path.resolve(__dirname, "src/"),
+      components: path.resolve(__dirname, "src/components/"),
+      theme: path.resolve(__dirname, "src/theme/"),
+      routers: path.resolve(__dirname, "src/routers/"),
+      constants: path.resolve(__dirname, "src/constants/"),
+      state: path.resolve(__dirname, "src/state/"),
+      request: path.resolve(__dirname, "src/request/"),
+      interface: path.resolve(__dirname, "src/interface/"),
+      utility: path.resolve(__dirname, "src/utility/"),
+      helper: path.resolve(__dirname, "src/helper/")
     }
-  },
-  stats: {
-    hash: false
   },
   module: {
     rules: [{
         test: /\.(ts|tsx)$/,
-        loader: 'ts-loader',
-        options: {
-          getCustomTransformers: () => ({
-            before: [
-              tsImportPlugin({
-                libraryName: 'antd',
-                libraryDirectory: 'es',
-                style: true
-              })
-            ]
-          })
-        }
+        exclude: /node_modules/,
+        loader: "ts-loader"
+      },
+      {
+        test: /\.(js|jsx)?$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
       },
       {
         test: /\.css$/,
-        use: [{
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true,
-              minimize: {
-                safe: true
-              }
-            }
-          },
-        ]
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.less$/,
-        use: [{
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true,
-              minimize: {
-                safe: true
-              }
-            }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
-              sourceMap: true,
-              modifyVars: {
-                '@primary-color': '#722ed1'
-              }
+        use: ["style-loader", "css-loader", {
+          loader: "less-loader",
+          options: {
+            sourceMap: true,
+            javascriptEnabled: true,
+            modifyVars: {
+              "primary-color": '#722ed1'
             }
           }
-        ]
-      }
+        }]
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [{
+          loader: "file-loader",
+          options: {
+            name: "[hash].[ext]",
+            outputPath: "fonts/"
+          }
+        }]
+      },
+      {
+        test: /\.(png|jp(e*)g)$/,
+        use: [{
+          loader: "file-loader",
+          options: {
+            name: "[hash].[ext]",
+            outputPath: "images/"
+          }
+        }]
+      },
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: "html-loader",
+          options: {
+            attrs: [":data-src"]
+          }
+        }
+      },
     ]
   },
-  plugins: [new CleanWebpackPlugin(['dist'], {
-    root: path.resolve('.')
-  })],
+  plugins: [new Dotenv()],
   devServer: {
-    contentBase: path.resolve('.'),
+    contentBase: path.resolve("."),
     compress: true,
     port: 3000,
     watchOptions: {
@@ -104,5 +102,10 @@ module.exports = {
     },
     watchContentBase: true,
     historyApiFallback: true
+    // https: {
+    //   key: fs.readFileSync('/Users/na/ssl/server.key'),
+    //   cert: fs.readFileSync('/Users/na/ssl/server.crt'),
+    //   ca: fs.readFileSync('/Users/na/ssl/rootCa.pem'),
+    // }
   }
 };

@@ -29,7 +29,7 @@ export class RootHeader extends React.Component<any, any> {
 
   render() {
     return (
-      <Header id="header">
+      <Header id="root-header">
         <div id="logo" />
         <Menu
           theme="dark"

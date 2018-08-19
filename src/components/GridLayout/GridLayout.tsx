@@ -1,8 +1,8 @@
 import * as React from "react";
 import { styled } from "theme";
-import { WidthProvider, Responsive } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import { WidthProvider, Responsive } from "react-grid-layout";
 import { DRAG_HANDLER_COLOR, BORDER_COLOR } from "theme/color";
 import { DRAG_HANDLER_HEIGHT, GRID_ITEM_BORDER_RADIUS } from "theme/constant";
 import {
@@ -184,7 +184,7 @@ const styledGridLayout = styled(GridLayout)`
     overflow: hidden;
 
     display: flex;
-    flex-flow: column;
+    flex-flow: column; 
 
     .component {
       display: flex;
@@ -195,7 +195,7 @@ const styledGridLayout = styled(GridLayout)`
 
   .top-bar {
     width: 100%;
-    height: ${DRAG_HANDLER_HEIGHT};
+    height: ${DRAG_HANDLER_HEIGHT}px;
     background: ${DRAG_HANDLER_COLOR};
     flex: 0 0 auto;
     cursor: move;
@@ -206,6 +206,10 @@ const styledGridLayout = styled(GridLayout)`
     top: 3.3px;
     right: 3px;
     cursor: pointer;
+
+    .anticon.anticon-close {
+      display: block;
+    }
   }
 
   .react-resizable-handle {

@@ -31,7 +31,7 @@ const styledMessageItem = styled(MessageItem)`
     font-weight: 800;
   }
   .contents {
-    padding: 0 10px 0 10px;
+    padding: 0px 10px 0px 10px;
   }
   .createdAt {
     color: darkgray;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { styled } from "theme";
-import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
+import { Menu, MainButton, ChildButton } from "react-mfb";
 import { Styled } from "interface/global";
 import { ShowGridItemDrawer } from "./CreateGridItem";
 import { CreateChatting } from "./CreateChatting";
@@ -56,12 +56,15 @@ class FloatingMenu extends React.Component<Props, any> {
 }
 
 const styledFloatingMenu = styled(FloatingMenu)`
+
   .mfb-component__button--main {
     background-color: #722ed1;
+    line-height: 56px;
   }
 
   .mfb-component__button--child {
     background-color: #722ed1;
+    line-height: 56px;
   }
 `;
 

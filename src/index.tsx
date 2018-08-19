@@ -1,17 +1,26 @@
 import * as React from "react";
-import App from "components/App";
 import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
 import { Provider } from "mobx-react";
 import store from "state";
 import { client } from "helper/apolloConfig";
+import { RootRouter } from "routers/RootRouter";
+import "./index.less";
+ 
+function renderApp() {
+  const apolloApp = (
+    <ApolloProvider client={client}>
+      <Provider {...store}>
+        <RootRouter />
+      </Provider>
+    </ApolloProvider>
+  );
+  render(apolloApp, document.getElementById("app"));
+}
 
-const ApolloApp = () => (
-  <ApolloProvider client={client}>
-    <Provider {...store}>
-      <App />
-    </Provider>
-  </ApolloProvider>
-);
-
-render(<ApolloApp />, document.getElementById("app"));
+if (module.hot) {
+  module.hot.accept();
+  renderApp();
+} else {
+  renderApp();
+}

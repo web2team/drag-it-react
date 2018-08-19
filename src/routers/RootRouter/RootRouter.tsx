@@ -1,25 +1,31 @@
 import * as React from "react";
 import { Layout } from "antd";
 import { Router } from "react-router-dom";
-import { styled } from "theme";
+import "antd/dist/antd.less";
+import "theme/ant.less";
 const { Content, Footer } = Layout;
+import { styled } from "theme";
 import { RootHeader, RootContents } from "routers/RootRouter";
 import { inject, observer } from "mobx-react";
 
+interface Props {
+  className?: string;
+  browserHistoryState?: any;
+  authState?: any;
+}
 @inject("authState")
 @inject("browserHistoryState")
 @observer
-class RootRouter extends React.Component<any, any> {
+class RootRouter extends React.Component<Props, any> {
   render() {
-    const RootFooter = () => <Footer id="footer">Drag-it 2018</Footer>;
+    const RootFooter = () => <Footer id="root-footer">Drag-it 2018</Footer>;
     const userId = this.props.authState.getUserId;
 
-    const { className } = this.props;
     return (
       <Router history={this.props.browserHistoryState.getHistory}>
-        <Layout className={className}>
+        <Layout className={this.props.className}>
           <RootHeader />
-          <Content className="contents">
+          <Content className="root-contents">
             <RootContents userId={userId} />
           </Content>
           <RootFooter />
@@ -31,9 +37,18 @@ class RootRouter extends React.Component<any, any> {
 
 const styledRootRouer = styled(RootRouter)`
   background: white;
-  #header {
+
+  #root-header {
     display: flex;
     height: 5vh;
+
+    #logo {
+      width: 120px;
+      height: 31px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: auto 20px auto 5px;
+      float: left;
+    }
   }
   .ant-menu {
     display: flex;
@@ -43,20 +58,12 @@ const styledRootRouer = styled(RootRouter)`
     padding: auto;
   }
 
-  #header #logo {
-    width: 120px;
-    height: 31px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: auto 20 auto 5;
-    float: left;
-  }
-
-  .contents {
-    padding: 5vh 50px 0 50px;
+  .root-contents {
+    padding: 5vh 50px 0px 50px;
     min-height: 90vh;
   }
 
-  #footer {
+  #root-footer {
     background: white;
     text-align: center;
 

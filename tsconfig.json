@@ -2,14 +2,15 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
-    "module": "ESNext",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "es5", "dom"],
+    "allowJs": true,
+    "sourceMap": true,
     "moduleResolution": "node",
     "noImplicitAny": false,
+    "emitDecoratorMetadata": true,
     "suppressImplicitAnyIndexErrors": true,
-
-    "sourceMap": true,
-    "target": "es5",
-    "lib": ["es2015", "es2017", "dom"],
     "experimentalDecorators": true,
     "baseUrl": "src",
     "paths": {
@@ -42,13 +43,11 @@
       ],
       "helper/*": [
         "helper/*"
-      ]
+      ],
     },
     "plugins": [{
       "name": "ts-graphql-plugin"
     }]
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["dist", "build", "node_modules"]
 }
