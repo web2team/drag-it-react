@@ -1,10 +1,29 @@
 import * as React from "react";
 import { Mention } from "antd";
 import { styled } from "theme";
+import { Styled } from "interface/global";
+const { toString, toContentState } = Mention;
 
-const users = ["afc163", "benjycui", "yiminghe", "jljsj33", "dqaria", "RaoHai", "가나다"];
+const users = [
+  "afc163",
+  "benjycui",
+  "yiminghe",
+  "jljsj33",
+  "dqaria",
+  "RaoHai",
+  "가나다"
+];
 
-class AsyncMention extends React.Component {
+interface Props extends Styled {
+  placeholder?: string;
+  value: string;
+  onChange: any;
+}
+interface State {
+  suggestions: string[];
+  loading: boolean;
+}
+class AsyncMention extends React.Component<Props, State> {
   state = {
     suggestions: [],
     loading: false
@@ -22,7 +41,7 @@ class AsyncMention extends React.Component {
       loading: true
     });
 
-    this.fetchSuggestions(value).then((suggestions) => {
+    this.fetchSuggestions(value).then((suggestions: string[]) => {
       this.setState({
         suggestions,
         loading: false
@@ -34,10 +53,13 @@ class AsyncMention extends React.Component {
     const { suggestions, loading } = this.state;
     return (
       <Mention
-        style={{ width: "100%" }}
         loading={loading}
         suggestions={suggestions}
         onSearchChange={this.onSearchChange}
+        placeholder=""
+        onChange={this.props.onChange}
+        value={this.props.value}
+        notFoundContent="not found"
       />
     );
   }

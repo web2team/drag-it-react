@@ -4,9 +4,7 @@ import { styled } from "theme";
 import { Message } from "interface/Message";
 import { Styled } from "interface/global";
 import _ from "lodash";
-import { Spin } from "antd";
-import Scrollbars from "react-custom-scrollbars";
-import { Element, scrollSpy, animateScroll, scroller } from "react-scroll";
+import { Spin, message } from "antd";
 import ReactChatView from "react-chatview";
 
 interface Props extends Styled {
@@ -48,7 +46,7 @@ const MessageListView = class extends React.PureComponent<Props, State> {
 
     return (
       <ReactChatView
-        scrollLoadThreshold={30}
+        scrollLoadThreshold={250}
         flipped={true}
         reversed={true}
         onInfiniteLoad={this.onInfiniteLoad}
@@ -63,15 +61,11 @@ const MessageListView = class extends React.PureComponent<Props, State> {
 };
 
 const styledMessageListView = styled(MessageListView)`
+  height: 100%;
   list-style-type: none;
-  padding: 10px 10px 0 10px;
+  padding: 10px 10px 0px 10px;
   word-break: break-word;
-
   flex: 1 1 auto;
-
-  .container {
-    overflow: scroll;
-  }
 
   ul {
     padding: 0 15px 0 15px;

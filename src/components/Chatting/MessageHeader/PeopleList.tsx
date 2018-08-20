@@ -3,7 +3,6 @@ import { styled } from "theme";
 import { Tag, Input, Tooltip, Icon } from "antd";
 import { Query } from "react-apollo";
 import { GET_CHAT_THREAD } from "../gql";
-import { AsyncMention } from "./AsyncMention";
 import { ChattingProps } from "interface/Chat";
 
 class PeopleList extends React.Component<ChattingProps, any> {
@@ -18,20 +17,6 @@ class PeopleList extends React.Component<ChattingProps, any> {
 
   handleInputChange = (e) => {
     this.setState({ inputValue: e.target.value });
-  };
-
-  handleInputConfirm = () => {
-    // const state = this.state;
-    // const inputValue = state.inputValue;
-    // let tags = state.tags;
-    // if (inputValue && tags.indexOf(inputValue) === -1) {
-    //   tags = [...tags, inputValue];
-    // }
-    // this.setState({
-    //   tags,
-    //   inputVisible: false,
-    //   inputValue: ""
-    // });
   };
 
   saveInputRef = (input) => (this.input = input);
@@ -102,19 +87,8 @@ class PeopleList extends React.Component<ChattingProps, any> {
                   style={{ width: 78 }}
                   value={inputValue}
                   onChange={this.handleInputChange}
-                  onBlur={this.handleInputConfirm}
-                  onPressEnter={this.handleInputConfirm}
                 />
               )}
-              {/* {!inputVisible && (
-                <Tag
-                  onClick={this.showInput}
-                  style={{ background: "#fff", borderStyle: "dashed" }}
-                >
-                  <Icon type="plus" /> New Tag
-                </Tag>
-              )} */}
-              <AsyncMention />
             </div>
           );
         }}

@@ -68,9 +68,11 @@ const styledRootRouer = styled(RootRouter)`
     text-align: center;
 
     position: sticky;
-    bottom: -10px;
-    margin: 1vh 50px 1vh 50px;
-    padding: 0;
+    bottom: -5vh;
+    padding: 1vh 50px 1vh 50px;
+    margin: 1vh 0px 1vh 0px;
+
+    border-top: 1px solid #e8e8e8;
   }
 `;
 

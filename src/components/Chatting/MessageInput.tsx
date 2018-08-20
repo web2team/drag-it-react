@@ -1,38 +1,50 @@
 import * as React from "react";
-import { Input, Button, Spin } from "antd";
+import { Input, Button, Spin, Mention } from "antd";
 import { Mutation } from "react-apollo";
 import { NEW_CHAT_MESSAGE } from "./gql";
 import { styled } from "theme";
 import { ChattingProps } from "interface/Chat";
+import { AsyncMention } from "components/Chatting/AsyncMention";
 const Search = Input.Search;
+const { toString, toContentState, getMentions } = Mention;
 
 interface State {
-  value: string;
+  value: any;
   sending: boolean;
 }
 class MessageInput extends React.Component<ChattingProps, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      value: "",
+      value: toContentState(""),
       sending: false
     };
   }
 
-  onChange = (e) => {
-    this.setState({ value: e.target.value });
+  onChange = (value) => {
+    this.setState({ value });
   };
 
-  handleSubmit = (newChatMessage) => (value, e) => {
-    const trimmedValue = value.trim();
+  handleSubmit = (newChatMessage) => (e) => {
+    if (e.key !== "Enter") {
+      return;
+    }
+    const value = this.state.value;
+    console.log(toString(value));
+    console.log(getMentions(value));
+
+    const trimmedValue: string = toString(value).trim();
     if (!trimmedValue) {
       return;
     }
     if (this.state.sending) {
       return;
     }
+    if (trimmedValue.endsWith("@")) {
+      return;
+    }
 
-    this.setState({ value: "", sending: true });
+    this.setState({ value: toContentState(""), sending: true });
     newChatMessage({
       variables: {
         contents: trimmedValue,
@@ -52,13 +64,26 @@ class MessageInput extends React.Component<ChattingProps, State> {
         {(newChatMessage, { data }) => (
           <div className={this.props.className}>
             <Spin spinning={this.state.sending}>
-              <Search
-                placeholder="내용을 입력해주세요"
-                enterButton="Enter"
-                onSearch={this.handleSubmit(newChatMessage)}
-                value={this.state.value}
-                onChange={this.onChange}
-              />
+              <div className="message-input-container">
+                <div
+                  className="message-input"
+                  onKeyDown={this.handleSubmit(newChatMessage)}
+                >
+                  <AsyncMention
+                    onChange={this.onChange}
+                    value={this.state.value}
+                  />
+                </div>
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  className="message-input-button-submit"
+                  onKeyDown={this.handleSubmit(newChatMessage)}
+                  onClick={this.handleSubmit(newChatMessage)}
+                >
+                  Enter
+                </Button>
+              </div>
             </Spin>
           </div>
         )}
@@ -72,6 +97,17 @@ const styledMessageInput = styled(MessageInput)`
   margin: 0;
   padding: 0;
 
+  .message-input-container {
+    display: flex;
+
+    .message-input {
+      flex: 1 0 auto;
+      width: 10px;
+    }
+    .message-input-button-submit {
+      flex: 0 1 auto;
+    }
+  }
   .ant-input-affix-wrapper .ant-input {
     min-height: 0;
   }
