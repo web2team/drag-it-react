@@ -97,6 +97,10 @@ const styledMessageInput = styled(MessageInput)`
   margin: 0;
   padding: 0;
 
+  * {
+    box-shadow: none !important;
+  }
+
   .message-input-container {
     display: flex;
 
@@ -106,6 +110,7 @@ const styledMessageInput = styled(MessageInput)`
     }
     .message-input-button-submit {
       flex: 0 1 auto;
+      border-radius: 0;
     }
   }
   .ant-input-affix-wrapper .ant-input {
@@ -120,6 +125,11 @@ const styledMessageInput = styled(MessageInput)`
 
   .ant-input-search .ant-input-search-button {
     border-radius: 0;
+  }
+
+  .ant-mention-editor.oneline {
+    border: 0;
+    border-top: 1px solid #e8e8e8;
   }
 `;
 

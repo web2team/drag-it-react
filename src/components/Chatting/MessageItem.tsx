@@ -8,13 +8,38 @@ interface Props extends Message, Styled {
   className?: string;
 }
 class MessageItem extends React.PureComponent<Props> {
+  resolveMention = (contents: string) => {
+    return contents;
+    // let result;
+
+    // let idx = contents.indexOf("@", 0);
+    // if (idx === -1) {
+    //   return contents;
+    // }
+    // let end = 0;
+    // while (true) {
+    //   console.log(idx);
+    //   console.log(end);
+    //   console.log(result);
+    //   idx = contents.indexOf("@", end);
+    //   if (idx === -1 || end === -1) {
+    //     return result;
+    //   }
+    //   end = contents.indexOf(" ", idx);
+
+    //   result += (
+    //     <span className="name">{contents.substring(idx + 1, end)}</span>
+    //   );
+    // }
+  };
+
   render() {
     const { user, contents, createdAt, className } = this.props;
 
     return (
       <div className={className}>
         <span className="name">{user.name}</span>
-        <span className="contents">{contents}</span>
+        <span className="contents">{this.resolveMention(contents)}</span>
         <span className="createdAt">
           <Moment date={createdAt} fromNow={true} ago={true} /> 전
         </span>

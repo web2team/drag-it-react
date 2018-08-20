@@ -15,6 +15,7 @@ const MessageHeader = ({ className, ...props }: ChattingProps) => (
 const styledMessageHeader = styled(MessageHeader)`
   /* width: 100%; */
   /* margin: ${MESSAGE_HEADER_HEIGHT}px 0; */
+  border-bottom: 1px solid #e8e8e8;
 `;
 
 export { styledMessageHeader as MessageHeader };
