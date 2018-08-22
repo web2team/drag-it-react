@@ -2,11 +2,13 @@ import * as React from "react";
 import { List, message, Avatar, Spin } from "antd";
 
 import InfiniteScroll from "react-infinite-scroller";
+import styled from "theme";
 
 const fakeDataUrl =
   "https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo";
 
-export class InfiniteListExample extends React.Component {
+class NotificationList extends React.Component<any, any> {
+  container: any;
   state = {
     data: [
       {
@@ -38,21 +40,74 @@ export class InfiniteListExample extends React.Component {
         name: { title: "mr", first: "theo", last: "jones" },
         email: "theo.jones@example.com",
         nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
+      },
+      {
+        gender: "male",
+        name: { title: "mr", first: "theo", last: "jones" },
+        email: "theo.jones@example.com",
+        nat: "NZ"
       }
     ],
     loading: false,
     hasMore: true
   };
 
-  // componentDidMount() {
-    
-  // }
+  componentDidMount() {
+    document.addEventListener("click", this.handleClickOutside, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleClickOutside, true);
+  }
+
+  handleClickOutside = (e) => {
+    if (this.container !== e.target && !this.container.contains(e.target)) {
+      this.props.onDismiss();
+    }
+  };
 
   handleInfiniteOnLoad = () => {
     let data = this.state.data;
     this.setState({
       loading: true
     });
+
     if (data.length > 14) {
       message.warning("Infinite List loaded all");
       this.setState({
@@ -61,6 +116,10 @@ export class InfiniteListExample extends React.Component {
       });
       return;
     }
+
+    // const operation = {
+    //   query: 
+    // }
     // this.getData((res) => {
     //   data = data.concat(res.results);
     //   this.setState({
@@ -72,7 +131,10 @@ export class InfiniteListExample extends React.Component {
 
   render() {
     return (
-      <div className="demo-infinite-container">
+      <div
+        className={this.props.className}
+        ref={(ref) => (this.container = ref)}
+      >
         <InfiniteScroll
           initialLoad={false}
           pageStart={0}
@@ -107,3 +169,16 @@ export class InfiniteListExample extends React.Component {
     );
   }
 }
+
+const styledNotificationList = styled(NotificationList)`
+  overflow: auto;
+  height: 50vh;
+  
+  .demo-loading-container {
+    text-align: center;
+    
+    margin: 1rem;
+  }
+`;
+
+export { styledNotificationList as NotificationList };

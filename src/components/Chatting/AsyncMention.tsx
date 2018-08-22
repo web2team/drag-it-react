@@ -24,6 +24,8 @@ interface State {
   loading: boolean;
 }
 class AsyncMention extends React.Component<Props, State> {
+  mention: Mention;
+
   state = {
     suggestions: [],
     loading: false
@@ -53,11 +55,15 @@ class AsyncMention extends React.Component<Props, State> {
     const { suggestions, loading } = this.state;
     return (
       <Mention
+        ref={(ref) => (this.mention = ref)}
         loading={loading}
         suggestions={suggestions}
         onSearchChange={this.onSearchChange}
         placeholder=""
-        onChange={this.props.onChange}
+        onChange={(v) => {
+          console.log(toString(v));
+          this.props.onChange(v);
+        }}
         value={this.props.value}
         notFoundContent="not found"
       />

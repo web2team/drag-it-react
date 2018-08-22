@@ -5,12 +5,12 @@
       "dev": {
         "url": "http://localhost:9000/graphql",
         "headers": {
-          "Authorization": "Bearer ${env:AUTH_TOKEN_ENV}"
+          "Authorization": "Bearer "
         },
         "subscription": {
           "url": "http://localhost:9000/graphql",
           "connectionParams": {
-            "Token": "${env:YOUR_APP_TOKEN}"
+            "Token": "" 
           }
         }
       }

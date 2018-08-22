@@ -27,7 +27,7 @@ export const NEW_CHAT_THREAD = gql`
     ) {
       id
       users {
-        id
+        id 
         name
       }
     }

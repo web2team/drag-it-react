@@ -5,6 +5,8 @@ import { NEW_CHAT_MESSAGE } from "./gql";
 import { styled } from "theme";
 import { ChattingProps } from "interface/Chat";
 import { AsyncMention } from "components/Chatting/AsyncMention";
+import * as $ from "jquery";
+
 const Search = Input.Search;
 const { toString, toContentState, getMentions } = Mention;
 
@@ -13,6 +15,9 @@ interface State {
   sending: boolean;
 }
 class MessageInput extends React.Component<ChattingProps, State> {
+  input: HTMLDivElement;
+  button: Button;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -29,11 +34,13 @@ class MessageInput extends React.Component<ChattingProps, State> {
     if (e.key !== "Enter") {
       return;
     }
-    const value = this.state.value;
-    console.log(toString(value));
-    console.log(getMentions(value));
 
+    const value = this.state.value;
+    // console.log(getMentions(value));
+
+    // console.log(toString(value));
     const trimmedValue: string = toString(value).trim();
+    console.log(trimmedValue);
     if (!trimmedValue) {
       return;
     }
@@ -41,6 +48,12 @@ class MessageInput extends React.Component<ChattingProps, State> {
       return;
     }
     if (trimmedValue.endsWith("@")) {
+      return;
+    }
+    if (
+      0 <= trimmedValue.lastIndexOf("@") &&
+      trimmedValue.lastIndexOf(" ") === -1
+    ) {
       return;
     }
 
@@ -66,7 +79,9 @@ class MessageInput extends React.Component<ChattingProps, State> {
             <Spin spinning={this.state.sending}>
               <div className="message-input-container">
                 <div
+                  id="myinput"
                   className="message-input"
+                  ref={(ref) => (this.input = ref)}
                   onKeyDown={this.handleSubmit(newChatMessage)}
                 >
                   <AsyncMention
@@ -80,6 +95,7 @@ class MessageInput extends React.Component<ChattingProps, State> {
                   className="message-input-button-submit"
                   onKeyDown={this.handleSubmit(newChatMessage)}
                   onClick={this.handleSubmit(newChatMessage)}
+                  ref={(ref) => (this.button = ref)}
                 >
                   Enter
                 </Button>
@@ -99,6 +115,7 @@ const styledMessageInput = styled(MessageInput)`
 
   * {
     box-shadow: none !important;
+    border-radius: 0px !important;
   }
 
   .message-input-container {

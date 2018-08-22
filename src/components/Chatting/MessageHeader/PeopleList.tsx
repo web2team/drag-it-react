@@ -67,7 +67,12 @@ class PeopleList extends React.Component<ChattingProps, any> {
               {getChatThread.users.map(({ name: tag }, index) => {
                 const isLongTag = tag.length > 10;
                 const tagElem = (
-                  <Tag key={index} closable={false} color={getRandomColor()}>
+                  <Tag
+                    className="tags"
+                    key={index}
+                    closable={false}
+                    color={getRandomColor()}
+                  >
                     {isLongTag ? `${tag.slice(0, 10)}...` : tag}
                   </Tag>
                 );
@@ -79,16 +84,6 @@ class PeopleList extends React.Component<ChattingProps, any> {
                   tagElem
                 );
               })}
-              {inputVisible && (
-                <Input
-                  ref={this.saveInputRef}
-                  type="text"
-                  size="small"
-                  style={{ width: 78 }}
-                  value={inputValue}
-                  onChange={this.handleInputChange}
-                />
-              )}
             </div>
           );
         }}
@@ -99,6 +94,10 @@ class PeopleList extends React.Component<ChattingProps, any> {
 
 const styledPeopleList = styled(PeopleList)`
   display: inline;
+
+  .tags {
+    margin-bottom: 10px;
+  }
 `;
 
 export { styledPeopleList as PeopleList };

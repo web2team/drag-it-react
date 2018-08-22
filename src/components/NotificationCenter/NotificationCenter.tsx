@@ -4,7 +4,7 @@ import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
 import { Styled } from "interface/global";
 import { Popover, Badge } from "antd";
-import { InfiniteListExample } from "components/NotificationCenter/NotificationList";
+import { NotificationList } from "components/NotificationCenter/NotificationList";
 
 interface Props extends Styled {
   userId: number;
@@ -29,9 +29,14 @@ class NotificationCenter extends React.Component<Props, any> {
           title={"title"}
           placement="topRight"
           content={
-            <div>
-              <InfiniteListExample />
-            </div>
+            this.state.visible ? (
+              <div>
+                <NotificationList
+                  visible={this.state.visible}
+                  onDismiss={this.onClick}
+                />
+              </div>
+            ) : <div />
           }
         >
           <div className="menu-wrapper" onClick={this.onClick}>
