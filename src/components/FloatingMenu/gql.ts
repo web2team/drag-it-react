@@ -34,12 +34,12 @@ export const NEW_CHAT_THREAD = gql`
   }
 `;
 
-export const NEW_GRID_LAYOUT_ITEM = gql`
-  mutation newGridLayoutItem(
+export const NEW_GRID_LAYOUT_ITEM_AND_NOTIFY = gql`
+  mutation newGridLayoutItemAndNotify(
     $gridLayoutId: ID!
     $gridLayoutItemPropsInput: GridLayoutItemPropsInput!
   ) {
-    newGridLayoutItem(
+    newGridLayoutItemAndNotify(
       gridLayoutId: $gridLayoutId
       gridLayoutItemPropsInput: $gridLayoutItemPropsInput
     ) {

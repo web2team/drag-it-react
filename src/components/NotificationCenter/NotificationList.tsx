@@ -1,23 +1,33 @@
 import * as React from "react";
-import { List, message, Avatar, Spin, Button } from "antd";
+import { List, message, Avatar, Spin, Button, notification } from "antd";
 
 import InfiniteScroll from "react-infinite-scroller";
 import styled from "theme";
-import { GET_NOTIFICATIONS, LINK_NOTIFICATION } from "./gql";
+import {
+  GET_NOTIFICATIONS,
+  LINK_NOTIFICATION,
+  ACCEPT_NOTIFICATION
+} from "./gql";
 import { executePromise, executePromiseSubscribe } from "helper/apolloConfig";
 import { NotificationCenterProps, Notification } from "interface/Notification";
 import Moment from "react-moment";
+import { inject } from "mobx-react";
+import { GridState } from "state/gridState";
 
 interface Props extends NotificationCenterProps {
   visible: boolean;
   onDismiss: () => void;
+  gridState?: GridState;
 }
 interface State {
   notifications: Notification[];
   page: number;
+  sending: boolean;
   loading: boolean;
   hasMore: boolean;
 }
+
+@inject("gridState")
 class NotificationList extends React.Component<Props, State> {
   container: any;
   size = 10;
@@ -25,6 +35,7 @@ class NotificationList extends React.Component<Props, State> {
   state = {
     notifications: [],
     page: 0,
+    sending: false,
     loading: false,
     hasMore: true
   };
@@ -91,10 +102,24 @@ class NotificationList extends React.Component<Props, State> {
     // }
   };
 
-  handleAcceptInvitation = (notification: Notification) => {
+  handleAcceptInvitation = (noti: Notification): void => {
+    const operation = {
+      query: ACCEPT_NOTIFICATION,
+      variables: {
+        gridLayoutId: this.props.gridState.currentGridLayoutId,
+        notificationId: noti.id
+      }
+    };
 
-    
-    return;
+    this.setState({ sending: true });
+    executePromise(operation).then(() => {
+      notification.success({
+        message: "SUCCESS",
+        description: "추가되었습니다."
+      });
+      noti.isRead = true;
+      this.setState({ sending: false });
+    });
   };
 
   render() {
@@ -133,18 +158,22 @@ class NotificationList extends React.Component<Props, State> {
                       </div>
                     }
                   />
-                  <div>
-                    <Button
-                      type="primary"
-                      size="small"
-                      onClick={() => this.handleAcceptInvitation(noti)}
-                    >
-                      수락
-                    </Button>{" "}
-                    <Button type="danger" size="small">
-                      취소
-                    </Button>
-                  </div>
+                  {!noti.isRead ? (
+                    <div>
+                      <Spin spinning={this.state.sending}>
+                        <Button
+                          type="primary"
+                          size="small"
+                          onClick={() => this.handleAcceptInvitation(noti)}
+                        >
+                          수락
+                        </Button>{" "}
+                        <Button type="danger" size="small">
+                          취소
+                        </Button>
+                      </Spin>
+                    </div>
+                  ) : null}
                 </List.Item>
               )}
             >

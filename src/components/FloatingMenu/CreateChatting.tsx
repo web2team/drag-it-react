@@ -14,7 +14,7 @@ import { Styled } from "interface/global";
 const { Option } = Select;
 import { SelectPeople } from "./SelectPeople";
 import { executePromise } from "helper/apolloConfig";
-import { NEW_GRID_LAYOUT_ITEM } from "components/FloatingMenu/gql";
+import { NEW_GRID_LAYOUT_ITEM_AND_NOTIFY } from "components/FloatingMenu/gql";
 import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
 import { GridLayoutItemType } from "interface/GridLayout";
@@ -44,7 +44,7 @@ class CreateChatting extends React.Component<Props, State> {
       });
       console.log(values);
       const operation = {
-        query: NEW_GRID_LAYOUT_ITEM,
+        query: NEW_GRID_LAYOUT_ITEM_AND_NOTIFY,
         variables: {
           gridLayoutId: this.props.gridState.currentGridLayoutId,
           gridLayoutItemPropsInput: {

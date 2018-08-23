@@ -47,3 +47,12 @@ export const LINK_NOTIFICATION = gql`
     }
   }
 `;
+
+export const ACCEPT_NOTIFICATION = gql`
+  mutation acceptNotification($gridLayoutId: ID!, $notificationId: ID!) {
+    acceptNotification(
+      gridLayoutId: $gridLayoutId
+      notificationId: $notificationId
+    )
+  }
+`;

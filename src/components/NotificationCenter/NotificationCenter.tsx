@@ -9,17 +9,28 @@ import { NotificationCenterProps } from "interface/Notification";
 
 class NotificationCenter extends React.Component<NotificationCenterProps, any> {
   state = {
-    visible: false
+    visible: false,
+    notificationCount: 50
   };
+
+  componentDidMount() {
+    this.fetchNotificationCount();
+  }
 
   onClick = () => {
     this.setState({ visible: !this.state.visible });
   };
 
+  fetchNotificationCount = () => {
+    return;
+  };
+
   render() {
     return (
       <div className={this.props.className}>
-        {!this.state.visible ? <Badge count={100} className="badge" /> : null}
+        {!this.state.visible ? (
+          <Badge count={this.state.notificationCount} className="badge" />
+        ) : null}
 
         <Popover
           visible={this.state.visible}

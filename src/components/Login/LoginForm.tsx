@@ -29,7 +29,7 @@ class LoginForm extends React.Component<any, any> {
       requestLogin(values)
         .then(({ data }) => {
           this.props.authState.setToken(data.token);
-          this.props.authState.setUserId(data.userId); 
+          this.props.authState.setUserId(data.userId);
           this.props.authState.setIsLogin(true);
 
           console.log(data);
@@ -58,9 +58,12 @@ class LoginForm extends React.Component<any, any> {
       return <Redirect to="home" />;
     }
     return (
-      <div id="login">
-        <Row className={this.props.className}>
-          <Col span={20} offset={8}>
+      <div className={this.props.className} id="login">
+        <div className="login-container">
+          <div className="title-container">
+            <span className="title">Drag It</span>
+          </div>
+          <div className="form-container">
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
                 {getFieldDecorator("email", {
@@ -107,8 +110,8 @@ class LoginForm extends React.Component<any, any> {
                 Drag-it에 처음이신가요? <a href="register">회원가입!</a>
               </FormItem>
             </Form>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }
@@ -117,10 +120,42 @@ class LoginForm extends React.Component<any, any> {
 const WrappedNormalLoginForm = Form.create()(LoginForm);
 
 const styledForm = styled(WrappedNormalLoginForm)`
+
+  .login-container {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e8e8e8;
+    border-radius: 20px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .title-container {
+    margin: 3rem auto 0 auto;
+    width: 80%;
+    text-align: center;
+    
+    .title {
+      font-family: "BMDoHyeon-OTF";
+      font-size: 3rem;
+      letter-spacing: 5px;
+    }
+  }
+
+  .form-container {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    /* min-width: 500px; */
+  }
+
   .login-form {
-    max-width: 300px;
-    max-height: 300px;
-    padding-top: 10rem;
+    margin-right: auto;
+    margin-left: auto;
+
+    padding-top: 3rem;
 
     .ant-input {
       min-height: 0;
