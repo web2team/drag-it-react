@@ -4,18 +4,15 @@ import { Menu, MainButton, ChildButton } from "react-mfb";
 import "react-mfb/mfb.css";
 import { Styled } from "interface/global";
 import { Popover, Badge } from "antd";
-import { NotificationList } from "components/NotificationCenter/NotificationList";
+import { NotificationList } from "./NotificationList";
+import { NotificationCenterProps } from "interface/Notification";
 
-interface Props extends Styled {
-  userId: number;
-}
-class NotificationCenter extends React.Component<Props, any> {
+class NotificationCenter extends React.Component<NotificationCenterProps, any> {
   state = {
     visible: false
   };
 
   onClick = () => {
-    console.log("clcll");
     this.setState({ visible: !this.state.visible });
   };
 
@@ -32,11 +29,14 @@ class NotificationCenter extends React.Component<Props, any> {
             this.state.visible ? (
               <div>
                 <NotificationList
+                  {...this.props}
                   visible={this.state.visible}
                   onDismiss={this.onClick}
                 />
               </div>
-            ) : <div />
+            ) : (
+              <div />
+            )
           }
         >
           <div className="menu-wrapper" onClick={this.onClick}>

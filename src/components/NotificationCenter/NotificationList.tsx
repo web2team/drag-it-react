@@ -1,99 +1,42 @@
 import * as React from "react";
-import { List, message, Avatar, Spin } from "antd";
+import { List, message, Avatar, Spin, Button } from "antd";
 
 import InfiniteScroll from "react-infinite-scroller";
 import styled from "theme";
+import { GET_NOTIFICATIONS, LINK_NOTIFICATION } from "./gql";
+import { executePromise, executePromiseSubscribe } from "helper/apolloConfig";
+import { NotificationCenterProps, Notification } from "interface/Notification";
+import Moment from "react-moment";
 
-const fakeDataUrl =
-  "https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo";
-
-class NotificationList extends React.Component<any, any> {
+interface Props extends NotificationCenterProps {
+  visible: boolean;
+  onDismiss: () => void;
+}
+interface State {
+  notifications: Notification[];
+  page: number;
+  loading: boolean;
+  hasMore: boolean;
+}
+class NotificationList extends React.Component<Props, State> {
   container: any;
+  size = 10;
+
   state = {
-    data: [
-      {
-        gender: "male",
-        name: { title: "mr", first: "mehmet", last: "körmükçü" },
-        email: "mehmet.körmükçü@example.com",
-        nat: "TR"
-      },
-      {
-        gender: "female",
-        name: { title: "mrs", first: "melissa", last: "stevens" },
-        email: "melissa.stevens@example.com",
-        nat: "AU"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "carmelo", last: "fuentes" },
-        email: "carmelo.fuentes@example.com",
-        nat: "ES"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "niklas", last: "lakso" },
-        email: "niklas.lakso@example.com",
-        nat: "FI"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      },
-      {
-        gender: "male",
-        name: { title: "mr", first: "theo", last: "jones" },
-        email: "theo.jones@example.com",
-        nat: "NZ"
-      }
-    ],
+    notifications: [],
+    page: 0,
     loading: false,
     hasMore: true
   };
 
-  componentDidMount() {
-    document.addEventListener("click", this.handleClickOutside, true);
-  }
-
   componentWillUnmount() {
     document.removeEventListener("click", this.handleClickOutside, true);
+  }
+  componentDidMount() {
+    document.addEventListener("click", this.handleClickOutside, true);
+
+    this.fetchNotification();
+    this.subscribeNotification();
   }
 
   handleClickOutside = (e) => {
@@ -102,69 +45,118 @@ class NotificationList extends React.Component<any, any> {
     }
   };
 
-  handleInfiniteOnLoad = () => {
-    let data = this.state.data;
-    this.setState({
-      loading: true
-    });
+  fetchNotification = () => {
+    this.setState({ loading: true });
 
-    if (data.length > 14) {
-      message.warning("Infinite List loaded all");
+    const operation = {
+      query: GET_NOTIFICATIONS,
+      variables: {
+        userId: this.props.userId,
+        page: this.state.page,
+        size: this.size
+      }
+    };
+    executePromise(operation).then(({ data: { getNotifications } }) =>
       this.setState({
-        hasMore: false,
-        loading: false
-      });
-      return;
-    }
+        notifications: getNotifications,
+        loading: false,
+        page: this.state.page + 1
+      })
+    );
+  };
 
-    // const operation = {
-    //   query: 
-    // }
-    // this.getData((res) => {
-    //   data = data.concat(res.results);
+  subscribeNotification = () => {
+    const operation = {
+      query: LINK_NOTIFICATION,
+      variables: { userId: this.props.userId }
+    };
+    executePromiseSubscribe(operation, {
+      next: ({ data: { linkNotification } }) =>
+        this.setState({
+          notifications: [...this.state.notifications, linkNotification]
+        })
+    });
+  };
+
+  handleInfiniteOnLoad = () => {
+    this.fetchNotification();
+
+    // if (data.length > 14) {
+    //   message.warning("Infinite List loaded all");
     //   this.setState({
-    //     data,
+    //     hasMore: false,
     //     loading: false
     //   });
-    // });
+    //   return;
+    // }
+  };
+
+  handleAcceptInvitation = (notification: Notification) => {
+
+    
+    return;
   };
 
   render() {
+    console.log(this.state.notifications);
     return (
       <div
         className={this.props.className}
         ref={(ref) => (this.container = ref)}
       >
-        <InfiniteScroll
-          initialLoad={false}
-          pageStart={0}
-          loadMore={this.handleInfiniteOnLoad}
-          hasMore={!this.state.loading && this.state.hasMore}
-          useWindow={false}
-        >
-          <List
-            dataSource={this.state.data}
-            renderItem={(item) => (
-              <List.Item key={item.id}>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                  }
-                  title={<a href="https://ant.design">{item.name.last}</a>}
-                  description={item.email}
-                />
-                <div>Content</div>
-              </List.Item>
-            )}
+        <Spin spinning={this.state.loading}>
+          <InfiniteScroll
+            initialLoad={false}
+            pageStart={0}
+            loadMore={this.handleInfiniteOnLoad}
+            hasMore={!this.state.loading && this.state.hasMore}
+            useWindow={false}
           >
-            {this.state.loading &&
-              this.state.hasMore && (
-                <div className="demo-loading-container">
-                  <Spin />
-                </div>
+            <List
+              dataSource={this.state.notifications}
+              renderItem={(noti: Notification) => (
+                <List.Item key={noti.id}>
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    }
+                    title={<a href="https://ant.design">{noti.title}</a>}
+                    description={
+                      <div>
+                        {noti.message} /{" "}
+                        <Moment
+                          date={noti.createdAt}
+                          fromNow={true}
+                          ago={true}
+                        />{" "}
+                        전
+                      </div>
+                    }
+                  />
+                  <div>
+                    <Button
+                      type="primary"
+                      size="small"
+                      onClick={() => this.handleAcceptInvitation(noti)}
+                    >
+                      수락
+                    </Button>{" "}
+                    <Button type="danger" size="small">
+                      취소
+                    </Button>
+                  </div>
+                </List.Item>
               )}
-          </List>
-        </InfiniteScroll>
+            >
+              {this.state.loading &&
+                this.state.hasMore && (
+                  <div className="demo-loading-container">
+                    <Spin />
+                  </div>
+                )}
+            </List>
+          </InfiniteScroll>
+        </Spin>
       </div>
     );
   }
@@ -173,10 +165,11 @@ class NotificationList extends React.Component<any, any> {
 const styledNotificationList = styled(NotificationList)`
   overflow: auto;
   height: 50vh;
-  
+  width: 50vw;
+
   .demo-loading-container {
     text-align: center;
-    
+
     margin: 1rem;
   }
 `;

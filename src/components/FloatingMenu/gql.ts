@@ -37,17 +37,16 @@ export const NEW_CHAT_THREAD = gql`
 export const NEW_GRID_LAYOUT_ITEM = gql`
   mutation newGridLayoutItem(
     $gridLayoutId: ID!
-    $gridLayoutItemType: GridLayoutItemType!
     $gridLayoutItemPropsInput: GridLayoutItemPropsInput!
   ) {
     newGridLayoutItem(
       gridLayoutId: $gridLayoutId
-      gridLayoutItemType: $gridLayoutItemType
       gridLayoutItemPropsInput: $gridLayoutItemPropsInput
     ) {
       id
-      gridLayoutItemType
       gridLayoutItemProps {
+        id
+        type
         chatThread {
           id
           users {

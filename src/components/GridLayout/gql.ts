@@ -4,8 +4,8 @@ export const GET_GRID_LAYOUT_ITEMS = gql`
   query getGridLayoutItems($gridLayoutId: ID!) {
     getGridLayoutItems(gridLayoutId: $gridLayoutId) {
       id
-      gridLayoutItemType
       gridLayoutItemProps {
+        type
         chatThread {
           id
           users {
@@ -55,8 +55,9 @@ export const LINK_GRID_LAYOUT_ITEM = gql`
   subscription linkGridLayoutItem($gridLayoutId: ID!) {
     linkGridLayoutItem(gridLayoutId: $gridLayoutId) {
       id
-      gridLayoutItemType
       gridLayoutItemProps {
+        id
+        type
         chatThread {
           id
           users {

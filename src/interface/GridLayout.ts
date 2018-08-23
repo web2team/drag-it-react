@@ -1,19 +1,22 @@
 import { ChatThread } from "interface/Chat";
 import { Styled } from "interface/global";
+import { User } from "interface/User";
 
 export interface GridLayoutProps extends Styled {
   gridLayoutId: number;
   userId: number;
 }
 
-export enum GridLayoutItemType {
-  CHATTING = "CHATTING"
+export interface GridLayout {
+  id: number;
+  name: string;
+  user: User;
 }
 
 export interface GridLayoutItem {
   id: number;
-  gridLayoutItemType: GridLayoutItemType;
-  gridLayoutItemProps?: GridLayoutItemProps;
+  gridLayout: GridLayout;
+  gridLayoutItemProps: GridLayoutItemProps;
   gridLayoutItemPosition: GridLayoutItemPosition;
 }
 
@@ -36,7 +39,12 @@ export interface GridLayoutItemPosition {
   draggableHandle?: string;
 }
 
+export enum GridLayoutItemType {
+  CHATTING = "CHATTING"
+}
+
 export interface GridLayoutItemProps {
   id: number;
+  type: GridLayoutItemType;
   chatThread?: ChatThread;
 }

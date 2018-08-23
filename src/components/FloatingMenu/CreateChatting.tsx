@@ -47,8 +47,8 @@ class CreateChatting extends React.Component<Props, State> {
         query: NEW_GRID_LAYOUT_ITEM,
         variables: {
           gridLayoutId: this.props.gridState.currentGridLayoutId,
-          gridLayoutItemType: GridLayoutItemType.CHATTING,
           gridLayoutItemPropsInput: {
+            type: GridLayoutItemType.CHATTING,
             chatThreadInput: {
               threadName: values.title,
               users: values.users.map((user) => ({ id: user.userId }))
@@ -60,7 +60,7 @@ class CreateChatting extends React.Component<Props, State> {
         .then(({ data }) => {
           this.setState({ loading: false });
           this.onClose();
-          console.log(data);
+          console.log("new chat result", data);
         })
         .catch((e) => {
           notification.error({

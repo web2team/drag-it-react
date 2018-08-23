@@ -115,11 +115,10 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
 
   createGridLayoutItem = ({
     id,
-    gridLayoutItemType,
     gridLayoutItemProps,
     gridLayoutItemPosition: { key, x, y, w, h }
   }: GridLayoutItem) => {
-    const Component = getComponent(gridLayoutItemType);
+    const Component = getComponent(gridLayoutItemProps.type);
 
     return (
       <div
