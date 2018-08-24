@@ -24,6 +24,7 @@ class RootRouter extends React.Component<Props, any> {
     return (
       <Router history={this.props.browserHistoryState.getHistory}>
         <Layout className={this.props.className}>
+          {/* {this.props.authState.getIsLogin ? null : <RootHeader />} */}
           <RootHeader />
           <Content className="root-contents">
             <RootContents userId={userId} />

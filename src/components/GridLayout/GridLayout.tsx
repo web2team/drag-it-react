@@ -20,17 +20,19 @@ import {
   LINK_GRID_LAYOUT_ITEM
 } from "./gql";
 import { FloatingMenu } from "components/FloatingMenu/FloatingMenu";
-import { Icon, Popconfirm } from "antd";
+import { Icon, Popconfirm, message, Spin } from "antd";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
 interface State {
+  loading: boolean;
   gridLayoutItems: GridLayoutItem[];
 }
 class GridLayout extends React.Component<GridLayoutProps, State> {
   constructor(props: any) {
     super(props);
     this.state = {
+      loading: false,
       gridLayoutItems: []
     };
   }
@@ -47,9 +49,10 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
         gridLayoutId: this.props.gridLayoutId
       }
     };
+    this.setState({ loading: true });
     executePromise(operation).then(({ data: { getGridLayoutItems } }) => {
-      console.log(getGridLayoutItems);
       this.setState({ gridLayoutItems: getGridLayoutItems });
+      setTimeout(() => this.setState({ loading: false }), 1000);
     });
   };
 
@@ -62,7 +65,6 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     };
     executePromiseSubscribe(operation, {
       next: ({ data: { linkGridLayoutItem } }) => {
-        console.log(linkGridLayoutItem);
         this.setState({
           gridLayoutItems: [...this.state.gridLayoutItems, linkGridLayoutItem]
         });
@@ -102,6 +104,7 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
       }
     };
 
+    const loading = message.loading("삭제중 입니다...");
     executePromise(operation)
       .then(() => {
         this.setState({
@@ -109,6 +112,8 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
             (item) => item.id !== gridLayoutItemId
           )
         });
+        loading();
+        message.success("성공!", 1000);
       })
       .catch(() => console.error("error on delete layout item"));
   };
@@ -160,30 +165,36 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     const cols = { lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 };
 
     return (
-      <div className={this.props.className}>
-        <FloatingMenu gridId={this.props.gridLayoutId} />
-        <ResponsiveReactGridLayout
-          breakpoints={breakpoints}
-          cols={cols}
-          onLayoutChange={this.onLayoutChange}
-          rowHeight={30}
-          draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
-        >
-          {this.state.gridLayoutItems.map(this.createGridLayoutItem)}
-        </ResponsiveReactGridLayout>
-      </div>
+      <Spin spinning={this.state.loading} tip="loading...">
+        <div className={this.props.className}>
+          {this.state.loading ? null : (
+            <FloatingMenu gridId={this.props.gridLayoutId} />
+          )}
+          <ResponsiveReactGridLayout
+            breakpoints={breakpoints}
+            cols={cols}
+            onLayoutChange={this.onLayoutChange}
+            rowHeight={30}
+            draggableHandle={`.${DRAG_HANDLER_CLASSNAME}`}
+          >
+            {this.state.gridLayoutItems.map(this.createGridLayoutItem)}
+          </ResponsiveReactGridLayout>
+        </div>
+      </Spin>
     );
   }
 }
 
 const styledGridLayout = styled(GridLayout)`
+  min-height: 50vh;
+
   .with-draggable {
     border: 1px solid ${BORDER_COLOR};
     border-radius: ${GRID_ITEM_BORDER_RADIUS}px;
     overflow: hidden;
 
     display: flex;
-    flex-flow: column; 
+    flex-flow: column;
 
     .component {
       display: flex;

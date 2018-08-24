@@ -1,10 +1,13 @@
 import { Chatting } from "components/Chatting";
+import { Calendar } from "components/Calendar";
+import { GridLayoutItemType } from "interface/GridLayout";
 
 class ComponentResolver {
   map = new Map();
 
   constructor() {
-    this.map.set("CHATTING", Chatting);
+    this.map.set(GridLayoutItemType.CHATTING, Chatting);
+    this.map.set(GridLayoutItemType.CALENDAR, Calendar);
   }
 
   getComponent(componentType: string) {
