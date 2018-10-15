@@ -83,7 +83,7 @@ const StyledTextEditor = styled(TextEditor)`
   display: block;
   position: relative;
   padding: 100px;
-  z-index: 5000;
+  z-index: 1000;
   overflow: scroll;
 `;
 

@@ -204,7 +204,6 @@ const styledGridLayout = styled(GridLayout)`
       display: flex;
       flex-flow: column;
       flex: auto;
-      z-index: 100;
     }
   }
 
