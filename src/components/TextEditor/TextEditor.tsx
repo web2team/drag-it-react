@@ -24,7 +24,9 @@ class TextEditor extends React.Component<any, any> {
 const StyledTextEditor = styled(TextEditor)`
   display: block;
   position: relative;
-  margin: 100px;
+  padding: 100px;
+  z-index: 5000;
+  overflow: scroll;
 `;
 
 const Wrapper = () => {

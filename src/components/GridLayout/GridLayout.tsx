@@ -188,6 +188,10 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
 const styledGridLayout = styled(GridLayout)`
   min-height: 50vh;
 
+  .react-resizable-handle {
+    z-index: 1000;
+  }
+
   .with-draggable {
     border: 1px solid ${BORDER_COLOR};
     border-radius: ${GRID_ITEM_BORDER_RADIUS}px;
@@ -200,6 +204,7 @@ const styledGridLayout = styled(GridLayout)`
       display: flex;
       flex-flow: column;
       flex: auto;
+      z-index: 100;
     }
   }
 
