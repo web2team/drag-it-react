@@ -49,5 +49,5 @@
       "name": "ts-graphql-plugin"
     }]
   },
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": ["dist", "build"]
 }
