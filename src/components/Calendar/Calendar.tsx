@@ -1,5 +1,7 @@
-import { Calendar, Badge } from "antd";
 import * as React from "react";
+import { Calendar, Badge, Dropdown, Menu } from "antd";
+const SubMenu = Menu.SubMenu;
+
 import { styled } from "theme";
 
 import moment from "moment";
@@ -7,6 +9,16 @@ import "moment/locale/ko";
 moment.locale("ko");
 
 class MyCalendar extends React.Component<any, any> {
+  container: HTMLDivElement;
+
+  state = {
+    fullscreen: true
+  };
+
+  componentDidUpdate() {
+    console.log("update");
+  }
+
   getListData = (value: any) => {
     let listData;
     switch (value.date()) {
@@ -36,14 +48,34 @@ class MyCalendar extends React.Component<any, any> {
 
   dateCellRender = (value: any) => {
     const listData = this.getListData(value);
+    const menu = (
+      <Menu
+        onClick={({ item, key, keyPath }) => console.log(item, key, keyPath)}
+      >
+        <Menu.Item>일정 추가</Menu.Item>
+        <Menu.Item>일정 삭제</Menu.Item>
+        <Menu.Item>자세히 보기</Menu.Item>
+        <SubMenu title="sub menu">
+          <Menu.Item>서브메뉴 1</Menu.Item>
+          <Menu.Item>서브메뉴 2</Menu.Item>
+        </SubMenu>
+        <SubMenu title="disabled sub menu" disabled={true}>
+          <Menu.Item>5d menu item</Menu.Item>
+          <Menu.Item>6th menu item</Menu.Item>
+        </SubMenu>
+      </Menu>
+    );
+
     return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <ul className="events">
+          {listData.map((item) => (
+            <li key={item.content}>
+              <Badge status={item.type} text={item.content} />
+            </li>
+          ))}
+        </ul>
+      </Dropdown>
     );
   };
 
@@ -64,14 +96,23 @@ class MyCalendar extends React.Component<any, any> {
     ) : null;
   };
 
+  onSelect = (date) => {
+    console.log(date);
+  };
+
   render() {
     return (
-      <Calendar
+      <div
+        ref={(ref) => (this.container = ref)}
         className={this.props.className}
-        dateCellRender={this.dateCellRender}
-        monthCellRender={this.monthCellRender}
-        onSelect={(s) => console.log(s)}
-      />
+      >
+        <Calendar
+          fullscreen={this.state.fullscreen}
+          dateCellRender={this.dateCellRender}
+          monthCellRender={this.monthCellRender}
+          onSelect={this.onSelect}
+        />
+      </div>
     );
   }
 }
@@ -81,6 +122,9 @@ const styledCalendar = styled(MyCalendar)`
     list-style: none;
     margin: 0;
     padding: 0;
+
+    width: 100%;
+    height: 100%;
   }
 
   .events .ant-badge-status {

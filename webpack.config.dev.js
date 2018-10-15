@@ -49,6 +49,7 @@ module.exports = {
         use: ["style-loader", "css-loader", {
           loader: "less-loader",
           options: {
+            includePaths: [path.resolve(__dirname, 'node_modules')],
             sourceMap: true,
             javascriptEnabled: true,
             modifyVars: {

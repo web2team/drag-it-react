@@ -41,7 +41,8 @@ export interface GridLayoutItemPosition {
 
 export enum GridLayoutItemType {
   CHATTING = "CHATTING",
-  CALENDAR = "CALENDAR"
+  CALENDAR = "CALENDAR",
+  TEXT_EDITOR = "TEXT_EDITOR"
 }
 
 export interface GridLayoutItemProps {

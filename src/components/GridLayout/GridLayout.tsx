@@ -165,8 +165,8 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     const cols = { lg: 30, md: 25, sm: 20, xs: 15, xxs: 10 };
 
     return (
-      <Spin spinning={this.state.loading} tip="loading...">
-        <div className={this.props.className}>
+      <div className={this.props.className}>
+        <Spin spinning={this.state.loading} tip="loading...">
           {this.state.loading ? null : (
             <FloatingMenu gridId={this.props.gridLayoutId} />
           )}
@@ -179,14 +179,13 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
           >
             {this.state.gridLayoutItems.map(this.createGridLayoutItem)}
           </ResponsiveReactGridLayout>
-        </div>
-      </Spin>
+        </Spin>
+      </div>
     );
   }
 }
 
 const styledGridLayout = styled(GridLayout)`
-  min-height: 50vh;
 
   .with-draggable {
     border: 1px solid ${BORDER_COLOR};
@@ -200,6 +199,9 @@ const styledGridLayout = styled(GridLayout)`
       display: flex;
       flex-flow: column;
       flex: auto;
+
+      position: relative;
+      overflow: auto;
     }
   }
 
