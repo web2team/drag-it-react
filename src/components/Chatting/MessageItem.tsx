@@ -6,7 +6,7 @@ import Moment from "react-moment";
 
 interface Props extends Message, Styled {
   className?: string;
-}
+} 
 class MessageItem extends React.PureComponent<Props> {
   resolveMention = (contents: string) => {
     return contents;

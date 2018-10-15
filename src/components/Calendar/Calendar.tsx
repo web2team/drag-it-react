@@ -96,10 +96,6 @@ class MyCalendar extends React.Component<any, any> {
     ) : null;
   };
 
-  onSelect = (date) => {
-    console.log(date);
-  };
-
   render() {
     return (
       <div
@@ -110,7 +106,7 @@ class MyCalendar extends React.Component<any, any> {
           fullscreen={this.state.fullscreen}
           dateCellRender={this.dateCellRender}
           monthCellRender={this.monthCellRender}
-          onSelect={this.onSelect}
+          // onSelect={this.onSelect}
         />
       </div>
     );
@@ -118,7 +114,7 @@ class MyCalendar extends React.Component<any, any> {
 }
 
 const styledCalendar = styled(MyCalendar)`
-  z-index: -100;
+  overflow-y: scroll;
   
   ul.events {
     list-style: none;
@@ -142,4 +138,5 @@ const styledCalendar = styled(MyCalendar)`
     font-size: 28px;
   }
 `;
+
 export { styledCalendar as Calendar };
