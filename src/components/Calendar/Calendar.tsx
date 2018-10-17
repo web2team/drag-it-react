@@ -1,5 +1,15 @@
 import * as React from "react";
-import { Calendar, Badge, Dropdown, Menu } from "antd";
+import {
+  Calendar,
+  Badge,
+  Dropdown,
+  Menu,
+  Modal,
+  Form,
+  Button,
+  Input,
+  Select
+} from "antd";
 const SubMenu = Menu.SubMenu;
 
 import { styled } from "theme";
@@ -8,16 +18,16 @@ import moment from "moment";
 import "moment/locale/ko";
 moment.locale("ko");
 
+const FormItem = Form.Item;
+const Option = Select.Option;
+
 class MyCalendar extends React.Component<any, any> {
   container: HTMLDivElement;
 
   state = {
-    fullscreen: true
+    fullscreen: true,
+    modalVisible: false
   };
-
-  componentDidUpdate() {
-    console.log("update");
-  }
 
   getListData = (value: any) => {
     let listData;
@@ -46,13 +56,25 @@ class MyCalendar extends React.Component<any, any> {
     return listData || [];
   };
 
+  toggleShowModal = () => {
+    this.setState((prev) =>
+      this.setState({ modalVisible: !prev.modalVisible })
+    );
+  };
+
+  addCalendarItem = () => {
+    this.toggleShowModal();
+  };
+
   dateCellRender = (value: any) => {
+    console.log(value);
     const listData = this.getListData(value);
+
     const menu = (
-      <Menu
-        onClick={({ item, key, keyPath }) => console.log(item, key, keyPath)}
-      >
-        <Menu.Item>일정 추가</Menu.Item>
+      <Menu>
+        <Menu.Item>
+          <div onClick={this.addCalendarItem}>일정 추가</div>
+        </Menu.Item>
         <Menu.Item>일정 삭제</Menu.Item>
         <Menu.Item>자세히 보기</Menu.Item>
         <SubMenu title="sub menu">
@@ -96,26 +118,69 @@ class MyCalendar extends React.Component<any, any> {
     ) : null;
   };
 
+  onSubmit = () => {
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      console.log(values);
+
+      if (!err) {
+        console.log("Received values of form: ", values);
+      }
+    });
+  };
+
+  onCancle = () => {
+    this.toggleShowModal();
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
+
+    const prefixSelector = getFieldDecorator("prefix", {
+      initialValue: "green"
+    })(
+      <Select style={{ width: 90 }}>
+        <Option value="green">보통</Option>
+        <Option value="orange">주의</Option>
+        <Option value="red">중요</Option>
+      </Select>
+    );
+
     return (
       <div
         ref={(ref) => (this.container = ref)}
         className={this.props.className}
       >
+        <Modal
+          visible={this.state.modalVisible}
+          centered={true}
+          onOk={this.onSubmit}
+          onCancel={this.onCancle}
+        >
+          <Form>
+            <FormItem label="내용을 입력해주세요">
+              {getFieldDecorator("content", {
+                rules: [{ required: true, message: "내용을 입력해주세요" }]
+              })(
+                <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
+              )}
+            </FormItem>
+          </Form>
+        </Modal>
         <Calendar
           fullscreen={this.state.fullscreen}
           dateCellRender={this.dateCellRender}
           monthCellRender={this.monthCellRender}
-          // onSelect={this.onSelect}
         />
       </div>
     );
   }
 }
 
-const styledCalendar = styled(MyCalendar)`
+const WrappedRegistrationForm = Form.create()(MyCalendar);
+
+const styledCalendar = styled(WrappedRegistrationForm)`
   overflow-y: scroll;
-  
+
   ul.events {
     list-style: none;
     margin: 0;
