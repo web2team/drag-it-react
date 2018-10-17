@@ -186,7 +186,7 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
 }
 
 const styledGridLayout = styled(GridLayout)`
-  min-height: 50vh;
+  /* min-height: 50vh; */
 
   .react-resizable-handle {
     z-index: 1000;

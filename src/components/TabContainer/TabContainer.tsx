@@ -29,6 +29,7 @@ interface Props extends Styled {
 interface State {
   panes: Pane[];
   activeId: number;
+  modalVisible: boolean;
 }
 @inject("gridState")
 class TabContainer extends React.Component<Props, State> {
@@ -37,7 +38,8 @@ class TabContainer extends React.Component<Props, State> {
 
     this.state = {
       activeId: 0,
-      panes: []
+      panes: [],
+      modalVisible: false
     };
   }
   componentDidMount() {
@@ -56,11 +58,8 @@ class TabContainer extends React.Component<Props, State> {
   }
 
   onChange = (activeId) => {
-    console.log(activeId);
     this.setState({ activeId });
     this.props.gridState.currentGridLayoutId = activeId;
-
-    // TODO: should update tabid(gridID) using mobx
   };
 
   onEdit = (targetId, action) => {
@@ -128,9 +127,28 @@ class TabContainer extends React.Component<Props, State> {
     });
   };
 
+  showModal = () => {
+    this.setState((prev) =>
+      this.setState({
+        modalVisible: !prev.modalVisible
+      })
+    );
+  };
+
   render() {
     return (
       <div>
+        <Modal
+          visible={this.state.modalVisible}
+          maskClosable={true}
+          centered={true}
+          footer={null}
+          closable={true}
+          onOk={this.showModal}
+          onCancel={this.showModal}
+        >
+          abc
+        </Modal>
         <NotificationCenter userId={this.props.userId} />
         <Tabs
           onChange={this.onChange}
@@ -145,17 +163,31 @@ class TabContainer extends React.Component<Props, State> {
           {this.state.panes.map((pane) => (
             <TabPane
               tab={
-                <EditableForm
-                  request={{
-                    query: UPDATE_GRID_LAYOUT_NAME,
-                    variables: {
-                      gridLayoutId: pane.id
-                    }
-                  }}
-                  editable={true}
-                  data={pane.name}
-                  dataFieldName="name"
-                />
+                <span>
+                  <EditableForm
+                    request={{
+                      query: UPDATE_GRID_LAYOUT_NAME,
+                      variables: {
+                        gridLayoutId: pane.id
+                      }
+                    }}
+                    editable={true}
+                    data={pane.name}
+                    dataFieldName="name"
+                  />
+                  <span
+                    onClick={this.showModal}
+                    style={{
+                      padding: 0,
+                      position: "relative",
+                      right: -10,
+                      top: -0.3,
+                      color: "gray"
+                    }}
+                  >
+                    <Icon style={{ transform: "scale(0.95)" }} type="plus" />
+                  </span>
+                </span>
               }
               key={pane.id}
               closable={true}
@@ -171,7 +203,7 @@ class TabContainer extends React.Component<Props, State> {
 
 const styledTabContainer = styled(TabContainer)`
   .ant-tabs-tab {
-    padding: 1px 16px !important;
+    padding: 1px 25px !important;
   }
 `;
 

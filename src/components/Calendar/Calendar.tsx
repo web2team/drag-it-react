@@ -67,7 +67,6 @@ class MyCalendar extends React.Component<any, any> {
   };
 
   dateCellRender = (value: any) => {
-    console.log(value);
     const listData = this.getListData(value);
 
     const menu = (
@@ -77,14 +76,6 @@ class MyCalendar extends React.Component<any, any> {
         </Menu.Item>
         <Menu.Item>일정 삭제</Menu.Item>
         <Menu.Item>자세히 보기</Menu.Item>
-        <SubMenu title="sub menu">
-          <Menu.Item>서브메뉴 1</Menu.Item>
-          <Menu.Item>서브메뉴 2</Menu.Item>
-        </SubMenu>
-        <SubMenu title="disabled sub menu" disabled={true}>
-          <Menu.Item>5d menu item</Menu.Item>
-          <Menu.Item>6th menu item</Menu.Item>
-        </SubMenu>
       </Menu>
     );
 
@@ -155,6 +146,8 @@ class MyCalendar extends React.Component<any, any> {
           centered={true}
           onOk={this.onSubmit}
           onCancel={this.onCancle}
+          closable={false}
+          maskClosable={false}
         >
           <Form>
             <FormItem label="내용을 입력해주세요">
