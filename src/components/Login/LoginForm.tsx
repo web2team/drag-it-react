@@ -131,6 +131,7 @@ const styledForm = styled(WrappedNormalLoginForm)`
 
     margin-left: auto;
     margin-right: auto;
+    margin-top: 15vh;
   }
 
   .title-container {

@@ -42,6 +42,8 @@ const styledRootRouer = styled(RootRouter)`
   #root-header {
     display: flex;
     height: 5vh;
+    position: absolute;
+    right: 0;
 
     #logo {
       width: 120px;
@@ -51,12 +53,32 @@ const styledRootRouer = styled(RootRouter)`
       float: left;
     }
   }
+
+  .ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    background: transparent;
+    color: black;
+  }
+
+  .ant-menu-dark.ant-menu-horizontal > .ant-menu-item {
+    color: black;
+
+    border: gray 1px solid;
+  }
+
+  .ant-menu.ant-menu-dark .ant-menu-item-selected {
+    background-color: transparent !important;
+  }
+
   .ant-menu {
     display: flex;
   }
   .ant-menu-dark.ant-menu-horizontal > .ant-menu-item {
     margin: auto;
     padding: auto;
+  }
+
+  .ant-layout-header {
+    background: none;
   }
 
   .root-contents {

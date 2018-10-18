@@ -39,7 +39,7 @@ export class RootHeader extends React.Component<any, any> {
         >
           {this.props.authState.getIsLogin ? (
             <Menu.Item key="logout">
-              <span>logout</span>
+              <span>로그아웃</span>
             </Menu.Item>
           ) : null}
         </Menu>
