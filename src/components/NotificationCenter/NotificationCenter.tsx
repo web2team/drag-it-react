@@ -10,7 +10,7 @@ import { NotificationCenterProps } from "interface/Notification";
 class NotificationCenter extends React.Component<NotificationCenterProps, any> {
   state = {
     visible: false,
-    notificationCount: 50
+    notificationCount: 0
   };
 
   componentDidMount() {

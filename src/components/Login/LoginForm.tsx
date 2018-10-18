@@ -31,7 +31,7 @@ class LoginForm extends React.Component<any, any> {
           this.props.authState.setToken(data.token);
           this.props.authState.setUserId(data.userId);
           this.props.authState.setIsLogin(true);
-
+          
           console.log(data);
           return data;
         })
@@ -56,7 +56,7 @@ class LoginForm extends React.Component<any, any> {
     const { getIsLogin } = this.props.authState;
 
     if (getIsLogin) {
-      return <Redirect to="home" />;
+      return <Redirect to="tab" />;
     }
     return (
       <div className={this.props.className} id="login">
