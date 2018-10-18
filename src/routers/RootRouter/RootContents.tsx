@@ -15,12 +15,6 @@ export const RootContents = ({ userId }) => {
       key={getKey()}
       exact={true}
       path="/"
-      render={(props) => <FrontPage />}
-    />,
-    <Route
-      key={getKey()}
-      exact={true}
-      path="/login"
       render={(props) => <Login />}
     />
   ];
@@ -31,12 +25,6 @@ export const RootContents = ({ userId }) => {
       exact={true}
       path="/tab"
       render={(props) => <TabContainer userId={userId} />}
-    />,
-    <Route
-      key={getKey()}
-      exact={true}
-      path="/calendar"
-      render={(props) => <Calendar />}
     />,
     <Route
       key={getKey()}

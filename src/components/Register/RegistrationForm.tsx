@@ -17,7 +17,9 @@ const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 import axios from "axios";
 import { API_ENDPOINT } from "constants/urls";
+import { inject } from "mobx-react";
 
+@inject("browserHistoryState")
 class RegistrationForm extends React.Component<any, any> {
   state = {
     confirmDirty: false,
@@ -39,16 +41,18 @@ class RegistrationForm extends React.Component<any, any> {
           userName,
           phone
         })
-        .then(() =>
+        .then(() => {
           notification.success({
             message: "회원가입 성공",
-            description: "성공적으로 등록되었습니다."
-          })
-        )
+            description: "성공적으로 등록되었습니다. 로그인 해주세요."
+          });
+
+          this.props.browserHistoryState.push("");
+        })
         .catch(({ response: { data: { message } } }) => {
           notification.error({
             message: "회원가입 실패",
-            description: `회원가입에 실패했습니다.`
+            description: `중복된 아이디가 존재합니다.`
           });
         });
     });
@@ -202,6 +206,9 @@ class RegistrationForm extends React.Component<any, any> {
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
 const styledWrapped = styled(WrappedRegistrationForm)`
+  max-width: 65vw;
+  margin: auto;
+
   margin-top: 2rem;
 `;
 export { styledWrapped as RegistrationForm };

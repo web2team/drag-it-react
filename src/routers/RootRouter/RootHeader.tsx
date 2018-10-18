@@ -37,7 +37,11 @@ export class RootHeader extends React.Component<any, any> {
           defaultSelectedKeys={["0"]}
           onSelect={(itemProps) => this.onSelect(itemProps)}
         >
-          {this.props.authState.getIsLogin ? AuthMenuItems : NormalMenuItems}
+          {this.props.authState.getIsLogin ? (
+            <Menu.Item key="logout">
+              <span>logout</span>
+            </Menu.Item>
+          ) : null}
         </Menu>
       </Header>
     );
