@@ -71,7 +71,7 @@ class TabContainer extends React.Component<Props, State> {
     const operation = {
       query: NEW_GRID_LAYOUT,
       variables: {
-        name: "newTab",
+        name: "새 탭",
         userId: this.props.userId
       }
     };

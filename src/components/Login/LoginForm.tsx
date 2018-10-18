@@ -37,14 +37,15 @@ class LoginForm extends React.Component<any, any> {
         })
         .then((data) => {
           notification.success({
-            message: "SUCCESS",
+            message: "로그인 성공",
             description: `안녕하세요, ${data.userName}님`
           });
         })
         .catch((e) =>
           notification.error({
-            message: "Fail to Login",
-            description: `${e}`
+            message: "로그인 실패",
+            description: `아이디와 비밀번호를 확인하세요.`,
+            duration: 1,
           })
         );
     });
@@ -61,7 +62,7 @@ class LoginForm extends React.Component<any, any> {
       <div className={this.props.className} id="login">
         <div className="login-container">
           <div className="title-container">
-            <span className="title">Drag It</span>
+            <span className="title">Drag-It</span>
           </div>
           <div className="form-container">
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -104,10 +105,10 @@ class LoginForm extends React.Component<any, any> {
                   htmlType="submit"
                   size="large"
                 >
-                  Sign In
+                  로그인
                 </Button>
                 <br />
-                Drag-it에 처음이신가요? <a href="register">회원가입!</a>
+                Drag-It에 처음이신가요? <a href="register">회원가입!</a>
               </FormItem>
             </Form>
           </div>

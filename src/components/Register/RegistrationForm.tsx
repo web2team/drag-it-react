@@ -41,14 +41,14 @@ class RegistrationForm extends React.Component<any, any> {
         })
         .then(() =>
           notification.success({
-            message: "SUCCESS",
+            message: "회원가입 성공",
             description: "성공적으로 등록되었습니다."
           })
         )
         .catch(({ response: { data: { message } } }) => {
           notification.error({
-            message: "Fail to register",
-            description: `회원가입에 실패했습니다. ${message}`
+            message: "회원가입 실패",
+            description: `회원가입에 실패했습니다.`
           });
         });
     });
@@ -62,7 +62,7 @@ class RegistrationForm extends React.Component<any, any> {
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue("password")) {
-      callback("Two passwords that you enter is inconsistent!");
+      callback("비밀번호가 일치하지 않습니다");
     } else {
       callback();
     }
@@ -107,7 +107,6 @@ class RegistrationForm extends React.Component<any, any> {
     })(
       <Select style={{ width: 70 }}>
         <Option value="010">010</Option>
-        <Option value="011">011</Option>
       </Select>
     );
 
@@ -164,7 +163,7 @@ class RegistrationForm extends React.Component<any, any> {
               label={
                 <span>
                   사용자 이름&nbsp;
-                  <Tooltip title="What do you want others to call you?">
+                  <Tooltip title="사용자 이름">
                     <Icon type="question-circle-o" />
                   </Tooltip>
                 </span>
@@ -174,7 +173,7 @@ class RegistrationForm extends React.Component<any, any> {
                 rules: [
                   {
                     required: true,
-                    message: "Please input your name!",
+                    message: "이름을 입력해주세요.",
                     whitespace: true
                   }
                 ]

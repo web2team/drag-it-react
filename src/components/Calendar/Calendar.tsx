@@ -66,6 +66,14 @@ class MyCalendar extends React.Component<any, any> {
     this.toggleShowModal();
   };
 
+  removeCalenderItem = () => {
+    this.toggleShowModal();
+  };
+
+  showDetailCalenderItem = () => {
+    this.toggleShowModal();
+  };
+
   dateCellRender = (value: any) => {
     const listData = this.getListData(value);
 
@@ -74,8 +82,12 @@ class MyCalendar extends React.Component<any, any> {
         <Menu.Item>
           <div onClick={this.addCalendarItem}>일정 추가</div>
         </Menu.Item>
-        <Menu.Item>일정 삭제</Menu.Item>
-        <Menu.Item>자세히 보기</Menu.Item>
+        <Menu.Item>
+          <div onClick={this.removeCalenderItem}>일정 삭제</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={this.addCalendarItem}>자세히보기</div>
+        </Menu.Item>
       </Menu>
     );
 
