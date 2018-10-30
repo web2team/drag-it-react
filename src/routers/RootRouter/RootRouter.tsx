@@ -7,6 +7,7 @@ const { Content, Footer } = Layout;
 import { styled } from "theme";
 import { RootHeader, RootContents } from "routers/RootRouter";
 import { inject, observer } from "mobx-react";
+import "./RootRouter.less";
 
 interface Props {
   className?: string;
@@ -39,29 +40,13 @@ const styledRootRouer = styled(RootRouter)`
   background: white;
 
   #root-header {
-    display: flex;
-    
-    #logo {
-      width: 120px;
-      height: 31px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: auto 20px auto 5px;
-      float: left;
-      color: white;
-      font-family: "BMDoHyeon-OTF";
-
-      & > span {
-        margin: auto;
-        line-height: 33px !important;
-        font-size: 25px;
-        position: relative;
-        left: 3.5px;
-        letter-spacing: 3px;
-      }
-    }
+    display: flex;    
   }
   .ant-menu {
     display: flex;
+  }
+  .ant-menu-item {
+    margin: auto;
   }
   .ant-layout-header {
     width: 100%;

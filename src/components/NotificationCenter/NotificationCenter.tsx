@@ -14,7 +14,7 @@ class NotificationCenter extends React.Component<NotificationCenterProps, any> {
   };
 
   componentDidMount() {
-    this.fetchNotificationCount();
+    this.fetchNotificationCount(); 
   }
 
   onClick = () => {
@@ -73,9 +73,9 @@ const styledNotificationCenter = styled(NotificationCenter)`
   .noti-icon {
     position: absolute !important;
     z-index: 500 !important;
-    top: 20 !important;
+    top: 20px !important;
     transform: scale(2) !important;
-    left: 20 !important;
+    left: 20px !important;
     color: white;
     cursor: pointer;
   }

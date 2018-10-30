@@ -31,6 +31,7 @@
         "apollo-link-ws": "^1.0.8",
         "babel-loader": "^7.1.5",
         "dotenv-webpack": "^1.5.7",
+        "draft-convert": "^2.1.4",
         "graphql": "^0.13.2",
         "graphql-tag": "^2.9.2",
         "immutability-helper": "^2.7.1",
@@ -54,6 +55,7 @@
         "react-router": "^4.3.1",
         "react-router-dom": "^4.3.1",
         "react-scroll": "^1.7.10",
+        "react-select": "^2.1.1",
         "store": "^2.0.12",
         "styled-components": "^3.4.2",
         "subscriptions-transport-ws": "^0.9.14",
@@ -72,7 +74,7 @@
         "axios": "^0.18.0",
         "babel-cli": "^6.26.0",
         "babel-plugin-import": "^1.8.0",
-        "babel-plugin-styled-components": "^1.5.1",
+        "babel-plugin-styled-components": "^1.8.0",
         "babel-preset-react": "^6.24.1",
         "clean-webpack-plugin": "^0.1.19",
         "css-loader": "^0.28.11",
@@ -91,6 +93,7 @@
         "ts-import-plugin": "^1.5.4",
         "ts-loader": "^4.4.2",
         "typescript": "^2.9.2",
+        "typescript-plugin-styled-components": "^1.0.0",
         "webpack": "^4.16.5",
         "webpack-cli": "^2.1.5",
         "webpack-dev-server": "^3.1.5"
@@ -101,6 +104,7 @@
         ],
         "plugins": [
             [
+                ["babel-plugin-styled-components"],
                 "import",
                 {
                     "libraryName": "antd"

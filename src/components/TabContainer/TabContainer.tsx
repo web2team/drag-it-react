@@ -189,7 +189,7 @@ class TabContainer extends React.Component<Props, State> {
                   </span>
                 </span>
               }
-              key={pane.id}
+              key={"" + pane.id}
               closable={true}
             >
               <GridLayout gridLayoutId={pane.id} userId={this.props.userId} />

@@ -6,6 +6,7 @@ import { Styled } from "interface/global";
 import { ShowGridItemDrawer } from "./CreateGridItem";
 import { CreateChatting } from "./CreateChatting";
 import { Icon } from "antd";
+import "./FloatingMenu.css";
 
 interface Props extends Styled {
   gridId: number;
@@ -58,15 +59,7 @@ class FloatingMenu extends React.Component<Props, any> {
 }
 
 const styledFloatingMenu = styled(FloatingMenu)`
-  .noti-icon {
-    position: absolute !important;
-    z-index: 500 !important;
-    top: 21 !important;
-    transform: scale(2) !important;
-    left: 21 !important;
-    color: white;
-    cursor: pointer;
-  }
+  
   .mfb-component__button--main {
     background-color: #722ed1;
     line-height: 56px;
