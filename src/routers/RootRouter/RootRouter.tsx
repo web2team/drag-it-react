@@ -24,8 +24,7 @@ class RootRouter extends React.Component<Props, any> {
     return (
       <Router history={this.props.browserHistoryState.getHistory}>
         <Layout className={this.props.className}>
-          {/* {this.props.authState.getIsLogin ? null : <RootHeader />} */}
-          <RootHeader />
+          {this.props.authState.getIsLogin ? <RootHeader /> : null}
           <Content className="root-contents">
             <RootContents userId={userId} />
           </Content>
@@ -44,45 +43,34 @@ const styledRootRouer = styled(RootRouter)`
     height: 5vh;
     position: absolute;
     right: 0;
-
     #logo {
       width: 120px;
       height: 31px;
       background: rgba(255, 255, 255, 0.2);
       margin: auto 20px auto 5px;
       float: left;
+      color: white;
+      font-family: "BMDoHyeon-OTF";
+
+      & > span {
+        margin: auto;
+        line-height: 33px;
+        font-size: 25px;
+        position: relative;
+        left: 3.5px;
+        letter-spacing: 3px;
+      }
     }
   }
-
-  .ant-menu-dark, .ant-menu-dark .ant-menu-sub {
-    background: transparent;
-    color: black;
-  }
-
-  .ant-menu-dark.ant-menu-horizontal > .ant-menu-item {
-    color: black;
-
-    border: gray 1px solid;
-  }
-
-  .ant-menu.ant-menu-dark .ant-menu-item-selected {
-    background-color: transparent !important;
-  }
-
   .ant-menu {
     display: flex;
   }
-  .ant-menu-dark.ant-menu-horizontal > .ant-menu-item {
-    margin: auto;
-    padding: auto;
-  }
-
   .ant-layout-header {
-    background: none;
+    width: 100%;
   }
 
   .root-contents {
-    padding: 5vh 50px 0px 50px;
+    padding: 10vh 50px 0px 50px;
     min-height: 90vh;
   }
 

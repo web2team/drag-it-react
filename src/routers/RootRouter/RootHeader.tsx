@@ -30,9 +30,11 @@ export class RootHeader extends React.Component<any, any> {
   render() {
     return (
       <Header id="root-header">
-        <div id="logo" />
+        <div id="logo">
+          <span>Drag-It</span>
+        </div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="horizontal"
           defaultSelectedKeys={["0"]}
           onSelect={(itemProps) => this.onSelect(itemProps)}
