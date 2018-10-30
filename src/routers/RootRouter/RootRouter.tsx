@@ -40,9 +40,7 @@ const styledRootRouer = styled(RootRouter)`
 
   #root-header {
     display: flex;
-    height: 5vh;
-    position: absolute;
-    right: 0;
+    
     #logo {
       width: 120px;
       height: 31px;
@@ -70,7 +68,7 @@ const styledRootRouer = styled(RootRouter)`
   }
 
   .root-contents {
-    padding: 10vh 50px 0px 50px;
+    padding: 2vh 50px 0px 50px;
     min-height: 90vh;
   }
 
