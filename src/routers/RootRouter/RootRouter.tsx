@@ -52,7 +52,7 @@ const styledRootRouer = styled(RootRouter)`
 
       & > span {
         margin: auto;
-        line-height: 33px;
+        line-height: 33px !important;
         font-size: 25px;
         position: relative;
         left: 3.5px;

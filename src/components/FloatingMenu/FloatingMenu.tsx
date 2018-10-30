@@ -59,11 +59,11 @@ class FloatingMenu extends React.Component<Props, any> {
 
 const styledFloatingMenu = styled(FloatingMenu)`
   .noti-icon {
-    position: absolute;
-    z-index: 500;
-    top: 21;
-    transform: scale(2);
-    left: 21;
+    position: absolute !important;
+    z-index: 500 !important;
+    top: 21 !important;
+    transform: scale(2) !important;
+    left: 21 !important;
     color: white;
     cursor: pointer;
   }

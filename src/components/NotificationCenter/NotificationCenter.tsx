@@ -71,11 +71,11 @@ class NotificationCenter extends React.Component<NotificationCenterProps, any> {
 
 const styledNotificationCenter = styled(NotificationCenter)`
   .noti-icon {
-    position: absolute;
-    z-index: 500;
-    top: 20;
-    transform: scale(2);
-    left: 20;
+    position: absolute !important;
+    z-index: 500 !important;
+    top: 20 !important;
+    transform: scale(2) !important;
+    left: 20 !important;
     color: white;
     cursor: pointer;
   }
