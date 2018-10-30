@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout } from "antd";
+import { Layout, Icon } from "antd";
 import { Router } from "react-router-dom";
 import "antd/dist/antd.less";
 import "theme/ant.less";
