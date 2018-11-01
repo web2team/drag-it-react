@@ -5,10 +5,14 @@ export const GET_PROJECT = gql`
     getProject(projectId: $projectId) {
       id
       name
-      users {
+      gridLayouts {
         id
         name
-        email
+        user {
+          id
+          name
+          email
+        }
       }
     }
   }

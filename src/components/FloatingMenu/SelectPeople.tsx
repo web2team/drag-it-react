@@ -38,8 +38,8 @@ class SelectPeople extends React.Component<Props, State> {
     };
     this.setState({ loading: true });
     executePromise(operation).then(({ data: { getProject } }) => {
-      const { users } = getProject;
-      const data = users.map((user: User, index) => ({
+      const { gridLayouts } = getProject;
+      const data = gridLayouts.map(layout => layout.user).map((user: User, index) => ({
         key: index,
         userId: user.id,
         title: `${user.name} (${user.email})`,

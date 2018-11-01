@@ -84,6 +84,7 @@ class TabContainer extends React.Component<Props, State> {
 
     const projectId = this.state.panes.find((pane) => pane.id === activeId)
       .project.id;
+    
     this.props.projectState.currentProjectId = projectId;
   };
 
