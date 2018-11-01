@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
 const Header = Layout.Header;
-import { getKey } from "routers/RootRouter/helper";
 import { inject, observer } from "mobx-react";
 
 @inject("authState")
 @inject("browserHistoryState")
 @observer
 export class RootHeader extends React.Component<any, any> {
+  // 사용자가 메뉴 클릭했을 때 호출되는 콜백
+  // 전역 상태를 수정 -> Login, Logout, Redirect 처리
   onSelect = ({ key }) => {
     if (key === "logout") {
       this.props.authState.onLogout();
@@ -37,8 +37,10 @@ export class RootHeader extends React.Component<any, any> {
           theme="light"
           mode="horizontal"
           defaultSelectedKeys={["0"]}
+          // 엘레멘트 선택 시 콜백함수 정의
           onSelect={(itemProps) => this.onSelect(itemProps)}
         >
+          {/* 로그인 시에만 로그아웃 메뉴 show */}
           {this.props.authState.getIsLogin ? (
             <Menu.Item key="logout">
               <span>로그아웃</span>
@@ -49,42 +51,3 @@ export class RootHeader extends React.Component<any, any> {
     );
   }
 }
-
-const NormalMenuItems = [
-  <Menu.Item key={getKey()}>
-    <Link to="">
-      <span>Home</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key={getKey()}>
-    <Link to="login">
-      <span>Sign in</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key={getKey()}>
-    <Link to="register">
-      <span>Sign up</span>
-    </Link>
-  </Menu.Item>
-];
-
-const AuthMenuItems = [
-  <Menu.Item key={getKey()}>
-    <Link to="calendar">
-      <span>Calendar</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key={getKey()}>
-    <Link to="tab">
-      <span>Tab</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key={getKey()}>
-    <Link to="test">
-      <span>test</span>
-    </Link>
-  </Menu.Item>,
-  <Menu.Item key="logout">
-    <span>logout</span>
-  </Menu.Item>
-];

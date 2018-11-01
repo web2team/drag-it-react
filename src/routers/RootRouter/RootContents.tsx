@@ -1,14 +1,10 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
-
-import { FrontPage } from "components/FrontPage";
-import { Chatting } from "components/Chatting";
-import { Calendar, Login, Register } from "components";
-
+import { Login, Register } from "components";
 import { getKey } from "routers/RootRouter/helper";
-import { GridLayout } from "components/GridLayout";
 import { TabContainer } from "components/TabContainer";
 
+// URL path에 맞는 상태 설정
 export const RootContents = ({ userId }) => {
   const NormalContents = [
     <Route
