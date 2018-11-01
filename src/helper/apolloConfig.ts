@@ -38,6 +38,9 @@ interface Operation {
   context?: any;
   extensions?: any;
 }
+
+// GraphQL Ajax 헬퍼.
+// Raw API를 사용하지 않고 Wrapping해서 생산성을 높임
 export const executePromise = (operation: Operation) =>
   makePromise(execute(link, operation));
 
@@ -46,6 +49,8 @@ interface OnExecuteSubscribe {
   error?: (error: any) => void;
   complete?: () => void;
 }
+
+// Ajax 헬퍼이지만 Subscription용
 export const executePromiseSubscribe = (
   operation: Operation,
   { next, error, complete }: OnExecuteSubscribe

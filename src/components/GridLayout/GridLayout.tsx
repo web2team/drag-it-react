@@ -24,9 +24,11 @@ import { Icon, Popconfirm, message, Spin } from "antd";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const DRAG_HANDLER_CLASSNAME = "drag-handler";
 
+// GridLayout : Grid 컴포넌트를 모두 담는 Container
+// GridLayoutItem : GridLayout에 포함되는 각각의 엘리먼트 (실제 기능 컴포넌트)
 interface State {
   loading: boolean;
-  gridLayoutItems: GridLayoutItem[];
+  gridLayoutItems: GridLayoutItem[]; 
 }
 class GridLayout extends React.Component<GridLayoutProps, State> {
   constructor(props: any) {
@@ -37,11 +39,15 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     };
   }
 
+  // Mount가 완료 된 후 초기 GridLayoutItem 가져오기
   componentDidMount() {
     this.fetchItems();
+    // 새로운 아이템 추가시에 
+    // 새로고침 없이 동적으로 적용시키기 위한 Subscribe 부분
     this.subscribeItems();
   }
 
+  // 실제 Fetch 부분 메서드
   fetchItems = () => {
     const operation = {
       query: GET_GRID_LAYOUT_ITEMS,
@@ -56,6 +62,8 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     });
   };
 
+  // 다음 아이템이 stream으로 넘어왔을 때
+  // 처리해주는 부분을 콜백으로 작성
   subscribeItems = () => {
     const operation = {
       query: LINK_GRID_LAYOUT_ITEM,
@@ -64,6 +72,7 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
       }
     };
     executePromiseSubscribe(operation, {
+      // 다음 GridLayoutItem 에 대해서 기존의 상태에 append하여 적용
       next: ({ data: { linkGridLayoutItem } }) => {
         this.setState({
           gridLayoutItems: [...this.state.gridLayoutItems, linkGridLayoutItem]
@@ -72,8 +81,11 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     });
   };
 
+  // 사용자가 컴포넌트를 드래그 혹은 리사이징 했을 때 
+  // Grid에서 처리해주는 핸들러 
   onLayoutChange = (gridLayoutItemPositions: any) => {
     gridLayoutItemPositions.map((gridLayoutItemPosition) => {
+      // i, moved, static property는 
       const tempPosition = _.omit(gridLayoutItemPosition, [
         "i",
         "moved",
@@ -92,10 +104,13 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
         }
       };
 
+      // 단순히 데이터만 전송하므로 콜백은 필요없음.
       executePromise(operation);
     });
   };
 
+  // 삭제도 변경과 마찬가지. 
+  // 그러나 응답 피드백은 사용자에게 주어야함
   onDeleteLayoutItem = (gridLayoutItemId: number) => {
     const operation = {
       query: DELETE_GRID_LAYOUT_ITEM,
@@ -118,6 +133,9 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
       .catch(() => console.error("error on delete layout item"));
   };
 
+  // 새로운 Grid Item 을 만드는 팩토리함수
+  // react dnd 를 위한 css 클래스네임을 추가하고, 추가 삭제 핸들러를 추가등록
+  // getComponent로 타입에 맞는 gridLayoutItem을 resolve 지정해준다.
   createGridLayoutItem = ({
     id,
     gridLayoutItemProps,
@@ -155,6 +173,7 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
   };
 
   render() {
+    // layout 구분점 (픽셀단위)
     const breakpoints = {
       lg: 1200,
       md: 1000,
@@ -167,9 +186,11 @@ class GridLayout extends React.Component<GridLayoutProps, State> {
     return (
       <Spin spinning={this.state.loading} tip="loading...">
         <div className={this.props.className}>
+          {/* 우측 하단에 사용자 floating 메뉴  */}
           {this.state.loading ? null : (
             <FloatingMenu gridId={this.props.gridLayoutId} />
           )}
+          {/* Layout Containe */}
           <ResponsiveReactGridLayout
             breakpoints={breakpoints}
             cols={cols}
