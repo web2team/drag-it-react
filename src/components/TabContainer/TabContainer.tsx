@@ -13,6 +13,7 @@ import { executePromise } from "helper/apolloConfig";
 import { GridLayout } from "components/GridLayout";
 import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
+import { ProjectState } from "state/projectState";
 import { NotificationCenter } from "components/NotificationCenter";
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
@@ -21,6 +22,7 @@ const confirm = Modal.confirm;
 interface Pane {
   id: number;
   name: string;
+  project: any;
 }
 
 // styled-component 상속한 property
@@ -28,6 +30,7 @@ interface Pane {
 interface Props extends Styled {
   userId: number;
   gridState?: GridState;
+  projectState?: ProjectState;
 }
 
 // 컴포넌트가 유지해야 할 상태정보
@@ -42,6 +45,7 @@ interface State {
 
 // mobx gridState class instance 상태 주입
 @inject("gridState")
+@inject("projectState")
 class TabContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -67,7 +71,7 @@ class TabContainer extends React.Component<Props, State> {
       console.log(getGridLayouts);
 
       const panes = getGridLayouts.map((pane) => ({ ...pane }));
-      // 받아온 상태를 현재 컴포넌트에 설정. 
+      // 받아온 상태를 현재 컴포넌트에 설정.
       // 처음 접속했을 때 보게 되는 화면은 첫번째 화면 (activeID : panes[0].id)
       this.setState({ panes, activeId: panes[0].id });
     });
@@ -77,6 +81,10 @@ class TabContainer extends React.Component<Props, State> {
   onChange = (activeId) => {
     this.setState({ activeId });
     this.props.gridState.currentGridLayoutId = activeId;
+
+    const projectId = this.state.panes.find((pane) => pane.id === activeId)
+      .project.id;
+    this.props.projectState.currentProjectId = projectId;
   };
 
   // +와 X에 해당하는 동작 구분 함수
