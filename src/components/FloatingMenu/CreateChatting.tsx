@@ -42,7 +42,6 @@ class CreateChatting extends React.Component<Props, State> {
       this.setState({
         loading: true
       });
-      console.log(values);
       const operation = {
         query: NEW_GRID_LAYOUT_ITEM_AND_NOTIFY,
         variables: {
@@ -60,7 +59,6 @@ class CreateChatting extends React.Component<Props, State> {
         .then(({ data }) => {
           this.setState({ loading: false });
           this.onClose();
-          console.log("new chat result", data);
         })
         .catch((e) => {
           notification.error({
@@ -80,7 +78,7 @@ class CreateChatting extends React.Component<Props, State> {
     return (
       <div>
         <Drawer
-          title="Create New Chatting Thread"
+          title="새로운 채팅 생성"
           placement="right"
           onClose={this.onClose}
           maskClosable={false}
@@ -158,14 +156,14 @@ class CreateChatting extends React.Component<Props, State> {
               }}
               onClick={this.onClose}
             >
-              Cancel
+              취소
             </Button>
             <Button
               onClick={this.onSubmit}
               type="primary"
               loading={this.state.loading}
             >
-              Submit
+              생성
             </Button>
           </div>
         </Drawer>
