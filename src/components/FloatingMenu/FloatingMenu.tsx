@@ -38,17 +38,18 @@ class FloatingMenu extends React.Component<Props, any> {
             iconActive="anticon anticon-close"
           />
           <ChildButton
-            icon="anticon anticon-form"
+            icon="ion-chatbubbles"
             label="add Chatting"
             onClick={this.onClick}
           />
           <ChildButton
-            icon="anticon anticon-calendar"
+            icon="ion-calendar"
             label="add Calendar"
             onClick={() => console.log("clicked")}
           />
           <Icon type="plus" theme="outlined" className="noti-icon" />
         </Menu>
+        <i className="icon ion-md-heart" />
         <CreateChatting
           visible={this.state.drawerVisible}
           onClose={this.onClose}
@@ -59,6 +60,11 @@ class FloatingMenu extends React.Component<Props, any> {
 }
 
 const styledFloatingMenu = styled(FloatingMenu)`
+  .ion-chatbubbles::before, .ion-calendar::before {
+    top: 17px;
+    position: relative;
+    transform: scale(1.4);
+  }
   
   .mfb-component__button--main {
     background-color: #722ed1;
