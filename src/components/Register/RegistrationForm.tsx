@@ -27,13 +27,16 @@ class RegistrationForm extends React.Component<any, any> {
   };
   handleSubmit = (e) => {
     e.preventDefault();
+    // validation을 적용하고 오류가 발생하면 스크롤을 내림
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (err) {
         console.log("Received values of form: ", values);
         return;
       }
+      // ES6 Destucturing 
       const { email, password, userName, phone } = values;
 
+      // Ajax Call -> payload: 앞서 받았던 유저정보
       axios
         .post(`${API_ENDPOINT}/register`, {
           email,
@@ -63,6 +66,7 @@ class RegistrationForm extends React.Component<any, any> {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
+  // 패스워드 비교함수 1
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue("password")) {
@@ -72,6 +76,7 @@ class RegistrationForm extends React.Component<any, any> {
     }
   };
 
+  // 패스워드 비교함수 2 
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
