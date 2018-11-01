@@ -29,6 +29,8 @@ class MyCalendar extends React.Component<any, any> {
     modalVisible: false
   };
 
+  // 날짜에 대한 데이터 파싱
+  // JSON 구조화를 시켜서 view 에 넘겨줌
   getListData = (value: any) => {
     let listData;
     switch (value.date()) {
@@ -74,6 +76,7 @@ class MyCalendar extends React.Component<any, any> {
     this.toggleShowModal();
   };
 
+  // 사용자가 셀을 클릭했을 때 나타나는 UI콜백 선언 부분
   dateCellRender = (value: any) => {
     const listData = this.getListData(value);
 
@@ -121,6 +124,7 @@ class MyCalendar extends React.Component<any, any> {
     ) : null;
   };
 
+  // 새로운 데이터 입력 핸들러 
   onSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {
       console.log(values);
@@ -153,6 +157,7 @@ class MyCalendar extends React.Component<any, any> {
         ref={(ref) => (this.container = ref)}
         className={this.props.className}
       >
+        {/* 캘린더 아이템의 추가 삭제를 위한 모달 선언 부분 */}
         <Modal
           visible={this.state.modalVisible}
           centered={true}
@@ -171,6 +176,8 @@ class MyCalendar extends React.Component<any, any> {
             </FormItem>
           </Form>
         </Modal>
+
+        {/* 실제 캘린더 인스턴스 from antd */}
         <Calendar
           fullscreen={this.state.fullscreen}
           dateCellRender={this.dateCellRender}
