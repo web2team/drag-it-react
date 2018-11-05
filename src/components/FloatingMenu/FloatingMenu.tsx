@@ -14,7 +14,7 @@ interface Props extends Styled {
 }
 class FloatingMenu extends React.Component<Props, any> {
   state = {
-    drawerVisible: [false, false]
+    drawerVisible: [false, false, false]
   };
 
   onClick = (idx: number) => {
@@ -58,6 +58,11 @@ class FloatingMenu extends React.Component<Props, any> {
             label="add Calendar"
             onClick={() => this.onClick(1)}
           />
+          <ChildButton
+            icon="ion-clipboard"
+            label="add MarkDown"
+            onClick={() => this.onClick(1)}
+          />
           <Icon type="plus" theme="outlined" className="noti-icon" />
         </Menu>
         <i className="icon ion-md-heart" />
@@ -76,6 +81,7 @@ class FloatingMenu extends React.Component<Props, any> {
 
 const styledFloatingMenu = styled(FloatingMenu)`
   .ion-chatbubbles::before,
+  .ion-clipboard::before,
   .ion-calendar::before {
     top: 17px;
     position: relative;
