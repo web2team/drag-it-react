@@ -7,3 +7,11 @@
   color: white;
   cursor: pointer;
 }
+
+.ion-chatbubbles::before,
+.ion-clipboard::before,
+.ion-calendar::before {
+  top: 17px;
+  position: relative;
+  transform: scale(1.4);
+}

@@ -85,13 +85,7 @@ class FloatingMenu extends React.Component<Props, any> {
 }
 
 const styledFloatingMenu = styled(FloatingMenu)`
-  .ion-chatbubbles::before,
-  .ion-clipboard::before,
-  .ion-calendar::before {
-    top: 17px;
-    position: relative;
-    transform: scale(1.4);
-  }
+  
 
   .mfb-component__button--main {
     background-color: #722ed1;
