@@ -34,7 +34,12 @@ export class RootHeader extends React.Component<any, any> {
           <span>Drag-It</span>
         </div>
         <Avatar
-          style={{ marginTop: "auto", marginBottom: "auto" }}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            color: "white",
+            backgroundColor: "#722ed1"
+          }}
           size={50}
           icon="user"
         />

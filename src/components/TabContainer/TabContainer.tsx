@@ -1,6 +1,15 @@
 import * as React from "react";
 import { Styled } from "interface/global";
-import { Tabs, Modal, Button, Icon } from "antd";
+import {
+  Tabs,
+  Modal,
+  Button,
+  Icon,
+  Progress,
+  DatePicker,
+  List,
+  Avatar
+} from "antd";
 import { styled } from "theme";
 import { EditableForm } from "utility/EditableForm";
 import {
@@ -15,8 +24,10 @@ import { inject } from "mobx-react";
 import { GridState } from "state/gridState";
 import { ProjectState } from "state/projectState";
 import { NotificationCenter } from "components/NotificationCenter";
+import moment from "moment";
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 // 각 프로젝트를 구분하는 인터페이스
 interface Pane {
@@ -84,7 +95,7 @@ class TabContainer extends React.Component<Props, State> {
 
     const projectId = this.state.panes.find((pane) => pane.id === activeId)
       .project.id;
-    
+
     this.props.projectState.currentProjectId = projectId;
   };
 
@@ -182,7 +193,83 @@ class TabContainer extends React.Component<Props, State> {
           onOk={this.showModal}
           onCancel={this.showModal}
         >
-          abc
+          <div
+            style={{
+              textAlign: "center"
+            }}
+          >
+            <div
+              style={{
+                textAlign: "center"
+              }}
+            >
+              <div className="project-info-title">전체 진행 상황</div>
+              <br />
+              <div>
+                <Progress percent={90} status="active" />
+              </div>
+              <br />
+              <br />
+              <div>
+                <Progress type="circle" percent={75} /> 
+                {"   "}
+                <Progress type="circle" percent={70} status="exception" />
+                {"   "}
+                <Progress type="circle" percent={100} />
+              </div>
+            </div>
+            <br />
+            <br />
+            <div style={{ textAlign: "initial" }}>
+              <div
+                className="project-info-title"
+                style={{ textAlign: "center" }}
+              >
+                참여인원 (2명)
+              </div>
+              <div style={{ margin: "0px 30px 0px 30px" }}>
+                <List
+                  itemLayout="horizontal"
+                  dataSource={[
+                    {
+                      title: "홍길동 (yhc942@naver.com)",
+                      description: "안녕하세요. 홍길동입니다."
+                    },
+                    {
+                      title: "김철수 (abc@abc.com)",
+                      description: "안녕하세요. 김철수입니다. 반갑습니다."
+                    }
+                  ]}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={<Avatar icon="user" />}
+                        title={item.title}
+                        description={item.description}
+                      />
+                    </List.Item>
+                  )}
+                />
+              </div>
+            </div>
+            <br />
+            <br />
+            <div
+              style={{
+                textAlign: "center"
+              }}
+            >
+              <div className="project-info-title">참여기간</div>
+              <br />
+              <RangePicker
+                size="large"
+                disabled={false}
+                defaultValue={[moment("2018-11-08"), moment("2018-12-11")]}
+              />
+            </div>
+            <br />
+            <br />
+          </div>
         </Modal>
         {/* 탭별로 선언되는 알람 구현을 위한 인스턴스 */}
         <NotificationCenter userId={this.props.userId} />
@@ -228,12 +315,16 @@ class TabContainer extends React.Component<Props, State> {
                       color: "gray"
                     }}
                   >
-                    <Icon style={{ transform: "scale(0.95)" }} type="plus" />
+                    <Icon
+                      style={{ transform: "scale(0.95)" }}
+                      type="info-circle"
+                      theme="outlined"
+                    />
                   </span>
                 </span>
               }
               key={"" + pane.id}
-              closable={true}
+              closable={false}
             >
               {/* 각각의 탭 안에 내용을 선언 */}
               {/* GridLayout클래스로 렌러딩 위임 */}
