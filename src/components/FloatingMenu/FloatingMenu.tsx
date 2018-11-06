@@ -5,21 +5,35 @@ import { Menu, MainButton, ChildButton } from "react-mfb";
 import { Styled } from "interface/global";
 import { ShowGridItemDrawer } from "./CreateGridItem";
 import { CreateChatting } from "./CreateChatting";
+import { CreateCalendar } from "./CreateCalandar";
+import { Icon } from "antd";
+import "./FloatingMenu.css";
+import { CreateMarkdown } from "./CreateMarkdown";
 
 interface Props extends Styled {
   gridId: number;
 }
 class FloatingMenu extends React.Component<Props, any> {
   state = {
-    drawerVisible: false
+    drawerVisible: [false, false, false]
   };
 
-  onClick = () => {
-    this.setState({ drawerVisible: true });
+  onClick = (idx: number) => {
+    this.setState((prev) => {
+      const newState = { ...prev };
+      newState.drawerVisible[idx] = true;
+
+      return newState;
+    });
   };
 
-  onClose = () => {
-    this.setState({ drawerVisible: false });
+  onClose = (idx: number) => {
+    this.setState((prev) => {
+      const newState = { ...prev };
+      newState.drawerVisible[idx] = false;
+
+      return newState;
+    });
   };
 
   render() {
@@ -36,19 +50,34 @@ class FloatingMenu extends React.Component<Props, any> {
             iconActive="anticon anticon-close"
           />
           <ChildButton
-            icon="anticon anticon-form"
+            icon="ion-chatbubbles"
             label="add Chatting"
-            onClick={this.onClick}
+            onClick={() => this.onClick(0)}
           />
           <ChildButton
-            icon="anticon anticon-calendar"
+            icon="ion-calendar"
             label="add Calendar"
-            onClick={() => console.log("clicked")}
+            onClick={() => this.onClick(1)}
           />
+          <ChildButton
+            icon="ion-clipboard"
+            label="add MarkDown"
+            onClick={() => this.onClick(2)}
+          />
+          <Icon type="plus" theme="outlined" className="noti-icon" />
         </Menu>
+        <i className="icon ion-md-heart" />
         <CreateChatting
-          visible={this.state.drawerVisible}
-          onClose={this.onClose}
+          visible={this.state.drawerVisible[0]}
+          onClose={() => this.onClose(0)}
+        />
+        <CreateCalendar
+          visible={this.state.drawerVisible[1]}
+          onClose={() => this.onClose(1)}
+        />
+        <CreateMarkdown
+          visible={this.state.drawerVisible[2]}
+          onClose={() => this.onClose(2)}
         />
       </div>
     );
@@ -56,7 +85,6 @@ class FloatingMenu extends React.Component<Props, any> {
 }
 
 const styledFloatingMenu = styled(FloatingMenu)`
-
   .mfb-component__button--main {
     background-color: #722ed1;
     line-height: 56px;

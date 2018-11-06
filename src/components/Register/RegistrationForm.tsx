@@ -17,7 +17,9 @@ const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 import axios from "axios";
 import { API_ENDPOINT } from "constants/urls";
+import { inject } from "mobx-react";
 
+@inject("browserHistoryState")
 class RegistrationForm extends React.Component<any, any> {
   state = {
     confirmDirty: false,
@@ -25,13 +27,16 @@ class RegistrationForm extends React.Component<any, any> {
   };
   handleSubmit = (e) => {
     e.preventDefault();
+    // validation을 적용하고 오류가 발생하면 스크롤을 내림
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (err) {
         console.log("Received values of form: ", values);
         return;
       }
+      // ES6 Destucturing 
       const { email, password, userName, phone } = values;
 
+      // Ajax Call -> payload: 앞서 받았던 유저정보
       axios
         .post(`${API_ENDPOINT}/register`, {
           email,
@@ -39,16 +44,18 @@ class RegistrationForm extends React.Component<any, any> {
           userName,
           phone
         })
-        .then(() =>
+        .then(() => {
           notification.success({
-            message: "SUCCESS",
-            description: "성공적으로 등록되었습니다."
-          })
-        )
+            message: "회원가입 성공",
+            description: "성공적으로 등록되었습니다. 로그인 해주세요."
+          });
+
+          this.props.browserHistoryState.push("");
+        })
         .catch(({ response: { data: { message } } }) => {
           notification.error({
-            message: "Fail to register",
-            description: `회원가입에 실패했습니다. ${message}`
+            message: "회원가입 실패",
+            description: `중복된 아이디가 존재합니다.`
           });
         });
     });
@@ -59,15 +66,17 @@ class RegistrationForm extends React.Component<any, any> {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
+  // 패스워드 비교함수 1
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue("password")) {
-      callback("Two passwords that you enter is inconsistent!");
+      callback("비밀번호가 일치하지 않습니다");
     } else {
       callback();
     }
   };
 
+  // 패스워드 비교함수 2 
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
@@ -107,7 +116,6 @@ class RegistrationForm extends React.Component<any, any> {
     })(
       <Select style={{ width: 70 }}>
         <Option value="010">010</Option>
-        <Option value="011">011</Option>
       </Select>
     );
 
@@ -164,7 +172,7 @@ class RegistrationForm extends React.Component<any, any> {
               label={
                 <span>
                   사용자 이름&nbsp;
-                  <Tooltip title="What do you want others to call you?">
+                  <Tooltip title="사용자 이름">
                     <Icon type="question-circle-o" />
                   </Tooltip>
                 </span>
@@ -174,7 +182,7 @@ class RegistrationForm extends React.Component<any, any> {
                 rules: [
                   {
                     required: true,
-                    message: "Please input your name!",
+                    message: "이름을 입력해주세요.",
                     whitespace: true
                   }
                 ]
@@ -203,6 +211,9 @@ class RegistrationForm extends React.Component<any, any> {
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
 const styledWrapped = styled(WrappedRegistrationForm)`
+  max-width: 65vw;
+  margin: auto;
+
   margin-top: 2rem;
 `;
 export { styledWrapped as RegistrationForm };

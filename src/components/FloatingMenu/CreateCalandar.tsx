@@ -29,7 +29,7 @@ interface State {
   loading: boolean;
 }
 @inject("gridState")
-class CreateChatting extends React.Component<Props, State> {
+class CreateCalendar extends React.Component<Props, State> {
   state = { visible: false, loading: false };
 
   onSubmit = () => {
@@ -47,10 +47,10 @@ class CreateChatting extends React.Component<Props, State> {
         variables: {
           gridLayoutId: this.props.gridState.currentGridLayoutId,
           gridLayoutItemPropsInput: {
-            type: GridLayoutItemType.CHATTING,
+            type: GridLayoutItemType.CALENDAR,
             chatThreadInput: {
-              threadName: values.title,
-              users: values.users.map((user) => ({ id: user.userId }))
+              threadName: "",
+              users: []
             }
           }
         }
@@ -78,7 +78,7 @@ class CreateChatting extends React.Component<Props, State> {
     return (
       <div>
         <Drawer
-          title="새로운 채팅 생성"
+          title="새로운 캘린더 생성"
           placement="right"
           onClose={this.onClose}
           maskClosable={false}
@@ -87,7 +87,8 @@ class CreateChatting extends React.Component<Props, State> {
           style={{
             height: "calc(100% - 55px)",
             overflow: "auto",
-            paddingBottom: 53
+            paddingBottom: 53,
+            paddingRight: 100
           }}
           zIndex={3000}
           destroyOnClose={true}
@@ -98,41 +99,9 @@ class CreateChatting extends React.Component<Props, State> {
                 <Form.Item label="Title">
                   {getFieldDecorator("title", {
                     rules: [
-                      { required: true, message: "채팅방 제목을 입력해주세요" }
+                      { required: true, message: "캘린더 제목을 입력해주세요" }
                     ]
-                  })(<Input placeholder="채팅방 제목을 입력해주세요" />)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Form.Item label="Description">
-                  {getFieldDecorator("description", {
-                    rules: [
-                      {
-                        required: false
-                      }
-                    ]
-                  })(
-                    <Input.TextArea
-                      rows={4}
-                      placeholder="채팅방 설명을 입력해주세요. (선택)"
-                    />
-                  )}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Form.Item label="Select People to Chat">
-                  {getFieldDecorator("users", {
-                    rules: [
-                      {
-                        required: true,
-                        message: "대화를 나눌 인원을 선택해주세요."
-                      }
-                    ]
-                  })(<SelectPeople />)}
+                  })(<Input placeholder="캘린더 제목을 입력해주세요" />)}
                 </Form.Item>
               </Col>
             </Row>
@@ -172,5 +141,5 @@ class CreateChatting extends React.Component<Props, State> {
   }
 }
 
-const formed = Form.create()(CreateChatting);
-export { formed as CreateChatting };
+const formed = Form.create()(CreateCalendar);
+export { formed as CreateCalendar };

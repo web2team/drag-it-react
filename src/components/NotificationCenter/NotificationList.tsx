@@ -40,9 +40,11 @@ class NotificationList extends React.Component<Props, State> {
     hasMore: true
   };
 
+  // 사용자 마우스 이벤트 영역 해제
   componentWillUnmount() {
     document.removeEventListener("click", this.handleClickOutside, true);
   }
+  // 사용자 마우스 이벤트 영역 등록
   componentDidMount() {
     document.addEventListener("click", this.handleClickOutside, true);
 

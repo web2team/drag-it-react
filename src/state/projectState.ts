@@ -7,7 +7,7 @@ export class ProjectState {
 
   @computed
   get currentProjectId(): number { 
-    return this._currentProjectId || store.get("currentProjectId") || 1;
+    return this._currentProjectId || store.get("currentProjectId");
   }
 
   set currentProjectId(currentProjectId: number) {

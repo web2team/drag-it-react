@@ -3,6 +3,9 @@ import { Calendar } from "components/Calendar";
 import { TextEditor } from "components/TextEditor";
 import { GridLayoutItemType } from "interface/GridLayout";
 
+// componentRosolver 
+// 컴포넌트 타입에 맞는 인스턴스를 반환해줌
+// if - else refactorying -> map container
 class ComponentResolver {
   map = new Map();
 

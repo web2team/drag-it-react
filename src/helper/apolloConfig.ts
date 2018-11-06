@@ -8,15 +8,15 @@ import { getMainDefinition } from "apollo-utilities";
 import { execute, makePromise } from "apollo-link";
 
 const httpLink = createHttpLink({
-  uri: APOLLO_CLIENT_URL,
-
+  uri: APOLLO_CLIENT_URL
 });
+
+// Subscription 설정
 const wsLink = new WebSocketLink({
   uri: APOLLO_SUBSCRIPTION_URL,
   options: {
     reconnect: true
-  },
-  
+  }
 });
 
 export const link = split(
@@ -28,6 +28,7 @@ export const link = split(
   httpLink
 );
 
+// HTTP request 캐시 정책 설정 (in-memory)
 const cache = new InMemoryCache();
 export const client = new ApolloClient({ link, cache });
 
@@ -38,6 +39,9 @@ interface Operation {
   context?: any;
   extensions?: any;
 }
+
+// GraphQL Ajax 헬퍼.
+// Raw API를 사용하지 않고 Wrapping해서 생산성을 높임
 export const executePromise = (operation: Operation) =>
   makePromise(execute(link, operation));
 
@@ -46,6 +50,8 @@ interface OnExecuteSubscribe {
   error?: (error: any) => void;
   complete?: () => void;
 }
+
+// Ajax 헬퍼이지만 Subscription용
 export const executePromiseSubscribe = (
   operation: Operation,
   { next, error, complete }: OnExecuteSubscribe

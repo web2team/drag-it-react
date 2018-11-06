@@ -14,6 +14,9 @@ export const GET_GRID_LAYOUTS = gql`
     getGridLayouts(userId: $userId) {
       id
       name
+      project {
+        id
+      }
     }
   }
 `;

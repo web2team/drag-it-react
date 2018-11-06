@@ -7,6 +7,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const tsImportPlugin = require('ts-import-plugin');
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+const styledComponentsTransformer = createStyledComponentsTransformer();
 
 module.exports = {
   cache: true,
@@ -25,7 +27,12 @@ module.exports = {
     rules: [{
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
-        loader: "ts-loader"
+        loader: "ts-loader",
+        options: {
+          getCustomTransformers: () => ({
+            before: [styledComponentsTransformer]
+          })
+        }
       },
       {
         test: /\.(js|jsx)?$/,
