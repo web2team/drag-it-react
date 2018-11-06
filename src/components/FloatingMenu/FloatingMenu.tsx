@@ -85,8 +85,6 @@ class FloatingMenu extends React.Component<Props, any> {
 }
 
 const styledFloatingMenu = styled(FloatingMenu)`
-  
-
   .mfb-component__button--main {
     background-color: #722ed1;
     line-height: 56px;

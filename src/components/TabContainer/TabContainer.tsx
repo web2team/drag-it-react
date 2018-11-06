@@ -193,7 +193,7 @@ class TabContainer extends React.Component<Props, State> {
           activeKey={this.state.activeId + ""}
           type="editable-card"
           tabBarGutter={10}
-          tabBarExtraContent={"extra"}
+          tabBarExtraContent={"프로젝트추가"}
           tabPosition="top"
           className={this.props.className}
         >

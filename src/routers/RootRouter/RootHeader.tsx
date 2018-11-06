@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Avatar } from "antd";
 const Header = Layout.Header;
 import { inject, observer } from "mobx-react";
 
@@ -33,9 +33,18 @@ export class RootHeader extends React.Component<any, any> {
         <div id="logo">
           <span>Drag-It</span>
         </div>
+        <Avatar
+          style={{ marginTop: "auto", marginBottom: "auto" }}
+          size={50}
+          icon="user"
+        />
         <Menu
           theme="light"
           mode="horizontal"
+          style={{
+            background: "transparent",
+            border: 0
+          }}
           defaultSelectedKeys={["0"]}
           // 엘레멘트 선택 시 콜백함수 정의
           onSelect={(itemProps) => this.onSelect(itemProps)}
@@ -43,7 +52,7 @@ export class RootHeader extends React.Component<any, any> {
           {/* 로그인 시에만 로그아웃 메뉴 show */}
           {this.props.authState.getIsLogin ? (
             <Menu.Item key="logout">
-              <span>로그아웃</span>
+              <span className="menu-item">로그아웃</span>
             </Menu.Item>
           ) : null}
         </Menu>
