@@ -158,7 +158,7 @@ class TabContainer extends React.Component<Props, State> {
       centered: true,
       onOk() {
         doRemove(targetId);
-
+        this.setState({ modalVisible: false });
         // GraphQL 응답시간을 고려하여 1초 이후 modal 해제
         return new Promise((resolve) =>
           setTimeout(() => {
@@ -211,7 +211,7 @@ class TabContainer extends React.Component<Props, State> {
               <br />
               <br />
               <div>
-                <Progress type="circle" percent={75} /> 
+                <Progress type="circle" percent={75} />
                 {"   "}
                 <Progress type="circle" percent={70} status="exception" />
                 {"   "}
@@ -268,6 +268,15 @@ class TabContainer extends React.Component<Props, State> {
               />
             </div>
             <br />
+            <br />
+
+            <Button
+              size="large"
+              type="danger"
+              onClick={() => this.remove(this.state.activeId)}
+            >
+              프로젝트 삭제하기
+            </Button>
             <br />
           </div>
         </Modal>
