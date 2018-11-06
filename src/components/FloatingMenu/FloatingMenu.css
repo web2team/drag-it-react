@@ -13,5 +13,4 @@
 .ion-calendar::before {
   position: relative;
   transform: scale(1.4);
-  top: 16px;
 }
